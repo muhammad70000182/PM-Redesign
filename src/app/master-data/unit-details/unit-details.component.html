@@ -1,0 +1,395 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+
+
+
+                <div class="sectionHeading mt-4">
+                    <h6 class="fw-bold text-primary">{{'Unit Details' | translate}}</h6>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-label">{{'Unit Code' | translate}}</label>
+                        <ng-select aria-label="Default select example" [(ngModel)]="BL_code"
+                            [ngModelOptions]="{standalone: true}" name="title">
+                            <ng-option *ngFor="let car of PropertyItemsList"
+                                [value]="car.u_ItemCode">{{car.name}}</ng-option>
+                        </ng-select>
+
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">{{'Zone' | translate}}</label>
+                        <ng-select aria-label="Default select example" name="title" [(ngModel)]="BL_Zone"
+                            [ngModelOptions]="{standalone: true}" (change)="GetSubZoneData(0,$event)">
+                            <ng-option *ngFor="let car of ZoneList" [value]="car.id">{{car.name}}</ng-option>
+                        </ng-select>
+
+                    </div>
+                    <div class="col-md-4">
+                        <label for="ProjectId" class="form-label">{{'Sub Zone' | translate}}</label>
+                        <ng-select [items]="SubZoneList" bindLabel="name" bindValue="id" [(ngModel)]="BL_subZone"
+                            [ngModelOptions]="{standalone: true}" [multiple]="true" [closeOnSelect]="false"
+                            placeholder="Select Floors">
+                        </ng-select>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <label class="form-label">{{'Status' | translate}}</label>
+                        <ng-select aria-label="Default select example" [(ngModel)]="BL_Status"
+                            [ngModelOptions]="{standalone: true}" name="title">
+                            <ng-option value="Assigned">Assigned </ng-option>
+                            <ng-option value="NotAssigned">NotAssigned</ng-option>
+                            <ng-option value="All">All</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                        <div class="btn-group btn-design">
+                            <button class="btn btn-success" (click)=" onSubmit()" type="button">
+                                <i class="fa fa-save"></i><span>{{'Search' | translate}}</span>
+                            </button>
+                            <button class="btn btn-warning" (click)=" onclear()" type="button">
+                                <i class="fa fa-save"></i><span> {{'Clear' | translate}}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="row py-2 border-bottom border-dashed">
+                    <nav class="customTab">
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+
+                            <a class="nav-item nav-link active" (click)="switchTab('UnitDetail','units')"
+                                [class.active]="UnitactiveTab === 'UnitDetail'">{{'Items' | translate}}</a>
+                            <a class="nav-item nav-link active" (click)="switchTab('Facilities','units')"
+                                [class.active]="UnitactiveTab === 'Facilities'">{{'Facilities' | translate}}</a>
+                            <a class="nav-item nav-link active" (click)="switchTab('Utilites','units')"
+                                [class.active]="UnitactiveTab === 'Utilites'">{{'Utilites' | translate}}</a>
+
+                        </div>
+                    </nav>
+                    <div class="tab-content w-100" id="nav-tabContent">
+                        <div class="tab-pane fade show active" [ngClass]="{ active: UnitactiveTab === 'UnitDetail' }">
+
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="table-responsive dataTableDesign fixed-height-wrapper">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th> <input type="checkbox" [(ngModel)]="masterSelected"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            (change)="checkUncheckAll()" /></th>
+                                                    <th>{{'Unit Code'|translate}}</th>
+                                                    <th>{{'Project'|translate}}</th>
+                                                    <th>{{'Building'|translate}}</th>
+                                                    <th>{{'Zone'|translate}}</th>
+                                                    <th>{{'Sub Zone'|translate}}</th>
+                                                    <th>{{'Action'|translate}}</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr *ngFor="let u of agreementItems; let i = index">
+                                                     <td>{{i+1}}</td>
+                                                    <td> <input type="checkbox" [(ngModel)]="u.selected"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            (change)="isAllSelected()" /></td>
+                                                    <td>{{ u.itemCode }}</td>
+                                                    <td>{{ u.projectName }}</td>
+                                                    <td>{{ u.buildingName }}</td>
+                                                    <td>{{ u.zoneName }}</td>
+                                                    <td>{{ u.subZoneName }}</td>
+                                                    <td class="action-btn">
+                                                        <span class="me-1" (click)="GetFacilityUtilityById(u.id)">
+                                                            <i class="fa fa-bars"></i>
+                                                        </span>
+                                                    </td>
+
+
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade show active" [ngClass]="{ active: UnitactiveTab === 'Facilities' }">
+                            <div class="row mt-4">
+
+                                <div class="col-md-12">
+                                    <div class="table-responsive fixed-height-wrapper tbl-input-select dataTableDesign">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{'Facility'|translate}}</th>
+                                                    <th>{{'Quantity'|translate}}</th>
+                                                    <th>{{'Rate(Fixed)'|translate}}</th>
+                                                    <th>{{'Action'|translate}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <ng-select aria-label="Default select example"
+                                                            [(ngModel)]="Facility" name="title">
+                                                            <ng-option *ngFor="let car of FacilitiesMasterList"
+                                                                [value]="car.id">{{car.code+'-'+car.name}}</ng-option>
+                                                        </ng-select>
+                                                    </td>
+                                                    <td> <input type="text" [(ngModel)]="Quantity" appCommaSeparated
+                                                            class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" appCommaSeparated
+                                                            [(ngModel)]="Rate" /></td>
+
+                                                    <td>
+                                                        <div class="action-btn">
+                                                            <a class="tbl-add-btn"
+                                                                (click)="AddRemoveFacilty('add','')"><i
+                                                                    class="fa fa-plus text-primary"></i></a>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngFor='let p of FacilityList;index as i'>
+                                                    <td>{{p.U_FctCode}}</td>
+                                                    <td>{{p.U_Qty}}</td>
+                                                    <td>{{p.U_Rate}}</td>
+
+                                                    <td class="action-btn">
+                                                        <span>
+                                                            <a class="tbl-dlt-btn" (click)="AddRemoveFacilty('remove',p)"><i
+                                                                class="fa fa-trash "></i></a>
+                                                        </span>
+                                                        
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show active" [ngClass]="{ active: UnitactiveTab === 'Utilites' }">
+                            <div class="row mt-4">
+
+                                <div class="col-md-12">
+                                    <div class="dataTableDesign table-responsive tbl-input-select fixed-height-wrapper">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{'Utility'|translate}}</th>
+                                                    <th>{{'Tax Code'|translate}}</th>
+                                                    <th>{{'Calculation'|translate}}</th>
+                                                    <th>{{'Rates'|translate}}</th>
+                                                    <th>{{'Occurance'|translate}}</th>
+                                                    <th>{{'Action'|translate}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <ng-select aria-label="Default select example"
+                                                            [(ngModel)]="Utility" name="title">
+                                                            <ng-option *ngFor="let car of UtilityItemsList"
+                                                                [value]="car.itemCode">{{car.itemName}}</ng-option>
+                                                        </ng-select>
+                                                    </td>
+                                                    <td><ng-select aria-label="Default select example"
+                                                            [(ngModel)]="TaxCode" placeholder="Select Tax Code">
+                                                            <ng-option *ngFor="let car of TaxCodesList"
+                                                                [value]="car.code">{{car.name}}</ng-option>
+                                                        </ng-select></td>
+                                                    <td><ng-select aria-label="Default select example"
+                                                            [(ngModel)]="Calculation"
+                                                            placeholder="Select Calculation Method">
+                                                            <ng-option value="Fixed"> Fixed</ng-option>
+                                                            <ng-option value="By Unit Size(Per SQM)"> By Unit
+                                                                Size(Per SQM)</ng-option>
+                                                            <ng-option value="Metered (Per Unit)"> Metered (Per
+                                                                Unit)</ng-option>
+                                                        </ng-select></td>
+                                                    <td><input type="text" [(ngModel)]="UtilityRates" appCommaSeparated
+                                                            class="form-control" /></td>
+                                                    <td><ng-select aria-label="Default select example"
+                                                            [(ngModel)]="Occurance" placeholder="Select Occurance">
+
+                                                            <ng-option value="One Time">One Time</ng-option>
+                                                            <ng-option value="Based On Plan"> Based On
+                                                                Plan</ng-option>
+                                                        </ng-select></td>
+
+                                                    <!-- <td>
+                                                        <input type="text" [(ngModel)]="UtilityRateTotal"
+                                                            appCommaSeparated class="form-control" readonly />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" [(ngModel)]="UtilityTax" appCommaSeparated
+                                                            class="form-control" readonly />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" [(ngModel)]="UtilityAmountAfterTax"
+                                                            appCommaSeparated class="form-control" readonly />
+                                                    </td> -->
+                                                    <td>
+                                                        <div class="action-btn">
+                                                            <a class="tbl-add-btn"
+                                                                (click)="AddRemoveUtility('add','')"><i
+                                                                    class="fa fa-plus text-primary"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngFor='let p of UtilityList;index as i'>
+                                                    <td>{{p.u_UtilItemCode}}</td>
+                                                    <td>{{p.u_TaxCode}}</td>
+                                                    <td>{{p.CalculationName }}</td>
+                                                    <td>{{p.u_Rate | number}}</td>
+                                                    <td>{{p.u_Occurance}}</td>
+
+
+                                                    <td class="action-btn">
+                                                        <span>
+<a class="action-btn" (click)="AddRemoveUtility('remove',p)"><i
+                                                                class="fa fa-trash "></i></a>
+                                                        </span>
+                                                        </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                       <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                        <div class="btn-group btn-design">
+                            <button class="btn btn-success" (click)=" ondataSubmit()" type="button">
+                                <i class="fa fa-save"></i><span>{{'Save' | translate}}</span>
+                            </button>
+                            <button class="btn btn-warning" (click)=" onclearform()" type="button">
+                                <i class="fa fa-save"></i><span> {{'Cancel' | translate}}</span>
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{'Unit Assigned' | translate}}</h5>
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row py-2 border-bottom border-dashed">
+
+
+                </div>
+                <nav class="customTab">
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+
+                        <a class="nav-item nav-link active" (click)="switchTab('UnitDetail','header')"
+                            [class.active]="activeTab === 'UnitDetail'">{{'Facility' | translate}}</a>
+                        <a class="nav-item nav-link active" (click)="switchTab('Attachments','header')"
+                            [class.active]="activeTab === 'Attachments'">{{'Utility' | translate}}</a>
+
+                    </div>
+                </nav>
+
+                <div class="tab-content" id="nav-tabContent">
+
+                    <div class="tab-pane fade show active" [hidden]="activeTab !== 'UnitDetail'">
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <div class="table-responsive dataTableDesign fixed-height-wrapper">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>{{'Facility'|translate}}</th>
+                                                <th>{{'Quantity'|translate}}</th>
+                                                <th>{{'Rate(Fixed)'|translate}}</th>
+
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let u of FacilitybyID; let i = index">
+                                                 <td>{{i+1}}</td>
+                                                <td>{{ u.name}}</td>
+                                                <td>{{ u.u_Qty }}</td>
+                                                <td>{{ u.u_Rate }}</td>
+
+
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade show active" [hidden]="activeTab !== 'Attachments'">
+
+                        <!-- Attachment table start -->
+                        <div class="table-responsive dataTableDesign fixed-height-wrapper mt-4">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{'Utility Name'|translate}}</th>
+                                        <th>{{'Utility'|translate}}</th>
+                                        <th>{{'Tax Code'|translate}}</th>
+                                        <th>{{'Calculation'|translate}}</th>
+                                        <th>{{'Rates'|translate}}</th>
+                                        <th>{{'Occurance'|translate}}</th>
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let p of this.UtilitybyID">
+                                         <td>{{ p.name}}</td>
+                                        <td>{{ p.u_UtilItemCode}}</td>
+                                        <td></td>
+                                        <td>
+                                            {{ p.u_Calculation}}
+                                        </td>
+                                        <td>{{ p.u_Rate}}</td>
+                                        <td>{{ p.u_Occurance}}</td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- Attachment table end -->
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

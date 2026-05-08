@@ -1,0 +1,173 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">{{'Agreement Type' | translate}}</label>
+                            <!-- <select class="form-select" aria-label="Default select example">
+                            <option selected>Sale</option>
+                            <option value="1">Rent</option>
+
+                            </select> -->
+                            <ng-select aria-label="Default select example">
+                                <ng-option *ngFor="let car of AgreementTypeListVlaues"
+                                    [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-right">
+
+                        <div class="btn-design" *ngIf="AllowedPermissions['canCreate']">
+                            <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to
+                                Excel</button>
+                            <button [routerLink]="['/revenue/revenue-posting']" class="btn btn-success"><i
+                                    class="fa fa-plus"></i> {{'Add New' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="AllowedPermissions['canView'] ">
+                    <div class="table-responsive dataTableDesign">
+                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'Doc Num' | translate}}</th>
+                                    <th>{{'Series' | translate}}</th>
+                                    <!-- <th>{{'Type' | translate}}</th> -->
+                                    <th>{{'Due Date' | translate}}</th>
+                                    <th>{{'Posting Date' | translate}}</th>createdByName
+                                    <th>{{'CreatedBy' | translate}}</th>
+
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of ReportsList; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{ p.u_DocNum }}</td>
+                                    <td>{{ p.u_Seri+"-"+p.series }}</td>
+                                    <!-- <td>{{ p.agType }}</td> -->
+
+                                    <td>{{ p.u_DDate|
+                                        date:GenericForma.DateFormate }}</td>
+                                    <td>{{ p.u_PDate|
+                                        date:GenericForma.DateFormate }}</td>
+                                    <td>{{ p.createdByName }}</td>
+
+                                    <td>
+
+                                        <div class="action-btn">
+
+                                            <span class="" (click)="GetRevenueList(p.id)">
+                                                <i class="fa fa-eye"></i>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Posting Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row py-2 border-bottom border-dashed">
+                        <div class="col-md-4 mb-2">
+                            <div class="fw-semibold text-dark">{{'Doc Num' | translate}}</div>
+                            <div class="text-secondary small">{{SelectedAgreement.u_DocNum}}</div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <div class="fw-semibold text-dark">{{'Series' | translate}}</div>
+                            <div class="text-secondary small">{{SelectedAgreement.u_Seri+"-"+SelectedAgreement.series}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <div class="fw-semibold text-dark">{{'Type' | translate}}</div>
+                            <div class="text-secondary small">{{SelectedAgreement.agType}}</div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <div class="fw-semibold text-dark">{{'Due Date' | translate}}</div>
+                            <div class="text-secondary small">{{SelectedAgreement.u_DDate
+                                | date:GenericForma.DateFormate }}</div>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <div class="fw-semibold text-dark">{{'Posting Date' | translate}}</div>
+                            <div class="text-secondary small">{{SelectedAgreement.u_PDate
+                                | date:GenericForma.DateFormate }}</div>
+                        </div>
+                    </div>
+                    <!-- <nav class="customTab">
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" [class.active]=true>{{'Detail' | translate}}</a>
+                        </div>
+                    </nav> -->
+
+                    <!-- <div class="tab-content" id="nav-tabContent">
+
+                        <div class="tab-pane fade show active"> -->
+                    <div class="sectionHeading mt-4  heading-with-btn">
+                        <h6 class="fw-bold text-primary mb-0">{{ 'Invoice Details' | translate }}</h6>
+                        <div class="btn-design">
+                            <button (click)="exportDataDetail()" class="btn btn-outline-info export-btns">Export to
+                                Excel</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="table-responsive dataTableDesign fixed-height-wrapper">
+                                <table class="table table-striped t-footer-sticky mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>{{'Doc Num' | translate}}</th>
+                                            <th>{{'Customer' | translate}}</th>
+                                            <th>{{'Agreement Type' | translate}}</th>
+                                            <th>{{'BP Code' | translate}}</th>
+                                            <th>{{'Amount' | translate}}</th>
+                                            <th>{{ 'SAP Doc#' | translate }}</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let u of SelectedAgreement.revenueDetails; let i = index">
+                                             <td>{{i+1}}</td>
+                                            <td>{{ u.agDocNum }}</td>
+                                            <td>{{ u.agbpName }}</td>
+                                            <td>{{ u.agType }}</td>
+                                            <td>{{ u.agbp }}</td>
+                                            <td>{{ u.u_Amt | number: '1.2-2' }}</td>
+                                            <td>{{ u.u_ARInvDoc ?? u.u_RevJE }}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">Total</td>
+                                            <td>{{TotalAmountOfSelectedAgreement | number}}</td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

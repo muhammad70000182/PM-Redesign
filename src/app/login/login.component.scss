@@ -1,0 +1,26 @@
+
+.login-wrapper{
+    background-image: url(../../assets/images/login-bg.png);
+    background-size: cover;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+
+.bg-custom{
+    background-color: #08321a;
+}
+.bg-light{
+    background-image: url(../../assets/img/login-back.jpg);
+}
+.modal-logo {
+    width: 100px;
+}
+.modal-logo img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.forgot-btn .btn{
+    width: 100%;
+    margin: 0 !important;
+}

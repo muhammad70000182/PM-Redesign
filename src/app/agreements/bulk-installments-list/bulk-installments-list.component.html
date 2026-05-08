@@ -1,0 +1,223 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div *ngIf="AllowedPermissions['canCreate']">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-4">
+
+                        </div>
+                        <div class="col-md-8 text-right">
+                            <div class="btn-design">
+                                <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to
+                                    Excel</button>
+                                <button [routerLink]="['/agreements/bulk-installments-posting']"
+                                    class="btn btn-success"><i class="fa fa-plus"></i> {{'Add New' |
+                                    translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="AllowedPermissions['canView'] ">
+                    <div class="table-responsive dataTableDesign">
+                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{ 'Doc Num' | translate }}</th>
+                                    <th>{{ 'Series' | translate }}</th>
+                                    <th>{{ 'From BP Code' | translate }}</th>
+                                    <th>{{ 'To BP Code' | translate }}</th>
+                                    <th>{{ 'Type' | translate }}</th>
+                                    <th>{{ 'Due Date' | translate }}</th>
+                                    <th>{{ 'Created By' | translate }}</th>
+                                    <th>{{ 'Created Date' | translate }}</th>
+                                    <!-- <th>{{ 'Updated By' | translate }}</th>
+                                    <th>{{ 'Updated Date' | translate }}</th> -->
+                                    <th>{{ 'Action' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of BulkInstallmentsList; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{ p.u_DocNum }}</td>
+                                    <td>{{ p.series }}</td>
+                                    <td>{{ p.u_FBPCode }}</td>
+                                    <td>{{ p.u_TBPCode }}</td>
+                                    <td>{{ p.type }}</td>
+                                    <td>{{ p.u_DDate | date: GenericForma.DateFormate }}</td>
+                                    <td>{{ p.createdByName }}</td>
+                                    <td>{{ p.createdDate | date: GenericForma.DateFormate }}</td>
+                                    <!-- <td>{{ p.updatedByName || '-' }}</td>
+                                    <td>{{ p.updatedDate | date: GenericForma.DateFormate }}</td> -->
+                                    <td>
+                                        <div class="action-btn">
+                                            <span>
+                                                <i class="fa fa-eye" (click)="GetBulkInstallments(p.id)"></i>
+                                            </span>
+                                            <!-- Optional delete button -->
+                                            <!-- <span (click)="Delete(p)">
+            <i class="fa fa-trash"></i>
+          </span> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ 'Invoice Detail' | translate }}</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="row py-2 border-bottom border-dashed">
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'Doc Num' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.u_DocNum }}</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'Series' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.series }}</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'From BP Code' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.u_FBPCode }}</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'To BP Code' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.u_TBPCode }}</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'Type' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.type }}</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'Due Date' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.u_DDate | date:
+                                            GenericForma.DateFormate }}</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'Posting Date' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.u_PDate | date:
+                                            GenericForma.DateFormate }}</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'Created By' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.createdByName }}</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'Created Date' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.createdDate | date:
+                                            GenericForma.DateFormate }}</div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'Updated By' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.updatedByName || '-' }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{ 'Updated Date' | translate }}</div>
+                                        <div class="text-secondary small">{{ SelectedAgreement.updatedDate | date:
+                                            GenericForma.DateFormate }}</div>
+                                    </div>
+                                </div>
+
+                                <!-- ===== Detail / Invoice Table ===== -->
+                                <div class="sectionHeading heading-with-btn mt-4">
+                                    <h6 class="fw-bold text-primary mb-0">{{ 'Invoice Details' | translate }}</h6>
+                                    <div class="btn-design">
+                                        <button (click)="exportDataDetail()"
+                                            class="btn btn-outline-info export-btns">Export to Excel</button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive fixed-height-wrapper dataTableDesign t-footer-sticky mt-3">
+                                    <table class="table table-striped mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>{{ 'Agreement Doc Num' | translate }}</th>
+                                                <th>{{ 'Customer Code' | translate }}</th>
+                                                <th>{{ 'Customer Name' | translate }}</th>
+                                                <th>{{ 'Contact Person' | translate }}</th>
+                                                <th>{{ 'Agreement Type' | translate }}</th>
+                                                <th>{{ 'Price Unit' | translate }}</th>
+                                                <th>{{ 'Amount Before Tax' | translate }}</th>
+                                                <th>{{ 'Utility Amount' | translate }}</th>
+                                                <th>{{ 'Tax' | translate }}</th>
+                                                <th>{{ 'Amount After Tax' | translate }}</th>
+                                                <th>{{ 'Proforma Sent' | translate }}</th>
+                                                <th>{{ 'Amount Received' | translate }}</th>
+                                                <th>{{ 'Posting Date' | translate }}</th>
+                                                <th>{{ 'SAP Doc#' | translate }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let inv of SelectedAgreement.invoiceDetails; let i = index">
+                                                <td>{{ i + 1 }}</td>
+                                                <td>{{ inv.agDocNum }}</td>
+                                                <td>{{ inv.agbp }}</td>
+                                                <td class="wrap-text">{{ inv.agbpName || '-' }}</td>
+                                                <td>{{ inv.agcpName }}</td>
+                                                <td>{{ inv.agType }}</td>
+                                                <td>{{ inv.u_PrcUnit }}</td>
+                                                <td>{{ inv.u_AmtBeforeTax | number }}</td>
+                                                <td>{{ inv.u_UtilAmt | number }}</td>
+                                                <td>{{ inv.u_Tax | number }}</td>
+                                                <td>{{ inv.u_AmtAfterTax | number }}</td>
+                                                <td>{{ inv.u_ProfSent }}</td>
+                                                <td>{{ inv.u_AmtRcvd }}</td>
+                                                <td>{{ inv.u_PostingDate | date: GenericForma.DateFormate }}</td>
+                                                 <td>{{ inv.sapDocNum }}</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="7">Total:</td>
+                                                <td>{{ totalBeforeTax | number:'1.0-0' }}</td>
+                                                <td>{{ totalUtilAmt | number:'1.0-0' }}</td>
+                                                <td>{{ totalTax | number:'1.0-0' }}</td>
+                                                <td>{{ totalAfterTax | number:'1.0-0' }}</td>
+                                                <td>Y</td>
+                                                <td>{{ totalAmtReceived | number:'1.0-0' }}</td>
+                                                <td></td>
+                                                 <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer btn-design">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Close' |
+                                    translate }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

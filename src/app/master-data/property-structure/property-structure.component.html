@@ -1,0 +1,634 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div *ngIf="AllowedPermissions['canCreate']">
+                    <!-- <h4 class="sectionHeading">New Role:</h4> -->
+
+                    <div class="wizard-container customWizardDesign">
+                        <ul class="wizard-steps">
+                            <li [ngClass]="getStepClass(1)" class="right">
+                                <span class="step-number">1</span>
+                                <span class="step-title">{{'Project' | translate}}</span>
+                            </li>
+                            <li [ngClass]="getStepClass(2)" class="left right">
+                                <span class="step-number">2</span>
+                                <span class="step-title">{{'Building' | translate}}</span>
+                            </li>
+                            <li [ngClass]="getStepClass(3)" class="left right">
+                                <span class="step-number">3</span>
+                                <span class="step-title">{{'Zone' | translate}}</span>
+                            </li>
+                            <li [ngClass]="getStepClass(4)" class="left">
+                                <span class="step-number">4</span>
+                                <span class="step-title">{{'Sub Zone' | translate}}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Step Content -->
+                    <div class="step-content mt-4">
+                        <div *ngIf="currentStep === 1">
+                            <form [formGroup]="projectForm" #projectFormEl>
+                                <input type="hidden" formControlName="Id" />
+                                <div class="row">
+                                    <!-- SAP User Name -->
+                                    <div class="col-md-3">
+                                        <label for="U_Code" class="form-label">{{'Code' | translate}}</label>
+                                        <input type="text" id="U_Code" class="form-control form-control-sm"
+                                            placeholder="{{'Enter Code' | translate}}" formControlName="U_Code"
+                                            [ngClass]="{'is-invalid': (submitted || pr['U_Code'].touched) && pr['U_Code'].invalid}" />
+                                        <app-validation-message [control]="pr['U_Code']" label="Code"
+                                            [submitted]="submitted"></app-validation-message>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="Name" class="form-label">{{'Name' | translate}}</label>
+                                        <input type="text" id="Name" class="form-control form-control-sm"
+                                            placeholder="{{'Name' | translate}}Enter Name" formControlName="Name"
+                                            [ngClass]="{'is-invalid': (submitted || pr['Name'].touched) && pr['Name'].invalid}" />
+                                        <app-validation-message [control]="pr['Name']" label="Name"
+                                            [submitted]="submitted"></app-validation-message>
+                                    </div>
+
+
+                                </div>
+                            </form>
+                        </div>
+
+                        <div *ngIf="currentStep === 2">
+                            <form [formGroup]="buildingForm" #buildingFormEl>
+                                <input type="hidden" formControlName="Id" />
+                                <div class="row">
+                                    <!-- SAP User Name -->
+                                    <!-- Code -->
+
+                                    <!-- Project Code -->
+                                    <div class="col-md-3 ng-select-readonly">
+                                        <label for="ProjectId" class="form-label">{{'Project Code' | translate}}
+                                        </label>
+                                        <ng-select aria-label="Default select example" name="title" [disabled]="true"
+                                            formControlName="ProjectId" class="readonly"
+                                            [ngClass]="{'is-invalid': (BLsubmitted || bl['ProjectId'].touched) && bl['ProjectId'].invalid }">
+                                            <ng-option *ngFor="let car of ProjectListValues"
+                                                [value]="car.id">{{car.name}}</ng-option>
+                                        </ng-select>
+                                        <app-validation-message [control]="bl['ProjectId']" label="Project Code"
+                                            [submitted]="BLsubmitted"></app-validation-message>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="U_Code" class="form-label">{{'Code' | translate}}</label>
+                                        <input type="text" id="U_Code" class="form-control form-control-sm"
+                                            placeholder="Enter Code" formControlName="U_Code"
+                                            [ngClass]="{'is-invalid': (BLsubmitted || bl['U_Code'].touched) && bl['U_Code'].invalid }" />
+                                        <app-validation-message [control]="bl['U_Code']" label="Code"
+                                            [submitted]="BLsubmitted"></app-validation-message>
+
+                                    </div>
+
+                                    <!-- Name -->
+                                    <div class="col-md-3">
+                                        <label for="Name" class="form-label">{{'Name' | translate}}</label>
+                                        <input type="text" id="Name" class="form-control form-control-sm"
+                                            placeholder="Enter Name" formControlName="Name"
+                                            [ngClass]="{'is-invalid': (BLsubmitted || bl['Name'].touched) && bl['Name'].invalid }" />
+                                        <app-validation-message [control]="bl['Name']" label="Name"
+                                            [submitted]="BLsubmitted"></app-validation-message>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="ProjectId" class="form-label">{{'Floor' | translate}}</label>
+                                        <ng-select [items]="FloorsList" bindLabel="name" bindValue="code"
+                                            [(ngModel)]="BL_Floor" [multiple]="true" [closeOnSelect]="false"
+                                            [ngModelOptions]="{standalone: true}" placeholder="Select Floors">
+                                        </ng-select>
+                                    </div>
+
+                                </div>
+                                <div class="sectionHeading mt-3">
+                                    <h6 class="fw-bold text-primary">{{'Dimensions' | translate}}</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-3" *ngFor="let dim of DimensionsList">
+                                            <label [for]="'U_Dimen' + dim.level" class="form-label">
+                                                {{ dim.dimDesc | translate }}
+                                            </label>
+                                            <ng-select [items]="dim.values" bindLabel="ocrName" bindValue="ocrCode"
+                                                [formControlName]="'U_Dimen' + dim.level"
+                                                [disabled]="dim.values.length === 0"
+                                                placeholder="Select {{ dim.dimDesc }}"
+                                                [ngClass]="{'is-invalid': (BLsubmitted || bl['U_Dimen' + dim.level].touched) && bl['U_Dimen' + dim.level].invalid}">
+                                            </ng-select>
+
+                                            <app-validation-message [control]="bl['U_Dimen' + dim.level]"
+                                                [label]="dim.dimDesc"
+                                                [submitted]="BLsubmitted"></app-validation-message>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="sectionHeading mt-3">
+                                    <h6 class="fw-bold text-primary">{{'Plot Details' | translate}}</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 dataTableDesign">
+                                        <table class="table align-middle table-striped mt-4">
+                                            <thead class="text-white">
+                                                <tr>
+                                                    <!-- <th scope="col">Name</th> -->
+                                                     <th>#</th>
+                                                    <th scope="col">{{'Plot No'|translate}}</th>
+                                                    <th scope="col">{{'Plot Size'|translate}}</th>
+                                                    <th scope="col">{{'Plot Owner'|translate}}</th>
+                                                    <th scope="col">{{'Deed'|translate}}</th>
+                                                    <th scope="col">{{'Status'|translate}}</th>
+                                                    <th scope="col">{{'Acquisition Date'|translate}}</th>
+                                                    <th scope="col">{{'Acquisition End Date'|translate}}</th>
+                                                    <th scope="col">{{'Action'|translate}}</th>
+                                                </tr>
+                                                <!-- Input row for adding new -->
+                                                <tr>
+                                                    <td></td>
+                                                    <!-- <td><input type="text" class="form-control form-control-sm"
+                                                                [(ngModel)]="NewPlot.Name"></td> -->
+                                                    <td><input type="text" class="form-control form-control-sm"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="NewPlot.U_PNo"></td>
+                                                    <td><input type="text" class="form-control form-control-sm"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="NewPlot.U_PSize"></td>
+                                                    <td><input type="text" class="form-control form-control-sm"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="NewPlot.U_POwner"></td>
+                                                    <td><input type="text" class="form-control form-control-sm"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="NewPlot.U_Deed"></td>
+                                                    <td>
+                                                        <select class="form-control form-control-sm"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="NewPlot.U_PStatus">
+                                                            <option [ngValue]="1">Owned</option>
+                                                            <option [ngValue]="2">Leased/Rented</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="NewPlot.U_AQSDate" placeholder="dd-mm-yyyy"
+                                                            bsDatepicker [bsConfig]="datePickerConfig">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="NewPlot.U_AQEDate" placeholder="dd-mm-yyyy"
+                                                            bsDatepicker [bsConfig]="datePickerConfig">
+                                                    </td>
+                                                    <td class="action-btn">
+                                                        <button class="" type="button"
+                                                            (click)="AddRemovePlot('add', '')">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let p of PlotList; let i = index">
+                                                     <td>{{i+1}}</td>
+                                                    <!-- <td>{{p.Name}}</td> -->
+                                                    <td>{{p.U_PNo}}</td>
+                                                    <td>{{p.U_PSize}}</td>
+                                                    <td>{{p.U_POwner}}</td>
+                                                    <td>{{p.U_Deed}}</td>
+                                                    <td>
+                                                        {{ p.U_PStatus === 1 ? 'Owned' : p.U_PStatus === 2 ?
+                                                        'Leased/Rented' : '' }}
+                                                    </td>
+                                                    <td>{{p.U_AQSDate | date:'dd-MM-yyyy'}}</td>
+                                                    <td>{{p.U_AQEDate | date:'dd-MM-yyyy'}}</td>
+                                                    <td class="action-btn">
+                                                        <button class="" type="button"
+                                                            (click)="AddRemovePlot('remove', i)">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 text-right">
+                                        <button class="btn btn-success" type="button"
+                                            (click)="AddRemoveBuildings('add')">{{'Add Building' | translate}}</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr class="my-4" />
+                            <div class="sectionHeading">
+                                <h6 class="fw-bold text-primary">{{'Buildings List' | translate}}</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 dataTableDesign">
+                                    <table class="table align-middle table-striped mt-4">
+                                        <thead class="text-white">
+                                            <tr>
+                                                <th>#</th>
+                                                <th scope="col">{{'Name'|translate}}</th>
+                                                <th scope="col">{{'Code'|translate}}</th>
+                                                <th scope="col">{{'Project'|translate}}</th>
+                                                <!-- <th scope="col">{{'Dimension1'|translate}}</th>
+                                                <th scope="col">{{'Dimension2'|translate}}</th>
+                                                <th scope="col">{{'Dimension3'|translate}}</th>
+                                                <th scope="col">{{'Dimension4'|translate}}</th>
+                                                <th scope="col">{{'Dimension5'|translate}}</th> -->
+                                                <th *ngFor="let dim of DimensionsList">{{ dim.dimDesc }}</th>
+                                                <th scope="col">{{'Action'|translate}}</th>
+                                            </tr>
+                                            <!-- Input row for adding new -->
+
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let p of PostedBuildingList; let i = index">
+                                                 <td>{{i+1}}</td>
+                                                <td>{{p.Name}}</td>
+                                                <td>{{p.U_Code}}</td>
+                                                <td>{{p.U_PrjCode}}</td>
+
+                                                <!-- <td>{{p.U_Dimen1}}</td>
+                                                <td>{{p.U_Dimen2}}</td>
+                                                <td>{{p.U_Dimen3}}</td>
+                                                <td>{{p.U_Dimen4}}</td>
+                                                <td>{{p.U_Dimen5}}</td> -->
+
+                                                <td>{{ getDimensionName(1, p.U_Dimen1) }}</td>
+                                                <td>{{ getDimensionName(2, p.U_Dimen2) }}</td>
+                                                <td>{{ getDimensionName(3, p.U_Dimen3) }}</td>
+                                                <td>{{ getDimensionName(4, p.U_Dimen4) }}</td>
+                                                <td>{{ getDimensionName(5, p.U_Dimen5) }}</td>
+                                                <td class="action-btn">
+                                                    <button class="" type="button"
+                                                        (click)="AddRemoveBuildings('remove', i)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                    <button class="" type="button" (click)="ShowBuildingDetail(p)">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                    <button class="" type="button" (click)="editBuilding(i)">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="currentStep === 3">
+                            <div class="table-responsive">
+                                <div class="col-md-12 dataTableDesign  table-input-select th-last-child fixed-height-wrapper">
+                                   
+                                    <table class="table align-middle table-striped">
+                                        <thead class="text-white">
+                                            <tr>
+                                                <th>#</th>
+                                                <th scope="col">{{ 'Code' | translate }}</th>
+                                                <th scope="col">{{ 'Name' | translate }}</th>
+                                                <th>{{ 'Building' | translate }}</th>
+                                                <th>{{ 'Floors' | translate }}</th>
+                                                <th *ngFor="let dim of DimensionsList">{{ dim.dimDesc }}</th>
+
+                                                <th scope="col">{{ 'Action' | translate }}</th>
+                                            </tr>
+
+                                            <!-- Input row -->
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="NewZone.U_Code" placeholder="Enter Code" />
+                                                </td>
+
+                                                <td>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="NewZone.Name" placeholder="Enter Name" />
+                                                </td>
+
+                                                <td>
+                                                    <ng-select aria-label="Default select example" name="title"
+                                                        [(ngModel)]="NewZone.BuildingId"
+                                                        (change)="onDropDownChange($event, 'ZoneBuilding')">
+                                                        <ng-option *ngFor="let car of PostedBuildingsInDBList"
+                                                            [value]="car.id">
+                                                            {{ car.name }}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </td>
+
+                                                <td>
+                                                    <ng-select [items]="SelectedBuildingFloors" bindLabel="name"
+                                                        bindValue="u_FlrCode" [(ngModel)]="Zone_BL_Floor"
+                                                        [multiple]="true" [closeOnSelect]="false"
+                                                        [ngModelOptions]="{ standalone: true }"
+                                                        placeholder="Select Floors">
+                                                    </ng-select>
+                                                </td>
+
+                                                <!-- 👇 Dynamic dimension dropdowns -->
+                                                <td *ngFor="let dim of DimensionsList">
+                                                    <ng-select [items]="dim.values" bindLabel="ocrName"
+                                                        bindValue="ocrCode" [(ngModel)]="NewZone['U_Dimen' + dim.level]"
+                                                        placeholder="Select {{ dim.dimDesc }}"
+                                                        [ngModelOptions]="{ standalone: true }"></ng-select>
+                                                </td>
+
+                                                <td class="action-btn">
+                                                    <button type="button" (click)="AddRemoveZone('add', '')">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let z of ZoneList; let i = index">
+                                                 <td>{{i+1}}</td>
+                                                <td>{{ z.U_Code }}</td>
+                                                <td>{{ z.Name }}</td>
+                                                <td>{{ z.U_BldCode }}</td>
+                                                <td>
+                                                    <div *ngFor="let f of z.ZoneFloors">{{ f.Name }}</div>
+                                                </td>
+
+                                                <!-- 👇 Show selected dimension names -->
+                                                <!-- <td *ngFor="let dim of DimensionsList">
+                                                    {{ z['U_Dimen' + dim.level + 'Name'] || '-' }}
+                                                </td> -->
+                                                <td>{{ getDimensionName(1, z.U_Dimen1) }}</td>
+                                                <td>{{ getDimensionName(2, z.U_Dimen2) }}</td>
+                                                <td>{{ getDimensionName(3, z.U_Dimen3) }}</td>
+                                                <td>{{ getDimensionName(4, z.U_Dimen4) }}</td>
+                                                <td>{{ getDimensionName(5, z.U_Dimen5) }}</td>
+                                                <td class="action-btn">
+                                                    <button type="button" (click)="editZone(i)">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" (click)="AddRemoveZone('remove', i)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="currentStep === 4">
+                            <div class="table-responsive">
+                                <div class="col-md-12 dataTableDesign table-input-select th-last-child fixed-height-wrapper">
+                                  
+                                    <table class="table align-middle table-striped ">
+                                        <thead class="text-white">
+                                            <tr>
+                                                <th>#</th>
+                                                <th scope="col">{{ 'Code' | translate }}</th>
+                                                <th scope="col">{{ 'Name' | translate }}</th>
+                                                <th>{{ 'Zone' | translate }}</th>
+                                                <th>{{ 'Floors' | translate }}</th>
+
+                                                <!-- 👇 Dynamic headers for dimensions -->
+                                                <th *ngFor="let dim of DimensionsList">{{ dim.dimDesc }}</th>
+
+                                                <th scope="col">{{ 'Action' | translate }}</th>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="NewSubZone.U_Code" placeholder="Enter Code" />
+                                                </td>
+
+                                                <td>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="NewSubZone.Name" placeholder="Enter Name" />
+                                                </td>
+
+                                                <td>
+                                                    <ng-select aria-label="Default select example"
+                                                        [(ngModel)]="NewSubZone.ZoneId"
+                                                        (change)="onDropDownChange($event, 'SubZone_Zone')">
+                                                        <ng-option *ngFor="let car of PostedZoneList" [value]="car.id">
+                                                            {{ car.name }}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </td>
+
+                                                <td>
+                                                    <ng-select [items]="SelectedZoneFloors" bindLabel="name"
+                                                        bindValue="u_FlrCode" [(ngModel)]="Sub_Zone_BL_Floor"
+                                                        [multiple]="true" [closeOnSelect]="false"
+                                                        [ngModelOptions]="{ standalone: true }"
+                                                        placeholder="Select Floors">
+                                                    </ng-select>
+                                                </td>
+
+                                                <!-- 👇 Dynamic dimension dropdowns -->
+                                                <td *ngFor="let dim of DimensionsList">
+                                                    <ng-select [items]="dim.values" bindLabel="ocrName"
+                                                        bindValue="ocrCode"
+                                                        [(ngModel)]="NewSubZone['U_Dimen' + dim.level]"
+                                                        [ngModelOptions]="{ standalone: true }"
+                                                        placeholder="Select {{ dim.dimDesc }}">
+                                                    </ng-select>
+                                                </td>
+
+                                                <td class="action-btn">
+                                                    <button type="button" (click)="AddRemoveSubZone('add')">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let sz of SubZoneList; let i = index">
+                                                 <td>{{i+1}}</td>
+                                                <td>{{ sz.U_Code }}</td>
+                                                <td>{{ sz.Name }}</td>
+                                                <td>{{ sz.U_ZnCode }}</td>
+                                                <td>
+                                                    <div *ngFor="let f of sz.SubZoneSecFloors">{{ f.Name }}</div>
+                                                </td>
+
+                                                <!-- 👇 Show dimension names -->
+                                                <!-- <td *ngFor="let dim of DimensionsList">
+                                                    {{ sz['U_Dimen' + dim.level + '_Name'] || '-' }}
+                                                </td> -->
+
+                                                <!-- <td>{{ sz.U_Dimen1 }}</td>
+                                                <td>{{ sz.U_Dimen2 }}</td>
+                                                <td>{{ sz.U_Dimen3 }}</td>
+                                                <td>{{ sz.U_Dimen4 }}</td>
+                                                <td>{{ sz.U_Dimen5 }}</td> -->
+                                                <td>{{ getDimensionName(1, sz.U_Dimen1) }}</td>
+                                                <td>{{ getDimensionName(2, sz.U_Dimen2) }}</td>
+                                                <td>{{ getDimensionName(3, sz.U_Dimen3) }}</td>
+                                                <td>{{ getDimensionName(4, sz.U_Dimen4) }}</td>
+                                                <td>{{ getDimensionName(5, sz.U_Dimen5) }}</td>
+                                                <td class="action-btn">
+                                                    <button type="button" (click)="AddRemoveSubZone('remove', i)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                    <button type="button" (click)="editSubZone(i)">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <!-- Buttons -->
+
+                    <div class="text-right mt-3 wizardBtns">
+                        <button class="btn btn-secondary me-2" (click)="prevStep()" [disabled]="currentStep === 1">
+                            {{'Previous' | translate}}
+                        </button>
+                        <button class="btn btn-primary me-2" (click)="nextStep()" [disabled]="currentStep === 4">
+                            {{'Next' | translate}}
+                        </button>
+                        <button class="btn btn-success" [disabled]="currentStep < 4"
+                            (click)="SubmitCompleteApplication()">{{'Submit' | translate}}</button>
+                    </div>
+
+                    <!-- <h4 class="sectionHeading">Roles Listing:</h4> -->
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="buildingDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row py-2 border-bottom border-dashed">
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Code' | translate}}</div>
+                                <div class="text-secondary small">{{selectedBuildingForDeteal.U_Code}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Name' | translate}}</div>
+                                <div class="text-secondary small">{{selectedBuildingForDeteal.Name}}</div>
+                            </div>
+
+                        </div>
+                        <div class="row py-2 border-bottom border-dashed">
+                            <nav class="customTab">
+                                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" (click)="switchTab('FloorDetail')"
+                                        [class.active]="activeTab === 'FloorDetail'">{{'Floors' | translate}}</a>
+                                    <a class="nav-item nav-link active" (click)="switchTab('PlotsDetail')"
+                                        [class.active]="activeTab === 'PlotsDetail'">{{'Plots' | translate}}</a>
+
+
+                                </div>
+                            </nav>
+                            <div class="tab-content w-100" id="nav-tabContent">
+                                <div class="tab-pane fade show active"
+                                    [ngClass]="{ active: activeTab === 'FloorDetail' }">
+                                    <div class="row">
+                                        <div class="col-md-8 dataTableDesign">
+                                            <table class="table align-middle table-striped mt-4">
+
+                                                <thead class="text-white">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th scope="col">{{'Code' | translate}}</th>
+                                                        <th scope="col">{{'Name' | translate}}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let p of selectedBuildingForDeteal.BuildingFloors; let i = index">
+                                                         <td>{{i+1}}</td>
+                                                        <td>{{p.U_FlrCode}}</td>
+                                                        <td>{{p.Name}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade show active"
+                                    [ngClass]="{ active: activeTab === 'PlotsDetail' }">
+                                    <div class="row">
+                                        <div class="col-md-12 dataTableDesign">
+                                            <table class="table align-middle table-striped mt-4">
+                                                <thead class="text-white">
+                                                    <tr>
+                                                        <!-- <th scope="col">Name</th> -->
+                                                         <th>#</th>
+                                                        <th scope="col">{{'Plot No'|translate}}</th>
+                                                        <th scope="col">{{'Plot Size'|translate}}</th>
+                                                        <th scope="col">{{'Plot Owner'|translate}}</th>
+                                                        <th scope="col">{{'Deed'|translate}}</th>
+                                                        <th scope="col">{{'Status'|translate}}</th>
+                                                        <th scope="col">{{'Acquisition Date'|translate}}</th>
+                                                        <th scope="col">{{'End Acquisition Date'|translate}}</th>
+
+                                                    </tr>
+                                                    <!-- Input row for adding new -->
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let p of selectedBuildingForDeteal.BuildingPropertyDetails; let i = index">
+                                                         <td>{{i+1}}</td>
+                                                        <!-- <td>{{p.Name}}</td> -->
+                                                        <td>{{p.U_PNo}}</td>
+                                                        <td>{{p.U_PSize}}</td>
+                                                        <td>{{p.U_POwner}}</td>
+                                                        <td>{{p.U_Deed}}</td>
+                                                        <td>
+                                                            {{ p.U_PStatus === 1 ? 'Owned' : p.U_PStatus === 2 ?
+                                                            'Leased/Rented' : '' }}
+                                                        </td>
+                                                        <td>{{p.U_AQSDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{p.U_AQEDate | date:'dd-MM-yyyy'}}</td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer btn-design">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">
+                            {{'Close' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

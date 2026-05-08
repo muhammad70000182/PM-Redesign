@@ -1,0 +1,36 @@
+.table-info {
+  background-color: #e9f5ff;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.table-light {
+  background-color: #f9f9f9;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.table-info:hover {
+  background-color: #d2ecff;
+}
+.card-header {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.table-info,
+.table-warning {
+  font-weight: bold;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.table-info:hover,
+.table-warning:hover {
+  background-color: #e0e0e0;
+}
+
+.card.card-user .table {
+    margin-bottom: 0;
+}

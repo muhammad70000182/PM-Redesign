@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <!-- <h4 class="sectionHeading">New Role:</h4> -->
+                <div class="sectionHeading">
+                    <h6 class="fw-bold text-primary mt-2">{{'Facility Master' | translate}}</h6>
+                </div>
+
+                <div class="table-responsive mt-2 dataTableDesign">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                      <table class="table table-striped align-middle" datatable
+                            [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                        
+                        <thead class="text-white">
+                          <tr>
+                            <th scope="col">{{'Code' | translate}}</th>
+                            <th scope="col">{{'Name' | translate}}</th>
+                            <th scope="col">{{'Action' | translate}}</th>
+                          </tr>
+                          <tr>
+                            <th>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{'Code' | translate}}"
+                                     formControlName="code"
+                                     [ngClass]="{ 'is-invalid': submitted && f['code'].errors }" />
+                              <app-validation-message [control]="f['code']" label="Code"
+                                                      [submitted]="submitted">
+                              </app-validation-message>
+                            </th>
+                            <th>
+                              <input type="text" class="form-control form-control-sm" placeholder="{{'Name' | translate}}"
+                                     formControlName="name"
+                                     [ngClass]="{ 'is-invalid': submitted && f['name'].errors }" />
+                              <app-validation-message [control]="f['Name']" label="Name"
+                                                      [submitted]="submitted">
+                              </app-validation-message>
+                            </th>
+                            <!-- <th>
+           <ng-select  formControlName="type"
+              [ngClass]="{ 'is-invalid': submitted && f['type'].errors }">
+              <ng-option *ngFor="let p of typesList" [value]="p">{{ p }}</ng-option>
+          </ng-select>
+          <app-validation-message [control]="f['type']" label="Type"
+              [submitted]="submitted"></app-validation-message>
+      </th>
+      <th>
+          <div class="form-check form-switch d-flex justify-content-center">
+              <input class="form-check-input" type="checkbox" formControlName="status" />
+          </div>
+      </th> -->
+                            <th class="action-btn">
+                              <button class="" type="submit">
+                                <i class="fa fa-plus"></i>
+                              </button>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let p of DataList; let i = index">
+                            <td>{{p.code}}</td>
+                            <td>{{p.name}}</td>
+                            <!-- <td>{{p.type}}</td>
+      <td>
+          <div class="form-check form-switch d-flex justify-content-center">
+              <input class="form-check-input" type="checkbox" [checked]="p.status" disabled />
+          </div>
+      </td> -->
+                            <td class="action-btn">
+                              <!-- <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> -->
+                              <!-- <input type="button" class="btn btn-info btn-sm" (click)="Update(p)"><i class="fa fa-edit"></i></button> -->
+                              <span class="" (click)="Update(p)"><i class="fa fa-edit"></i></span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

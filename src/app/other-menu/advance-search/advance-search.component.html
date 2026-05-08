@@ -1,0 +1,757 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div *ngIf="AllowedPermissions['canCreate']">
+                    <!-- <h4 class="sectionHeading">New Role:</h4> -->
+                    <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-2">{{'Unit Detail Search'|translate}}</h6>
+                    </div>
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div class="accordion adv-acc-design" id="DetailList">
+
+                            <!-- Project Search Section -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#ProjectSearch" aria-expanded="true"
+                                        aria-controls="ProjectSearch">
+                                        <span class="acc-icon"><i class="fas fa-project-diagram"></i></span>{{'Project
+                                        Search'|translate}}
+                                    </button>
+                                </h2>
+                                <div id="ProjectSearch" class="accordion-collapse collapse show"
+                                    data-bs-parent="#DetailList">
+                                    <div class="accordion-body">
+                                        <div class="row">
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Project'|translate}}</label>
+                                                <ng-select [items]="ProjectList" bindLabel="name" bindValue="id"
+                                                    (change)="onDropdownChange($event,'Project')"
+                                                    formControlName="project" placeholder="Select Project"></ng-select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Building'|translate}}</label>
+                                                <ng-select [items]="BuildingList" bindLabel="name" bindValue="id"
+                                                    (change)="onDropdownChange($event,'Building')"
+                                                    formControlName="building"
+                                                    placeholder="Select Building"></ng-select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Zone'|translate}}</label>
+                                                <ng-select [items]="ZoneList" bindLabel="name" bindValue="id"
+                                                    (change)="onDropdownChange($event,'Zone')" formControlName="zone"
+                                                    placeholder="Select Zone"></ng-select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Sub Zone'|translate}}</label>
+                                                <ng-select [items]="SubZoneList" bindLabel="name" bindValue="id"
+                                                    formControlName="subZone" placeholder="Select Sub Zone"></ng-select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Property Item Type'|translate}}</label>
+                                                <ng-select [items]="PropertyTypeList" bindLabel="name" bindValue="code"
+                                                    formControlName="propertyItemType"
+                                                    placeholder="Select Property Type"></ng-select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Unit Category'|translate}}</label>
+                                                <ng-select [items]="UnitCategoriesList" bindLabel="name"
+                                                    bindValue="u_Code" formControlName="unitCategory"
+                                                    placeholder="Select Property Type"></ng-select>
+                                            </div>
+
+                                            <!-- <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Property Status'|translate}}</label>
+                                                <select class="form-select" formControlName="propertyStatus">
+                                                    <option value="">Select</option>
+                                                    <option value="Available">Available</option>unitCategory
+                                                    <option value="Sold">Sold</option>
+                                                </select>
+                                            </div> -->
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Property Status'|translate}}</label>
+                                                <ng-select [items]="PropertyStatuses" bindLabel="name" bindValue="code"
+                                                    formControlName="propertyStatus"
+                                                    placeholder="Select Property Type"></ng-select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Floor'|translate}}</label>
+                                                <ng-select [items]="FloorList" bindLabel="name" bindValue="code"
+                                                    formControlName="floor" placeholder="Select Floor"></ng-select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Facing'|translate}}</label>
+                                                <ng-select [items]="FacingList" bindLabel="name" bindValue="code"
+                                                    formControlName="facingCode"
+                                                    placeholder="Select Facing"></ng-select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'Region'|translate}}</label>
+                                                <ng-select [items]="RegionList" bindLabel="name" bindValue="code"
+                                                    formControlName="region" placeholder="Select Region"></ng-select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'District'|translate}}</label>
+                                                <ng-select [items]="DistrictList" bindLabel="name" bindValue="code"
+                                                    formControlName="district"
+                                                    placeholder="Select District"></ng-select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label">{{'City'|translate}}</label>
+                                                <ng-select [items]="CityList" bindLabel="name" bindValue="code"
+                                                    formControlName="city" placeholder="Select City"></ng-select>
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Facilities Section -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#FacilitiesSearch" aria-expanded="false"
+                                        aria-controls="FacilitiesSearch">
+                                        <span class="acc-icon"><i
+                                                class="fa-solid fa-building"></i></span>{{'Facilities'|translate}}
+                                    </button>
+                                </h2>
+                                <div id="FacilitiesSearch" class="accordion-collapse collapse"
+                                    data-bs-parent="#DetailList">
+                                    <div class="accordion-body">
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_Electricity" id="U_Electricity">
+                                                    <label class="form-check-label" for="U_Electricity">{{'Electricity'
+                                                        | translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_Water" id="U_Water">
+                                                    <label class="form-check-label" for="U_Water">{{'Water' |
+                                                        translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_Gas" id="U_Gas">
+                                                    <label class="form-check-label" for="U_Gas">{{'Gas' |
+                                                        translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_Furnished" id="U_Furnished">
+                                                    <label class="form-check-label" for="U_Furnished">{{'Furnished' |
+                                                        translate}}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_Basement" id="U_Basement">
+                                                    <label class="form-check-label" for="U_Basement">{{'Basement' |
+                                                        translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_SwmPool" id="U_SwmPool">
+                                                    <label class="form-check-label" for="U_SwmPool">{{'Swimming Pool' |
+                                                        translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_AC" id="U_AC">
+                                                    <label class="form-check-label" for="U_AC">{{'Air Conditioning' |
+                                                        translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_FullKitchen" id="U_FullKitchen">
+                                                    <label class="form-check-label" for="U_FullKitchen">{{'Full Kitchen'
+                                                        | translate}}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_Elevator" id="U_Elevator">
+                                                    <label class="form-check-label" for="U_Elevator">{{'Elevator' |
+                                                        translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_OpenSpace" id="U_OpenSpace">
+                                                    <label class="form-check-label" for="U_OpenSpace">{{'Open Space' |
+                                                        translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_Garden" id="U_Garden">
+                                                    <label class="form-check-label" for="U_Garden">{{'Garden' |
+                                                        translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="U_NearbyPark" id="U_NearbyPark">
+                                                    <label class="form-check-label" for="U_NearbyPark">{{'Nearby Park' |
+                                                        translate}}</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- <div class="row">
+
+                                            <div class="col-md-4">
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="electricity" id="electricity">
+                                                    <label class="form-check-label"
+                                                        for="electricity">{{'Electricity'|translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="water" id="water">
+                                                    <label class="form-check-label"
+                                                        for="water">{{'Water'|translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="gas" id="gas">
+                                                    <label class="form-check-label"
+                                                        for="gas">{{'Gas'|translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="furnished" id="furnished">
+                                                    <label class="form-check-label"
+                                                        for="furnished">{{'Furnished'|translate}}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="basement" id="basement">
+                                                    <label class="form-check-label"
+                                                        for="basement">{{'Basement'|translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="swimmingPool" id="swimmingPool">
+                                                    <label class="form-check-label" for="swimmingPool">{{'Swimming
+                                                        Pool'|translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" formControlName="ac"
+                                                        id="ac">
+                                                    <label class="form-check-label" for="ac">{{'Air
+                                                        Conditioning'|translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="fullKitchen" id="fullKitchen">
+                                                    <label class="form-check-label" for="fullKitchen">{{'Full
+                                                        Kitchen'|translate}}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="elevator" id="elevator">
+                                                    <label class="form-check-label"
+                                                        for="elevator">{{'Elevator'|translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="openSpace" id="openSpace">
+                                                    <label class="form-check-label" for="openSpace">{{'Open
+                                                        Space'|translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="garden" id="garden">
+                                                    <label class="form-check-label"
+                                                        for="garden">{{'Garden'|translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        formControlName="nearbyPark" id="nearbyPark">
+                                                    <label class="form-check-label" for="nearbyPark">{{'Near By
+                                                        Park'|translate}}</label>
+                                                </div>
+                                            </div>
+
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Other Section -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#OtherSearch" aria-expanded="false" aria-controls="OtherSearch">
+                                        <span class="acc-icon"><i class="fa-solid fa-list"></i></span>
+                                        {{'Other'|translate}}
+                                    </button>
+                                </h2>
+                                <div id="OtherSearch" class="accordion-collapse collapse" data-bs-parent="#DetailList">
+                                    <div class="accordion-body">
+                                        <div class="row">
+
+                                            <!-- Example: Bedrooms -->
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Bedrooms'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromBedrooms" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toBedrooms" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                            <!-- Repeat for other numeric ranges -->
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Other Rooms'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromOtherRooms" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toOtherRooms" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Washrooms'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromWashRooms" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toWashRooms" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Parkings'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromParkings" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toParkings" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Servant Quarter'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromServantQuarter" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toServantQuarter" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Unit Size SQM'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromUnitSizeSQM" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toUnitSizeSQM" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Annual Rent SQM'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromAnnualRentSQM" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toAnnualRentSQM" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Total Rent/Year'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromTotalRentPerYear" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toTotalRentPerYear" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Property Age'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromPropertyAge" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toPropertyAge" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">{{'Last Renovated'|translate}}</label>
+                                                <div class="d-flex">
+                                                    <input type="number" class="form-control me-1"
+                                                        formControlName="fromLastRenovated" placeholder="From">
+                                                    <input type="number" class="form-control"
+                                                        formControlName="toLastRenovated" placeholder="To">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                            <div class="btn-group btn-design">
+                                <button class="btn btn-success" type="submit">
+                                    <i class="fa fa-save"></i> <span> {{'Search'|translate}}</span>
+                                </button>
+                                <button class="btn btn-danger" type="button" (click)="clearForm()">
+                                    <i class="fa fa-times"></i> <span> {{'Clear'|translate}}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                    <!-- <h4 class="sectionHeading">Roles Listing:</h4> -->
+                </div>
+
+                <div *ngIf="AllowedPermissions['canView'] ">
+                    <div class="dataTableDesign mt-4">
+                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+
+                            <!-- <thead>
+                                <tr>
+                                    <th>Item Code</th>
+                                    <th>Item Name</th>
+                                    <th>Project Code</th>
+                                    <th>Project Name</th>
+                                    <th>Building Code</th>
+                                    <th>Building Name</th>
+                                    <th>Zone Code</th>
+                                    <th>Zone Name</th>
+                                    <th>Sub Zone Name</th>
+                                    <th>Floor Code</th>
+                                    <th>Floor Name</th>
+                                    <th>Unit Detail ID</th>
+                                    <th>Unit Detail Name</th>
+                                    <th>Facing Code</th>
+                                    <th>Facing Name</th>
+                                    <th>Unit Category Code</th>
+                                    <th>Unit Category Name</th>
+                                    <th>Associated Parking</th>
+                                    <th>Assoc Parking No</th>
+                                    <th>Assigned To BP</th>
+                                    <th>Unit Size SQM</th>
+                                    <th>Annual Rent SQM</th>
+                                    <th>Total Rent Per Year</th>
+                                    <th>Total Sales Price</th>
+                                    <th>Sales Price SQM</th>
+                                    <th>Maintenance Cost SQM</th>
+                                    <th>Infrastructure Cost SQM</th>
+                                    <th>Utility Item</th>
+                                    <th>Property Item</th>
+                                    <th>Items Group Code</th>
+                                    <th>Commission %</th>
+                                    <th>Max Discount</th>
+                                    <th>Commission Expense</th>
+                                    <th>PrRecCl</th>
+                                    <th>PrUnRCl</th>
+                                    <th>Security Deposit</th>
+                                    <th>Withheld Rate</th>
+                                    <th>SQ M Calc</th>
+                                    <th>G Date</th>
+                                    <th>Project ID</th>
+                                    <th>Building ID</th>
+                                    <th>Sub Section ID</th>
+                                    <th>Sec Zone ID</th>
+                                    <th>Floor ID</th>
+                                    <th>Facing ID</th>
+                                    <th>District</th>
+                                    <th>Region</th>
+                                    <th>City</th>
+                                    <th>Property Status</th>
+                                    <th>Property Item Type</th>
+                                    <th>Unit Category ID</th>
+                                    <th>Unit Size SQM </th>
+                                    <th>Annual Rent SQM </th>
+                                    <th>Total Rent Per Year </th>
+                                    <th>Last Renovated</th>
+                                    <th>Electricity</th>
+                                    <th>Water</th>
+                                    <th>Gas</th>
+                                    <th>Furnished</th>
+                                    <th>Basement</th>
+                                    <th>Swimming Pool</th>
+                                    <th>AC</th>
+                                    <th>Full Kitchen</th>
+                                    <th>Elevator</th>
+                                    <th>Open Space</th>
+                                    <th>Garden</th>
+                                    <th>Nearby Park</th>
+                                    <th>Bedrooms</th>
+                                    <th>Other Rooms</th>
+                                    <th>Washrooms</th>
+                                    <th>Parkings</th>
+                                    <th>Servant Quarter</th>
+                                    <th>Construction Year</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let p of projectlist">
+                                    <td>{{ p.itemCode }}</td>
+                                    <td>{{ p.itemName }}</td>
+                                    <td>{{ p.projectCode }}</td>
+                                    <td>{{ p.projectName }}</td>
+                                    <td>{{ p.buildingCode }}</td>
+                                    <td>{{ p.buildingName }}</td>
+                                    <td>{{ p.secZoneCode }}</td>
+                                    <td>{{ p.secZoneName }}</td>
+                                    <td>{{ p.subZoneName }}</td>
+                                    <td>{{ p.floorCode }}</td>
+                                    <td>{{ p.floorName }}</td>
+                                    <td>{{ p.unitDetailID }}</td>
+                                    <td>{{ p.unitDetailName }}</td>
+                                    <td>{{ p.facingCode }}</td>
+                                    <td>{{ p.facingName }}</td>
+                                    <td>{{ p.unitCategoryCode }}</td>
+                                    <td>{{ p.unitCategoryName }}</td>
+                                    <td>{{ p.associatedParking }}</td>
+                                    <td>{{ p.assocParkingNo }}</td>
+                                    <td>{{ p.assignedToBP }}</td>
+                                    <td>{{ p.unitSizeSQM }}</td>
+                                    <td>{{ p.annualRentSQM }}</td>
+                                    <td>{{ p.totalRentPerYear }}</td>
+                                    <td>{{ p.totalSalesPrice }}</td>
+                                    <td>{{ p.salesPriceSQM }}</td>
+                                    <td>{{ p.maintenanceCostSQM }}</td>
+                                    <td>{{ p.infrastructureCostSQM }}</td>
+                                    <td>{{ p.utilityItem }}</td>
+                                    <td>{{ p.propertyItem }}</td>
+                                    <td>{{ p.itmsGrpCod }}</td>
+                                    <td>{{ p.commisPcnt }}</td>
+                                    <td>{{ p.u_MaxDisc }}</td>
+                                    <td>{{ p.u_CommExp }}</td>
+                                    <td>{{ p.u_PrRecCl }}</td>
+                                    <td>{{ p.u_PrUnRCl }}</td>
+                                    <td>{{ p.u_SecDeposit }}</td>
+                                    <td>{{ p.u_WithheldRt }}</td>
+                                    <td>{{ p.u_SQMCalc }}</td>
+                                    <td>{{ p.u_GDate }}</td>
+                                    <td>{{ p.projectID }}</td>
+                                    <td>{{ p.buildingID }}</td>
+                                    <td>{{ p.subSectionID }}</td>
+                                    <td>{{ p.secZoneID }}</td>
+                                    <td>{{ p.floorID }}</td>
+                                    <td>{{ p.facingID }}</td>
+                                    <td>{{ p.district }}</td>
+                                    <td>{{ p.region }}</td>
+                                    <td>{{ p.city }}</td>
+                                    <td>{{ p.propertyStatus }}</td>
+                                    <td>{{ p.u_PropertyItemType }}</td>
+                                    <td>{{ p.unitCategoryID }}</td>
+                                    <td>{{ p.u_UnitSizeSQM }}</td>
+                                    <td>{{ p.u_AnnualRentSQM }}</td>
+                                    <td>{{ p.u_TotalRentPerYear }}</td>
+                                    <td>{{ p.u_LastRenDt }}</td>
+                                    <td>{{ p.u_Electricity }}</td>
+                                    <td>{{ p.u_Water }}</td>
+                                    <td>{{ p.u_Gas }}</td>
+                                    <td>{{ p.u_Furnished }}</td>
+                                    <td>{{ p.u_Basement }}</td>
+                                    <td>{{ p.u_SwmPool }}</td>
+                                    <td>{{ p.u_AC }}</td>
+                                    <td>{{ p.u_FullKitchen }}</td>
+                                    <td>{{ p.u_Elevator }}</td>
+                                    <td>{{ p.u_OpenSpace }}</td>
+                                    <td>{{ p.u_Garden }}</td>
+                                    <td>{{ p.u_NearbyPark }}</td>
+                                    <td>{{ p.u_Bedrooms }}</td>
+                                    <td>{{ p.u_OtherRooms }}</td>
+                                    <td>{{ p.u_WashRooms }}</td>
+                                    <td>{{ p.u_Parkings }}</td>
+                                    <td>{{ p.u_SrvQuarter }}</td>
+                                    <td>{{ p.u_ConstYear }}</td>
+                                </tr>
+                            </tbody> -->
+                            <thead>
+                                <tr>
+                                    <th>Item Code</th>
+                                    <th>Item Name</th>
+                                    <th>Project Code</th>
+                                    <th>Project Name</th>
+                                    <th>Building Code</th>
+                                    <th>Building Name</th>
+                                    <th>Zone Code</th>
+                                    <th>Zone Name</th>
+                                    <th>Sub Zone Name</th>
+                                    <th>Floor Code</th>
+                                    <th>Floor Name</th>
+                                    <th>Unit Detail Name</th>
+                                    <th>Facing Code</th>
+                                    <th>Facing Name</th>
+                                    <th>Unit Category Code</th>
+                                    <th>Unit Category Name</th>
+                                    <th>Associated Parking</th>
+                                    <th>Assoc Parking No</th>
+                                    <th>Assigned To BP</th>
+                                    <th>Unit Size SQM</th>
+                                    <th>Annual Rent SQM</th>
+                                    <th>Total Rent Per Year</th>
+                                    <th>Total Sales Price</th>
+                                    <th>Sales Price SQM</th>
+                                    <th>Maintenance Cost SQM</th>
+                                    <th>Infrastructure Cost SQM</th>
+                                    <th>Utility Item</th>
+                                    <th>Property Item</th>
+                                    <th>Items Group Code</th>
+                                    <th>Commission %</th>
+                                    <th>Max Discount</th>
+                                    <th>Commission Expense</th>
+                                    <th>PrRecCl</th>
+                                    <th>PrUnRCl</th>
+                                    <th>Security Deposit</th>
+                                    <th>Withheld Rate</th>
+                                    <th>SQ M Calc</th>
+                                    <th>G Date</th>
+                                    <th>District</th>
+                                    <th>Region</th>
+                                    <th>City</th>
+                                    <th>Property Status</th>
+                                    <th>Property Item Type</th>
+                                    <th>Unit Size SQM </th>
+                                    <th>Annual Rent SQM </th>
+                                    <th>Total Rent Per Year </th>
+                                    <th>Last Renovated</th>
+                                    <th>Electricity</th>
+                                    <th>Water</th>
+                                    <th>Gas</th>
+                                    <th>Furnished</th>
+                                    <th>Basement</th>
+                                    <th>Swimming Pool</th>
+                                    <th>AC</th>
+                                    <th>Full Kitchen</th>
+                                    <th>Elevator</th>
+                                    <th>Open Space</th>
+                                    <th>Garden</th>
+                                    <th>Nearby Park</th>
+                                    <th>Bedrooms</th>
+                                    <th>Other Rooms</th>
+                                    <th>Washrooms</th>
+                                    <th>Parkings</th>
+                                    <th>Servant Quarter</th>
+                                    <th>Construction Year</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let p of projectlist">
+                                    <td>{{ p.itemCode }}</td>
+                                    <td>{{ p.itemName }}</td>
+                                    <td>{{ p.projectCode }}</td>
+                                    <td>{{ p.projectName }}</td>
+                                    <td>{{ p.buildingCode }}</td>
+                                    <td>{{ p.buildingName }}</td>
+                                    <td>{{ p.secZoneCode }}</td>
+                                    <td>{{ p.secZoneName }}</td>
+                                    <td>{{ p.subZoneName }}</td>
+                                    <td>{{ p.floorCode }}</td>
+                                    <td>{{ p.floorName }}</td>
+                                    <td>{{ p.unitDetailName }}</td>
+                                    <td>{{ p.facingCode }}</td>
+                                    <td>{{ p.facingName }}</td>
+                                    <td>{{ p.unitCategoryCode }}</td>
+                                    <td>{{ p.unitCategoryName }}</td>
+                                    <td>{{ p.associatedParking }}</td>
+                                    <td>{{ p.assocParkingNo }}</td>
+                                    <td>{{ p.assignedToBP }}</td>
+                                    <td>{{ p.unitSizeSQM }}</td>
+                                    <td>{{ p.annualRentSQM }}</td>
+                                    <td>{{ p.totalRentPerYear }}</td>
+                                    <td>{{ p.totalSalesPrice }}</td>
+                                    <td>{{ p.salesPriceSQM }}</td>
+                                    <td>{{ p.maintenanceCostSQM }}</td>
+                                    <td>{{ p.infrastructureCostSQM }}</td>
+                                    <td>{{ p.utilityItem }}</td>
+                                    <td>{{ p.propertyItem }}</td>
+                                    <td>{{ p.itmsGrpCod }}</td>
+                                    <td>{{ p.commisPcnt }}</td>
+                                    <td>{{ p.u_MaxDisc }}</td>
+                                    <td>{{ p.u_CommExp }}</td>
+                                    <td>{{ p.u_PrRecCl }}</td>
+                                    <td>{{ p.u_PrUnRCl }}</td>
+                                    <td>{{ p.u_SecDeposit }}</td>
+                                    <td>{{ p.u_WithheldRt }}</td>
+                                    <td>{{ p.u_SQMCalc }}</td>
+                                    <td>{{ p.u_GDate }}</td>
+                                    <td>{{ p.district }}</td>
+                                    <td>{{ p.region }}</td>
+                                    <td>{{ p.city }}</td>
+                                    <td>{{ p.propertyStatus }}</td>
+                                    <td>{{ p.u_PropertyItemType }}</td>
+                                    <td>{{ p.u_UnitSizeSQM }}</td>
+                                    <td>{{ p.u_AnnualRentSQM }}</td>
+                                    <td>{{ p.u_TotalRentPerYear }}</td>
+                                    <td>{{ p.u_LastRenDt }}</td>
+                                    <td>{{ p.u_Electricity }}</td>
+                                    <td>{{ p.u_Water }}</td>
+                                    <td>{{ p.u_Gas }}</td>
+                                    <td>{{ p.u_Furnished }}</td>
+                                    <td>{{ p.u_Basement }}</td>
+                                    <td>{{ p.u_SwmPool }}</td>
+                                    <td>{{ p.u_AC }}</td>
+                                    <td>{{ p.u_FullKitchen }}</td>
+                                    <td>{{ p.u_Elevator }}</td>
+                                    <td>{{ p.u_OpenSpace }}</td>
+                                    <td>{{ p.u_Garden }}</td>
+                                    <td>{{ p.u_NearbyPark }}</td>
+                                    <td>{{ p.u_Bedrooms }}</td>
+                                    <td>{{ p.u_OtherRooms }}</td>
+                                    <td>{{ p.u_WashRooms }}</td>
+                                    <td>{{ p.u_Parkings }}</td>
+                                    <td>{{ p.u_SrvQuarter }}</td>
+                                    <td>{{ p.u_ConstYear }}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

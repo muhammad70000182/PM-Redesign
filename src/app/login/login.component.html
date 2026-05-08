@@ -1,0 +1,277 @@
+<div class="bg-white min-vh-100" style="overflow: hidden;">
+  <div class="login-wrapper">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-lg-4">
+        <div class="login-form-card">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="">
+            <div class="form-content">
+              <div class="barnd-logo">
+                <img src="../../assets/images/company-logo.png" alt="/">
+              </div>
+              <div class="form-group">
+                <label>Your Email</label>
+                <input type="text" class="form-control" formControlName="UserCode" autocomplete="UserCode"
+                  placeholder="Your Email" [ngClass]="{ 'is-invalid': submitted && f['UserCode'].errors }">
+                <div *ngIf="submitted && f['UserCode'].errors" class="invalid-feedback">
+                  <div *ngIf="f['UserCode'].errors['required']">
+                    {{'User Code is required'}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" formControlName="Password" autocomplete="Password"
+                  placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f['Password'].errors }">
+                <div *ngIf="submitted && f['Password'].errors" class="invalid-feedback">
+                  <div *ngIf="f['Password'].errors['required']">
+                    {{'Password is required'}}
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="forgot-pass">
+                <a (click)="showForgotPasswordModal()">Forgot Password?</a>
+              </div>
+              <div class="form-btns">
+                <!-- <button class="btn btn-success">Login</button> -->
+
+                <button type="submit" [disabled]="loading" class="btn btn-success">
+                  <i *ngIf="loading" class="fa fa-spinner fa-spin"></i> Login
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="forgotPasswordModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{'Forgot Password' | translate}}</h5>
+          <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+        </div>
+        <div class="modal-body">
+          <div class="send-email-otp" *ngIf="SendOTPSection">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col col-lg-12 mb-4 mb-lg-0">
+                <div class="content-section">
+                  <div class="modal-logo">
+                    <img src="../../assets/images/fg-logo.png" alt="/">
+                  </div>
+                  <div class="text-area">
+                    <p>Password Recovery</p>
+                    <h2>Forgot your password?</h2>
+                    <p>Kindly enter the email address linked to this account and we will send you a code to enable you
+                      change your password.</p>
+                  </div>
+                  <div class="row">
+                    <form [formGroup]="SendOTPform">
+                      <div class="col-md-12">
+                        <label>Email Address</label>
+                        <c-input-group class="mb-2">
+                          <input type="text" class="form-control" formControlName="Email" autocomplete="Email"
+                            placeholder="Your Email"
+                            [ngClass]="{ 'is-invalid': Forgotsubmitted && SendOTP['Email'].errors }">
+                          <div *ngIf="Forgotsubmitted && SendOTP['Email'].errors" class="invalid-feedback">
+                            <div *ngIf="SendOTP['Email'].errors['required']">
+                              {{'Email is required'}}
+                            </div>
+                            <div *ngIf="SendOTP['Email'].errors['pattern']">
+                              {{'Email is not valid'}}
+                            </div>
+                          </div>
+
+                        </c-input-group>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="Verfiy-confirm-password" *ngIf="OtpVerificationSection">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col col-lg-12 mb-4 mb-lg-0">
+                <div class="content-section">
+                  <div class="modal-logo">
+                    <img src="../../assets/images/fg-logo.png" alt="/">
+                  </div>
+                  <div class="text-area">
+                    <p>Password Recovery</p>
+                    <h2>OTP Verification</h2>
+                    <p>Kindly enter the 6 digit code that has been sent to your email address.</p>
+                    <p>
+
+                      <span style="color: red;">
+                        * OTP will expire in 5 minutes.
+                      </span>
+                    </p>
+                  </div>
+                  <form [formGroup]="otpVerificationFrom">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="inputs-controls">
+                          <input id="d1" type="text" maxlength="1" class="form-control" formControlName="Digit1" #d1
+                            (input)="moveToNext($event, d2)" (paste)="handlePaste($event)"
+                            [ngClass]="{ 'is-invalid': otpSubmitted && otp['Digit1'].errors }" />
+
+                          <input id="d2" type="text" maxlength="1" class="form-control" formControlName="Digit2" #d2
+                            (input)="moveToNext($event, d3)"
+                            [ngClass]="{ 'is-invalid': otpSubmitted && otp['Digit2'].errors }" />
+
+                          <input id="d3" type="text" maxlength="1" class="form-control" formControlName="Digit3" #d3
+                            (input)="moveToNext($event, d4)"
+                            [ngClass]="{ 'is-invalid': otpSubmitted && otp['Digit3'].errors }" />
+
+                          <input id="d4" type="text" maxlength="1" class="form-control" formControlName="Digit4" #d4
+                            (input)="moveToNext($event, d5)"
+                            [ngClass]="{ 'is-invalid': otpSubmitted && otp['Digit4'].errors }" />
+
+                          <input id="d5" type="text" maxlength="1" class="form-control" formControlName="Digit5" #d5
+                            (input)="moveToNext($event, d6)"
+                            [ngClass]="{ 'is-invalid': otpSubmitted && otp['Digit5'].errors }" />
+
+                          <input id="d6" type="text" maxlength="1" class="form-control" formControlName="Digit6" #d6
+                            (input)="moveToNext($event, null)"
+                            [ngClass]="{ 'is-invalid': otpSubmitted && otp['Digit6'].errors }" />
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="Verfiy-confirm-password" *ngIf="ConfirmPasswordSection">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col col-lg-12 mb-4 mb-lg-0">
+                <div class="content-section">
+                  <div class="modal-logo">
+                    <img src="../../assets/images/fg-logo.png" alt="/">
+                  </div>
+                  <div class="text-area">
+                    <p>Password Recovery</p>
+                    <h2>Reset Password</h2>
+                    <p>Great! Your code is verified. Just one more step—enter a new password to finish resetting your
+                      account.</p>
+
+                  </div>
+                  <form [formGroup]="resetPasswordForm">
+                    <div class="row mt-4">
+                      <div class="col-md-12">
+                        <label>New Password <span class="colorRed">*</span></label>
+                        <c-input-group class="mb-2 forgot-pss">
+                          <input [type]="showPasswordConfirm ? 'text' : 'password'" class="form-control"
+                            placeholder="New Password" formControlName="NewPassword" maxlength="50"
+                            [ngClass]="{ 'is-invalid': Resetsubmitted && reset['NewPassword'].errors }">
+                          <!-- Eye Icon -->
+                          <i class="fa" [ngClass]="showPasswordConfirm ? 'fa-eye-slash' : 'fa-eye'"
+                            (click)="showPasswordConfirm = !showPasswordConfirm"
+                            style="position: absolute; top: 10px;z-index: 9999; right: 10px; cursor: pointer; color: black;"></i>
+
+                          <div *ngIf="Resetsubmitted && reset['NewPassword'].errors" class="invalid-feedback">
+                            <div *ngIf="reset['NewPassword'].errors['required']">New Password is required</div>
+                            <div *ngIf="reset['NewPassword'].errors['maxlength']">Maximum 50 characters allowed</div>
+                            <div *ngIf="reset['NewPassword'].errors['passwordMismatch']">Passwords do not match</div>
+                            <div *ngIf="reset['NewPassword'].errors['pattern']">
+                              Password must be at least 8 characters and contain at least one uppercase letter, one
+                              lowercase letter, one number, and one special character.
+                            </div>
+                          </div>
+                          <!-- <i class="fa-solid forgot-eye-icon"
+                            [ngClass]="showPasswordConfirm ? 'fa-eye-slash' : 'fa-eye'"
+                            (click)="showPasswordConfirm = !showPasswordConfirm">
+                          </i> -->
+
+                        </c-input-group>
+                      </div>
+                      <div class="col-md-12">
+                        <label>Confirm Password<span class="colorRed">*</span></label>
+                        <c-input-group class="mb-2 position-relative sign-up-field">
+                          <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control"
+                            placeholder="Confirm Password" formControlName="ConfirmPassword" maxlength="50"
+                            [ngClass]="{ 'is-invalid': Resetsubmitted && reset['ConfirmPassword'].errors }">
+
+                          <!-- Eye Icon -->
+                          <i class="fa" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"
+                            (click)="showConfirmPassword = !showConfirmPassword"
+                            style="position: absolute; top: 10px;z-index: 9999; right: 10px; cursor: pointer; color: black;"></i>
+
+                          <div *ngIf="Resetsubmitted && reset['ConfirmPassword'].errors" class="invalid-feedback">
+                            <div *ngIf="reset['ConfirmPassword'].errors['required']">Confirm Password is required</div>
+                            <div *ngIf="reset['ConfirmPassword'].errors['maxlength']">Maximum 50 characters allowed
+                            </div>
+                            <div *ngIf="reset['ConfirmPassword'].errors['passwordMismatch']">Passwords do not match
+                            </div>
+                          </div>
+                        </c-input-group>
+                      </div>
+
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer btn-design forgot-btn">
+          <button *ngIf="OtpVerificationSection" type="button" class="btn btn-success" (click)="VerifyOtp()">
+            <i class="fa fa-spinner fa-spin"></i> Verify OTP
+          </button>
+          <button *ngIf="ConfirmPasswordSection" type="button" class="btn btn-success" (click)="ResetPassword()">
+            <i class="fa fa-spinner fa-spin"></i> Change Password
+          </button>
+          <button *ngIf="SendOTPSection" type="button" class="btn btn-success" (click)="SendOTPFormSubmit()"
+            [disabled]="sendOtpLoader">
+            <i *ngIf="sendOtpLoader" class="fa fa-spinner fa-spin"></i>Send OTP
+          </button>
+
+        </div>
+      </div>
+    </div>
+    <!--Show Detail Modal End-->
+  </div>
+  <div class="modal fade" id="congratulationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-12 mb-4 mb-lg-0">
+              <div class="succ-img">
+                <img src="../../assets/images/succ-img.png" alt="/">
+              </div>
+              <div class="success-modal-content">
+                <h2>Congratulations</h2>
+                <p>You have successfully changed your password.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer btn-design">
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">
+            Back to Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,225 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="dealerName" class="form-label">{{'Role' | translate}}<span class="colorRed">*</span> </label>
+                        <ng-select [(ngModel)]="modelRoleId" (change)="GetAssignPermissionsList($event)">
+                            <ng-option *ngFor="let car of RolesList" [value]="car.id">{{car.roleName}}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+                <div class="table-responsive">
+                    <!-- <h4 class="sectionHeading" *ngIf="groupedAssignedPermissions.length > 0">Assigned Permissions</h4> -->
+                    <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-4" *ngIf="groupedAssignedPermissions.length > 0">{{'Assigned Permissions' | translate}}</h6>
+                    </div>
+
+                    <div class="card mb-4" *ngIf="groupedAssignedPermissions.length > 0">
+                        <div class="card-body p-0 dataTableDesign table-responsive">
+                            <table class="table table-striped ">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>{{'Assign'|translate}}</th>
+                                        <th>{{'Parent'|translate}}</th>
+                                        <th>{{'Title'|translate}}</th>
+                                        <th>{{'Url'|translate}}</th>
+                                        <th>{{'Create'|translate}}</th>
+                                        <th>{{'Update'|translate}}</th>
+                                        <th>{{'Delete'|translate}}</th>
+                                        <th>{{'View'|translate}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let group of groupedAssignedPermissions; let i = index">
+                                        <!-- Accordion Header -->
+                                        <tr class="table-info" (click)="toggleAssignedParent(i)"
+                                            style="cursor: pointer;">
+                                            <td colspan="8">
+                                                <strong>{{ group.parrent }}</strong>
+                                                <span style="float: right;">{{ expandedAssignedParent === i ? '▼' : '▶'
+                                                    }}</span>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Group Items -->
+                                        <ng-container *ngIf="expandedAssignedParent === i">
+                                            <tr *ngFor="let p of group.items">
+                                                <td><input type="checkbox" [(ngModel)]="p.isAssign"
+                                                        (change)="onSelectChange(p)"></td>
+                                                <td>{{p.parrent}}</td>
+                                                <td>{{p.title}}</td>
+                                                <td>{{p.formUrl}}</td>
+                                                <td><input type="checkbox" [(ngModel)]="p.canCreate"></td>
+                                                <td><input type="checkbox" [(ngModel)]="p.canUpdate"></td>
+                                                <td><input type="checkbox" [(ngModel)]="p.canDelete"></td>
+                                                <td><input type="checkbox" [(ngModel)]="p.canView"></td>
+                                            </tr>
+                                        </ng-container>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- <h4 class="sectionHeading" *ngIf="groupedNotAssignedPermissions.length > 0">Not Assigned Permissions</h4> -->
+
+                    <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-4" *ngIf="groupedNotAssignedPermissions.length > 0">
+                          {{'Not Assigned Permissions' | translate}}  </h6>
+                    </div>
+
+                    <div class="card" *ngIf="groupedNotAssignedPermissions.length > 0">
+
+
+
+                        <div class="card-body p-0 dataTableDesign table-responsive">
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>{{'Assign'|translate}}</th>
+                                        <th>{{'Parent'|translate}}</th>
+                                        <th>{{'Title'|translate}}</th>
+                                        <th>{{'Url'|translate}}</th>
+                                        <th>{{'Create'|translate}}</th>
+                                        <th>{{'Update'|translate}}</th>
+                                        <th>{{'Delete'|translate}}</th>
+                                        <th>{{'View'|translate}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let group of groupedNotAssignedPermissions; let i = index">
+                                        <!-- Accordion Header -->
+                                        <tr class="table-info" (click)="toggleNotAssignedParent(i)"
+                                            style="cursor: pointer;">
+                                            <td colspan="8">
+                                                <strong>{{ group.parrent }}</strong>
+                                                <span style="float: right;">{{ expandedNotAssignedParent === i ? '▼' :
+                                                    '▶' }}</span>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Group Items -->
+                                        <ng-container *ngIf="expandedNotAssignedParent === i">
+                                            <tr *ngFor="let p of group.items">
+                                                <td><input type="checkbox" [(ngModel)]="p.isAssign"
+                                                        (change)="onSelectChange(p)"></td>
+                                                <td>{{p.parrent}}</td>
+                                                <td>{{p.title}}</td>
+                                                <td>{{p.formUrl}}</td>
+                                                <td><input type="checkbox" [(ngModel)]="p.canCreate"></td>
+                                                <td><input type="checkbox" [(ngModel)]="p.canUpdate"></td>
+                                                <td><input type="checkbox" [(ngModel)]="p.canDelete"></td>
+                                                <td><input type="checkbox" [(ngModel)]="p.canView"></td>
+                                            </tr>
+                                        </ng-container>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-4" *ngIf="groupedAssignedPermissions.length > 0">
+                       {{'Agreement Permissions' | translate}}     </h6>
+                    </div>
+                    <div class="row" *ngIf="groupedAssignedPermissions.length > 0">
+                        <div class="col-md-6">
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                        [(ngModel)]="PermissionsList.agreementPermissions.saleAgreement">
+                                    <label for="Description" class="form-label checkboxstyle">{{'Sale Agreement' | translate}}</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                        [(ngModel)]="PermissionsList.agreementPermissions.rentAgreement">
+                                    <label for="Description" class="form-label checkboxstyle">{{'Rent Agreement' | translate}}</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                        [(ngModel)]="PermissionsList.agreementPermissions.offPlanAgreement">
+                                    <label for="Description" class="form-label checkboxstyle">{{'Off Plan Agreement' | translate}}</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                        [(ngModel)]="PermissionsList.agreementPermissions.maintenanceAgreement">
+                                    <label for="Description" class="form-label checkboxstyle"> {{'Maintenance Agreement' | translate}}
+                                        </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                        [(ngModel)]="PermissionsList.agreementPermissions.agreementQuotation">
+                                    <label for="Description" class="form-label checkboxstyle">{{'Agreement Quotation' | translate}}
+                                        </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                        [(ngModel)]="PermissionsList.agreementPermissions.agreementAcceptence">
+                                    <label for="Description" class="form-label checkboxstyle"> {{'Agreement Acceptance' | translate}}
+                                        </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                        [(ngModel)]="PermissionsList.agreementPermissions.agreementCancelation">
+                                    <label for="Description" class="form-label checkboxstyle">{{'Agreement Cancelation' | translate}}
+                                        </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-4" *ngIf="groupedAssignedPermissions.length > 0"> {{'Proforma Invoice Permissions' | translate}}
+                           </h6>
+                    </div>
+                    <div class="row" *ngIf="groupedAssignedPermissions.length > 0">
+                        <div class="col-md-6">
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                        [(ngModel)]="PermissionsList.agreementPermissions.proforma_Cancelation">
+                                    <label for="Description" class="form-label checkboxstyle"> {{'Invoice Cancelation' | translate}}
+                                        </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                        [(ngModel)]="PermissionsList.agreementPermissions.proforma_DP_Permission">
+                                    <label for="Description" class="form-label checkboxstyle">{{'Create Downpayment' | translate}}</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="d-flex justify-content-end mt-4 gap-2">
+                        <div class="btn-group btn-design">
+                            <button class="btn btn-success" type="button" (click)="onSubmit()"><i
+                                    class="fa fa-save"></i><span>{{'Add' | translate}}</span></button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+{
+  "TITLE": "Welcome to Multilingual App",
+  "HELLO": "Hello, how are you?",
+  "WELCOME":"Welcome",
+  "Login":"Login",
+  "Forgot Password":"Forgot Password?",
+  "Password":"Password",
+  "FEATURES": {
+    "TITLE": "Features",
+    "ITEM1": "English and Arabic support",
+    "ITEM2": "Automatic RTL/LTR switching",
+    "ITEM3": "JSON-based translations"
+  },
+   "Agreement Type": "Agreement Type"
+  }

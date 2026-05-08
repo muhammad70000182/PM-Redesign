@@ -1,0 +1,141 @@
+.wizard-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.wizard-steps {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+.wizard-steps li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 30px 10px 40px; /* more space on left for text */
+  margin-right: 6px;
+  background: #fff;
+  border: 1px solid #ddd;
+  font-weight: 500;
+  color: #999;
+  transition: all 0.3s ease;
+
+  /* only right side angled */
+  /* clip-path: polygon(
+    0 0,
+    calc(100% - 15px) 0,
+    100% 50%,
+    calc(100% - 15px) 100%,
+    0 100%
+  ); */
+}
+
+/* Active Step */
+.wizard-steps li.active {
+  background: #0d6efd;
+  color: #fff;
+}
+
+.wizard-steps li.active .step-number {
+  background: #0d6efd;
+  color: #fff;
+}
+
+/* Completed Step */
+.wizard-steps li.completed {
+  color: #000;
+}
+
+.wizard-steps li.completed .step-number {
+  background: #28a745; /* green */
+  color: #fff;
+}
+
+/* Pending Step */
+.wizard-steps li.pending {
+  color: #999;
+}
+
+.wizard-steps li.pending .step-number {
+  background: #ccc; /* gray */
+  color: #fff;
+}
+
+/* Step Number Style */
+.step-number {
+  border-radius: 50%;
+  padding: 5px 10px;
+  margin-right: 8px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+
+.customWizardDesign .step-number{
+    border: 1px solid;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+}
+.customWizardDesign .active .step-number {
+    border: 1px solid;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+}
+
+.customWizardDesign li.right::after {
+    content: "";
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    right: -10px;
+    top: 4px;
+    background-color: white;
+    z-index: 150;
+    -webkit-transform: translate(10px, 4px) rotate(45deg);
+    -moz-transform: translate(10px,4px) rotate(45deg);
+    -ms-transform: translate(10px,4px) rotate(45deg);
+    -o-transform: translate(10px,4px) rotate(20deg);
+    transform: translate(10px, 4px) rotate(45deg);
+}
+.customWizardDesign li.active::after {
+    background-color: #0d6efd;
+}
+.customWizardDesign li.left::before {
+    content: '';
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    left: -9px;
+    top: 4px;
+    background-color: white;
+    z-index: 50;
+    -webkit-transform: translate(-10px, 4px) rotate(45deg);
+    -moz-transform: translate(-10px,4px) rotate(45deg);
+    -ms-transform: translate(-10px,4px) rotate(45deg);
+    -o-transform: translate(-10px,4px) rotate(20deg);
+    transform: translate(-10px, 4px) rotate(45deg);
+}
+.text-right{
+  text-align: right;
+}
+.wizardBtns .btn {
+    padding: 6px 15px;
+    border-radius: 6px;
+    color: #fff;
+}
+
+.wizardBtns .btn-secondary {
+    border: 1px solid #000000;
+    background: unset;
+    color: #000 !important;
+}

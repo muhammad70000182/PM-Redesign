@@ -1,0 +1,26 @@
+.readonly-mode input,
+.readonly-mode textarea,
+.readonly-mode select,
+.readonly-mode .mat-select {
+  pointer-events: none;
+  background-color: #f7f7f7;
+  color: #555;
+}
+
+.readonly-mode .mat-select-trigger {
+  color: #555 !important;
+}
+
+.readonly-mode [formarrayname="AgreementInstallments"] * {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  cursor: auto !important;
+}
+.readonly-mode .customized-edit * {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  cursor: auto !important;
+}
+.readonly-mode .customized-edit input {
+  background-color: white !important;
+}

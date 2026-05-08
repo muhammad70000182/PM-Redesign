@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                
+                <div *ngIf="AllowedPermissions['canView'] ">
+                    <div class="table-responsive dataTableDesign">
+                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'Code' | translate}}</th>
+                                    <th>{{'Name' | translate}}</th>
+                                    <!-- <th class="hidden">File</th> -->
+                                    <th>{{'Action' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of ReportsList; let i = index">
+                                     <td>{{i+1}}</td>
+                                    <td>{{ p.code }}</td>
+                                    <td>{{ p.name }}</td>
+                                    <!-- <td class="hidden">{{ p.fileURL }}</td> -->
+                                    <td>
+                                        <div class="action-btn">
+                                            
+                                            <span><i class="fa-solid fa-file-lines" (click)="openReport(p.rptURL)"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

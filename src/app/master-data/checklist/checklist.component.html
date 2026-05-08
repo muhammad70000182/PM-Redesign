@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <!-- <h4 class="sectionHeading">New Role:</h4> -->
+                <div class="sectionHeading">
+                    <h6 class="fw-bold text-primary mt-4">{{'Check List' | translate}}</h6>
+                </div>
+
+                <div class=" mt-2 dataTableDesign table-responsive">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <table class="table table-striped align-middle"  datatable
+                            [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead class="text-white">
+                                <tr>
+                                    <th scope="col">{{'Code'|translate}}</th>
+                                    <th scope="col">{{'Name'|translate}}</th>
+                                    <th scope="col">{{'Type'|translate}}</th>
+                                    <th scope="col">{{'Status'|translate}}</th>
+                                    <th scope="col">{{'Action'|translate}}</th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Code"
+                                            formControlName="code"
+                                            [ngClass]="{ 'is-invalid': submitted && f['code'].errors }" />
+                                        <app-validation-message [control]="f['code']" label="Code"
+                                            [submitted]="submitted">
+                                        </app-validation-message>
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control form-control-sm" placeholder="name"
+                                            formControlName="name"
+                                            [ngClass]="{ 'is-invalid': submitted && f['name'].errors }" />
+                                        <app-validation-message [control]="f['name']" label="Name"
+                                            [submitted]="submitted">
+                                        </app-validation-message>
+                                    </th>
+                                    <th>
+                                        <!-- <select class="form-select form-select-sm" formControlName="type">
+                                            <option value="" disabled selected>Type</option>
+                                            <option>Delivery check List</option>
+                                            <option>QA Review</option>
+                                            <option>Testing</option>
+                                        </select> -->
+                                        <ng-select aria-label="Default select example" formControlName="type">
+                                            <ng-option *ngFor="let car of CheckListMasterTypeListValues"
+                                                [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                                        </ng-select>
+                                        <app-validation-message [control]="f['type']" label="Type"
+                                            [submitted]="submitted"></app-validation-message>
+                                    </th>
+                                    <th>
+                                        <div class="form-check form-switch d-flex">
+                                            <input class="form-check-input" type="checkbox" formControlName="status" />
+                                        </div>
+                                    </th>
+                                    <th class="action-btn">
+                                        <button class="" type="submit">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of DataList; let i = index">
+                                    <td>{{p.code}}</td>
+                                    <td>{{p.name}}</td>
+                                    <td>{{p.type}}</td>
+                                    <td>
+                                        <div class="form-check form-switch d-flex">
+                                            <input class="form-check-input" type="checkbox" [checked]="p.status"
+                                                disabled />
+                                        </div>
+                                    </td>
+                                    <td class="action-btn">
+                                        <!-- <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> -->
+                                        <!-- <input type="button" class="btn btn-info btn-sm" (click)="Update(p)"><i class="fa fa-edit"></i></button> -->
+                                        <span class="" (click)="Update(p)"><i
+                                                class="fa fa-edit"></i></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

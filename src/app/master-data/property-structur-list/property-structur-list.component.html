@@ -1,0 +1,347 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div *ngIf="AllowedPermissions['canCreate']">
+                    <!-- <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-2">New SAP Setting</h6>
+                    </div> -->
+                </div>
+
+                <div *ngIf="AllowedPermissions['canView']">
+                    <div class="table-responsive dataTableDesign">
+                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'Code'|translate}}</th>
+                                    <th>{{'Name'|translate}}</th>
+                                    <th>{{'Create Date'|translate}}</th>
+                                    <th>{{'Action'|translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of ProjectsList; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{ p.u_Code }}</td>
+                                    <td>{{ p.name }}</td>
+                                    <td>{{ p.createdDate | date:GenericForma.DateFormate }}</td>
+                                    <td>
+                                        <div class="action-btn">
+                                            <span><i class="fa fa-edit" (click)="GetProjectDetail(p.id,true)"></i></span>
+                                            <!-- <span><i class="fa fa-trash" (click)="Delete(p)"></i></span> -->
+                                            <span class="" (click)="GetProjectDetail(p.id)">
+                                                <i class="fa fa-eye"></i>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <!-- HEADER -->
+                    <div class="modal-header dialog-head">
+                        <div class="w-100">
+                            <div class="row">
+                                <div class="sectionHeading">
+                                    <h6>{{'Project Details' | translate}} </h6>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <div class="small">{{'Project Code' | translate}} </div>
+                                    <div class="fw-semibold">{{ ProjectDetails?.u_Code }}</div>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <div class="small">{{'Project Name' | translate}} </div>
+                                    <div class="fw-semibold">{{ ProjectDetails?.name }}</div>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <div class="small">{{'Created Date' | translate}}</div>
+                                    <div class="fw-semibold">{{ ProjectDetails?.createdDate | date:
+                                        GenericForma.DateFormate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <!-- BODY -->
+                    <div class="modal-body detailPageDesign">
+
+                        <div class="accordion adv-acc-design" id="accordionProjects">
+                            <div class="accordion-item"
+                                *ngFor="let building of ProjectDetails?.buildings; let i = index">
+                                <h2 class="accordion-header" [id]="'heading' + i">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        [attr.data-bs-target]="'#collapse' + i" [attr.aria-controls]="'collapse' + i"
+                                        [attr.aria-expanded]="i === 0 ? 'true' : 'false'">
+                                        <label class="fw-semibold">{{'Building Code:' | translate}}</label>
+                                        <span class="small me-3">{{ building.u_Code }}</span>
+                                        <label class="fw-semibold">Building Name:</label>
+                                        <span class="small">{{ building.name }}</span>
+                                    </button>
+                                </h2>
+
+                                <div [id]="'collapse' + i" class="accordion-collapse collapse" [class.show]="i === 0"
+                                    [attr.aria-labelledby]="'heading' + i" data-bs-parent="#accordionProjects">
+                                    <div class="accordion-body">
+
+                                        <!-- Vertical Tabs -->
+                                        <div class="d-flex align-items-start verticalTabs">
+                                            <ul class="nav nav-pills flex-column border-end border-3 me-3 align-items-center"
+                                                [id]="'pills-tab' + i" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link text-primary fw-semibold active"
+                                                        [id]="'pills-plot-tab' + i" data-bs-toggle="pill"
+                                                        [attr.data-bs-target]="'#pills-plot' + i" type="button"
+                                                        role="tab" [attr.aria-controls]="'pills-plot' + i"
+                                                        aria-selected="true">
+                                                        <span><i class="fa-solid fa-landmark"></i></span>
+                                                        <h4 class="m-0">{{'Property' | translate}}</h4>
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation"
+                                                    *ngIf="building.buildingFloors?.length">
+                                                    <button class="nav-link text-primary fw-semibold"
+                                                        [id]="'pills-floor-tab' + i" data-bs-toggle="pill"
+                                                        [attr.data-bs-target]="'#pills-floor' + i" type="button"
+                                                        role="tab" [attr.aria-controls]="'pills-floor' + i"
+                                                        aria-selected="false">
+                                                        <span><i class="fa-solid fa-warehouse"></i></span>
+                                                        <h4 class="m-0">{{'Floor' | translate}}</h4>
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation" *ngIf="building.zones?.length">
+                                                    <button class="nav-link text-primary fw-semibold"
+                                                        [id]="'pills-zone-tab' + i" data-bs-toggle="pill"
+                                                        [attr.data-bs-target]="'#pills-zone' + i" type="button"
+                                                        role="tab" [attr.aria-controls]="'pills-zone' + i"
+                                                        aria-selected="false">
+                                                        <span><i class="fa-solid fa-map"></i></span>
+                                                        <h4 class="m-0">{{'Zone' | translate}}</h4>
+                                                    </button>
+                                                </li>
+                                            </ul>
+
+                                            <!-- TAB CONTENT -->
+                                            <div class="tab-content w-100" [id]="'pills-tabContent' + i">
+
+                                                <!-- Property Tab -->
+                                                <div class="tab-pane fade show active dataTableDesign"
+                                                    [id]="'pills-plot' + i" role="tabpanel"
+                                                    [attr.aria-labelledby]="'pills-plot-tab' + i">
+                                                    <div
+                                                        *ngIf="building.buildingPropertyDetails?.length; else noProperty">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>{{'Property No'|translate}}</th>
+                                                                    <th>{{'Size'|translate}}</th>
+                                                                    <th>{{'Owner'|translate}}</th>
+                                                                    <th>{{'Status'|translate}}</th>
+                                                                    <th>{{'Start Date'|translate}}</th>
+                                                                    <th>{{'End Date'|translate}}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr
+                                                                    *ngFor="let prop of building.buildingPropertyDetails">
+                                                                    <td>{{ prop.u_PNo }}</td>
+                                                                    <td>{{ prop.u_PSize }}</td>
+                                                                    <td>{{ prop.u_POwner }}</td>
+                                                                    <td>{{ prop.u_PStatus === 1 ? 'Active' : 'Inactive'
+                                                                        }}</td>
+                                                                    <td>{{ prop.u_AQSDate | date:
+                                                                        GenericForma.DateFormate }}</td>
+                                                                    <td>{{ prop.u_AQEDate | date:
+                                                                        GenericForma.DateFormate }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <ng-template #noProperty>
+                                                        <p class="text-muted">No property details found.</p>
+                                                    </ng-template>
+                                                </div>
+
+                                                <!-- Floor Tab -->
+                                                <div class="tab-pane fade dataTableDesign" [id]="'pills-floor' + i"
+                                                    role="tabpanel" [attr.aria-labelledby]="'pills-floor-tab' + i">
+                                                    <div *ngIf="building.buildingFloors?.length; else noFloors">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>{{'Floor Code' | translate}}</th>
+                                                                    <th>{{'Floor Name' | translate}}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let floor of building.buildingFloors">
+                                                                    <td>{{ floor.u_FlrCode }}</td>
+                                                                    <td>{{ floor.name }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <ng-template #noFloors>
+                                                        <p class="text-muted">No floors found.</p>
+                                                    </ng-template>
+                                                </div>
+
+                                                <!-- Zone Tab -->
+                                                <div class="tab-pane fade" [id]="'pills-zone' + i" role="tabpanel"
+                                                    [attr.aria-labelledby]="'pills-zone-tab' + i">
+                                                    <div *ngIf="building.zones?.length; else noZones">
+
+                                                        <div class="accordion" [id]="'accordionZone' + i">
+                                                            <div class="accordion-item"
+                                                                *ngFor="let zone of building.zones; let j = index">
+                                                                <h2 class="accordion-header"
+                                                                    [id]="'headingZone' + i + '-' + j">
+                                                                    <button class="accordion-button" type="button"
+                                                                        data-bs-toggle="collapse"
+                                                                        [attr.data-bs-target]="'#zone' + i + '-' + j"
+                                                                        [attr.aria-controls]="'zone' + i + '-' + j"
+                                                                        [attr.aria-expanded]="j === 0 ? 'true' : 'false'">
+                                                                        <label class="fw-semibold">{{'Zone Code:' | translate}}</label>
+                                                                        <span class="small me-3">{{ zone.u_Code
+                                                                            }}</span>
+                                                                        <label class="fw-semibold">{{'Zone Name:' | translate}}</label>
+                                                                        <span class="small">{{ zone.name }}</span>
+                                                                    </button>
+                                                                </h2>
+
+                                                                <div [id]="'zone' + i + '-' + j"
+                                                                    class="accordion-collapse collapse"
+                                                                    [class.show]="j === 0"
+                                                                    [attr.aria-labelledby]="'headingZone' + i + '-' + j"
+                                                                    [attr.data-bs-parent]="'#accordionZone' + i">
+                                                                    <div class="accordion-body dataTableDesign">
+                                                                        <!-- Zone Floors -->
+                                                                        <div *ngIf="zone.zoneFloors?.length">
+                                                                            <table class="table table-striped">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>{{'Floor Code' | translate}}</th>
+                                                                                        <th>{{'Floor Name' | translate}}</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr
+                                                                                        *ngFor="let zf of zone.zoneFloors">
+                                                                                        <td>{{ zf.u_FlrCode }}</td>
+                                                                                        <td>{{ zf.name }}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                        <!-- Sub Zones -->
+                                                                        <div *ngIf="zone.subSectionofZone?.length"
+                                                                            class="mt-3">
+                                                                            <div class="sectionHeading">
+                                                                                <h6>{{'Sub Zones' | translate}}</h6>
+                                                                            </div>
+                                                                            <div class="accordion"
+                                                                                [id]="'accordionSubZone' + i + '-' + j">
+                                                                                <div class="accordion-item"
+                                                                                    *ngFor="let sub of zone.subSectionofZone; let k = index">
+                                                                                    <h2 class="accordion-header"
+                                                                                        [id]="'headingSubZone' + i + '-' + j + '-' + k">
+                                                                                        <button class="accordion-button"
+                                                                                            type="button"
+                                                                                            data-bs-toggle="collapse"
+                                                                                            [attr.data-bs-target]="'#subZone' + i + '-' + j + '-' + k"
+                                                                                            [attr.aria-controls]="'subZone' + i + '-' + j + '-' + k"
+                                                                                            [attr.aria-expanded]="k === 0 ? 'true' : 'false'">
+                                                                                            <label
+                                                                                                class="fw-semibold"> {{'Sub Zone Code:' | translate}}
+                                                                                                </label>
+                                                                                            <span class="small me-3">{{
+                                                                                                sub.u_Code }}</span>
+                                                                                            <label
+                                                                                                class="fw-semibold"> {{'Sub Zone Name:' | translate}}
+                                                                                                </label>
+                                                                                            <span class="small">{{
+                                                                                                sub.name }}</span>
+                                                                                        </button>
+                                                                                    </h2>
+
+                                                                                    <div [id]="'subZone' + i + '-' + j + '-' + k"
+                                                                                        class="accordion-collapse collapse"
+                                                                                        [class.show]="k === 0"
+                                                                                        [attr.aria-labelledby]="'headingSubZone' + i + '-' + j + '-' + k"
+                                                                                        [attr.data-bs-parent]="'#accordionSubZone' + i + '-' + j">
+                                                                                        <div
+                                                                                            class="accordion-body dataTableDesign">
+                                                                                            <div
+                                                                                                *ngIf="sub.subZoneSecFloors?.length">
+                                                                                                <table
+                                                                                                    class="table table-striped">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>
+                                                                                                                {{'Floor Code' | translate}}
+                                                                                                            </th>
+                                                                                                            <th>
+                                                                                                                 {{'Floor Name' | translate}}
+                                                                                                            </th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <tr
+                                                                                                            *ngFor="let sf of sub.subZoneSecFloors">
+                                                                                                            <td>{{
+                                                                                                                sf.u_FlrCode
+                                                                                                                }}</td>
+                                                                                                            <td>{{
+                                                                                                                sf.name
+                                                                                                                }}</td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> <!-- accordion-body -->
+                                                                </div> <!-- collapse -->
+                                                            </div> <!-- accordion-item -->
+                                                        </div> <!-- accordion -->
+                                                    </div>
+                                                    <ng-template #noZones>
+                                                        <p class="text-muted">No zones found.</p>
+                                                    </ng-template>
+                                                </div>
+
+                                            </div> <!-- tab-content -->
+                                        </div> <!-- verticalTabs -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- modal-body -->
+
+                    <!-- FOOTER -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close' | translate}}</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div *ngIf="AllowedPermissions['canCreate']">
+                    <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-2">{{'New Report' | translate}}</h6>
+                    </div>
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <input type="hidden" formControlName="id" />
+                        <div class="row">
+                            <!-- Code -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Code' | translate}}</label>
+                                    <input type="text" class="form-control" formControlName="code"
+                                        [ngClass]="{ 'is-invalid': (submitted || f['code'].touched) && f['code'].invalid }" />
+                                    <app-validation-message [control]="f['code']" label="Code" [submitted]="submitted">
+                                    </app-validation-message>
+                                </div>
+                            </div>
+
+                            <!-- Name -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Name' | translate}}</label>
+                                    <input type="text" class="form-control" formControlName="name"
+                                        [ngClass]="{ 'is-invalid': (submitted || f['name'].touched) && f['name'].invalid }" />
+                                    <app-validation-message [control]="f['name']" label="Name" [submitted]="submitted">
+                                    </app-validation-message>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <span style="display: block;" class="form-label">{{'File' | translate}}<span
+                                            class="colorRed">*</span></span>
+                                    <div class="mb-3 chosaeFilebtn">
+                                        <label class="form-label">
+                                            <a><i class="fa fa-file-image"></i> {{'Choose File' | translate}}</a>
+                                            <input class="" type="file" [(ngModel)]="FileURL"
+                                                [ngModelOptions]="{standalone: true}" #fileInput
+                                                (change)="onFileChange($event,fileInput)">
+                                        </label>
+                                    </div>
+                                    <app-validation-message [control]="f['fileURL']" label="File"
+                                        [submitted]="submitted">
+                                    </app-validation-message>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                                <div class="btn-group btn-design">
+                                    <button class="btn btn-success" type="submit">
+                                        <i class="fa fa-save"></i><span> {{'Save' | translate}}</span>
+                                    </button>
+                                    <button class="btn btn-danger" type="button" (click)="clearForm()">
+                                        <i class="fa fa-times"></i><span> {{'Cancel' | translate}}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div *ngIf="AllowedPermissions['canView'] ">
+                    <div class="table-responsive dataTableDesign">
+                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'Code' | translate}}</th>
+                                    <th>{{'Name' | translate}}</th>
+                                    <!-- <th class="hidden">File</th> -->
+                                    <th>{{'Action' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of ReportsList; let i = index">
+                                     <td>{{i+1}}</td>
+                                    <td>{{ p.code }}</td>
+                                    <td>{{ p.name }}</td>
+                                    <!-- <td class="hidden">{{ p.fileURL }}</td> -->
+                                    <td>
+                                        <div class="action-btn">
+                                            <span><i class="fa fa-edit" (click)="Update(p)"></i></span>
+                                            <span><i class="fa fa-trash" (click)="RemoveReport(p.id)"></i></span>
+                                            <span><i class="fa-solid fa-file-lines" (click)="openReport(p.rptURL)"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

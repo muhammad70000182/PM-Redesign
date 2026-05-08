@@ -1,0 +1,245 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div *ngIf="AllowedPermissions['canCreate']">
+                    <div class="wizard-container customWizardDesign">
+                        <ul class="wizard-steps">
+                            <li [ngClass]="getStepClass(1)" class="right" (click)="chnageWizard(1)">
+                                <span class="step-number">1</span>
+                                <span class="step-title">{{'Parameters' | translate}}</span>
+                            </li>
+                            <li [ngClass]="getStepClass(2)" class="left right" (click)="chnageWizard(2)">
+                                <span class="step-number">2</span>
+                                <span class="step-title">{{'Revenue' | translate}}</span>
+                            </li>
+                            <li [ngClass]="getStepClass(3)" class="left right" (click)="chnageWizard(3)">
+                                <span class="step-number">3</span>
+                                <span class="step-title">{{'Draft' | translate}}</span>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="step-content mt-4">
+                        <div [hidden]="currentStep !== 1">
+
+                            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <!-- Agreement Type (Required) -->
+                                        <label class="form-label">{{'Project' | translate}}</label>
+                                        <ng-select aria-label="Default select example" [(ngModel)]="BL_Project"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (change)="onDropdownChange($event,'Project')">
+                                            <ng-option *ngFor="let car of this.ProjectList"
+                                                [value]="car.id">{{car.name}}</ng-option>
+                                        </ng-select>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!-- Agreement Type (Required) -->
+                                        <label class="form-label">{{'Building' | translate}}</label>
+                                        <ng-select aria-label="Default select example" [(ngModel)]="BL_Building"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (change)="onDropdownChange($event,'Building')">
+                                            <ng-option *ngFor="let car of this.BuildingList"
+                                                [value]="car.id">{{car.name}}</ng-option>
+                                        </ng-select>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!-- Agreement Type (Required) -->
+                                        <label class="form-label">{{'Section' | translate}}</label>
+                                        <ng-select aria-label="Default select example" [(ngModel)]="BL_Zone"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (change)="onDropdownChange($event,'Zone')">
+                                            <ng-option *ngFor="let car of this.ZoneList"
+                                                [value]="car.id">{{car.name}}</ng-option>
+                                        </ng-select>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!-- Agreement Type (Required) -->
+                                        <label class="form-label">{{'Sub Section' | translate}}</label>
+                                        <ng-select aria-label="Default select example" [(ngModel)]="BL_SubZone"
+                                            [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let car of this.SubZoneList"
+                                                [value]="car.id">{{car.name}}</ng-option>
+                                        </ng-select>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="EndDate" class="form-label">{{'Date' | translate}}</label>
+                                        <input type="text" id="EndDate" class="form-control form-control-sm"
+                                            placeholder="dd-mm-yyyy" bsDatepicker [bsConfig]="datePickerConfig"
+                                            [bsValue]="bsInlineValue"
+                                            [ngClass]="{ 'is-invalid': submitted && f['EndDate'].errors }" />
+
+                                    </div>
+
+                                    <!-- <div class="col-md-3">
+                                        <button class="btn btn-success mt-4" type="submit">
+                                            <span> Load</span>
+                                        </button>
+                                    </div> -->
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <div [hidden]="currentStep !== 2">
+                            <div class="row mt-4">
+                                <div class="table-responsive dataTableDesign">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+
+                                                    <input type="checkbox" [(ngModel)]="masterSelected"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (change)="checkUncheckAll()" />
+                                                </th>
+                                                <th>{{'BP Code'|translate}}</th>
+                                                <th>{{'Agreement Document'|translate}}</th>
+                                                <th>{{'Item Code'|translate}}</th>
+                                                <th>{{'Project'|translate}}</th>
+                                                <th>{{'Building'|translate}}</th>
+                                                <th>{{'Section'|translate}}</th>
+                                                <th>{{'Sub Section'|translate}}</th>
+                                                <th>{{'Amount'|translate}}</th>
+                                                <th>{{'Tax Code'|translate}}</th>
+                                                <th>{{'Total Received'|translate}}</th>
+
+                                                <th>{{'Installment Due Date'|translate}}</th>
+                                                <th>{{'Revenue Due Date'|translate}}</th>
+
+                                                <th>{{'Completion'|translate}}</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let car of this.agreementItems">
+                                                <td>
+                                                    <input type="checkbox" [(ngModel)]="car.selected"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (change)="isAllSelected()" />
+                                                </td>
+                                                <td>{{car.bpCode}}</td>
+
+                                                <td>{{car.docNum}}</td>
+                                                <td>{{car.itemCode}}</td>
+                                                <td>{{car.projName}}</td>
+                                                <td>{{car.bldCode}}</td>
+                                                <td>{{car.secCode}}</td>
+                                                <td>{{car.subZoneCode}}</td>
+                                                <td>{{car.itemAmount| number}}</td>
+                                                <td>{{car.taxCode}}</td>
+                                                <td>{{car.revRecPrc| number}}</td>
+                                                <td>
+                                                    <input type="text" id="PostingDate"
+                                                        class="form-control form-control-sm"
+                                                        placeholder="{{'dd-mm-yyyy' | translate}}" bsDatepicker
+                                                        [bsConfig]="datePickerConfig" [bsValue]="bsInlineValue"
+                                                        [(ngModel)]="car.u_GDate"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="revDate"
+                                                        class="form-control form-control-sm"
+                                                        placeholder="{{'dd-mm-yyyy' | translate}}" bsDatepicker
+                                                        [bsConfig]="datePickerConfig" [bsValue]="bsInlineValue"
+                                                        [(ngModel)]="car.u_RevGDate"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                </td>
+                                                <td><input type="text" class="form-control" 
+                                                        appCommaSeparated [(ngModel)]="car.textValue" 
+                                                        [ngModelOptions]="{standalone: true}" (keyup)="validatePercentage(car)" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div [hidden]="currentStep !== 3">
+                            <div class="row mt-4">
+                                <div class="table-responsive dataTableDesign">
+                                    <table class="table table-striped" datatable [dtOptions]="dtOptions"
+                                        [dtTrigger]="dtTrigger">
+                                        <thead>
+                                            <tr>
+                                                <th>
+
+                                                    <input type="checkbox" [(ngModel)]="masterSelecteddrft"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (change)="checkUncheckAlldrft()" />
+                                                </th>
+                                                <th>{{'BP Code'|translate}}</th>
+                                                <th>{{'Doc Num'|translate}}</th>
+                                                <th>{{'Item Code'|translate}}</th>
+                                                <th>{{'Project'|translate}}</th>
+                                                <th>{{'Building'|translate}}</th>
+                                                <th>{{'Section'|translate}}</th>
+                                                <th>{{'SubSection'|translate}}</th>
+                                                <th>{{'Amount'|translate}}</th>
+                                                <th>{{'Tax Code'|translate}}</th>
+                                                <th>{{'Total Received'|translate}}</th>
+                                                <th>{{'Completion'|translate}}</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let car of this.draftdata">
+                                                <td>
+                                                    <input type="checkbox" [(ngModel)]="car.selected"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (change)="isAllSelecteddrft()" />
+                                                </td>
+                                                <td>{{car.bpCode}}</td>
+
+                                                <td>{{car.docNum}}</td>
+                                                <td>{{car.itemCode}}</td>
+                                                <td>{{car.projName}}</td>
+                                                <td>{{car.bldName}}</td>
+                                                <td>{{car.secName}}</td>
+                                                <td>{{car.subZoneName}}</td>
+                                                <td>{{car.itemAmount | number}}</td>
+                                                <td>{{car.taxCode}}</td>
+                                                <td>{{car.revRecTot | number}}</td>
+                                                <td>{{car.revRecPrc}}</td>
+
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right mt-3 wizardBtns">
+                        <button class="btn btn-secondary me-2" (click)="prevStep()" [disabled]="currentStep == 1">
+                            {{'Previous'|translate}}
+                        </button>
+                        <button class="btn btn-primary me-2" (click)="nextStep()" [disabled]="currentStep==3">
+                            {{'Next'|translate}}
+                        </button>
+                        <!-- <button class="btn btn-success" [disabled]="currentStep < 2">Submit</button> -->
+                        <div class="btn-group btn-design" *ngIf="currentStep == 3">
+                            <button class="btn btn-success" type="button" (click)="onDataPost()">
+                                <i class="fa fa-save"></i><span>{{'Post to Agreement'|translate}} </span>
+                            </button>
+                            <button class="btn btn-danger" type="button" (click)="onCancalPost()">
+                                <i class="fa fa-times"></i><span>{{'Cancel Draft'|translate}} </span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="AllowedPermissions['canView'] ">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

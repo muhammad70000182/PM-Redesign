@@ -1,0 +1,450 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div *ngIf="AllowedPermissions['canCreate']">
+                    <!-- <h4 class="sectionHeading">New Role:</h4> -->
+                    <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-2">{{'Unit Return' | translate}}</h6>
+                    </div>
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <input type="hidden" formControlName="Id" />
+
+                        <div class="row">
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Agreement Type' | translate}}</label>
+                                    <ng-select aria-label="Default select example" formControlName="AgreementType"
+                                        [ngClass]="{ 'is-invalid': (submitted || f['AgreementType'].touched) && f['AgreementType'].invalid }"
+                                        (change)="onDropDownChange($event,'AgreementType')">
+                                        <ng-option *ngFor="let car of AgreementTypeListVlaues"
+                                            [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                                    </ng-select>
+                                    <app-validation-message [control]="f['AgreementType']" label="Agreement Type"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="form.get('Id')?.value==0">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Series' | translate}}</label>
+
+                                    <ng-select aria-label="Default select example" name="title" formControlName="U_Seri"
+                                        (change)="onDropdownChange($event,'Series')"
+                                        [ngClass]="{ 'is-invalid': (submitted || f['U_Seri'].touched) && f['U_Seri'].invalid }">
+                                        <ng-option *ngFor="let car of SeriesList"
+                                            [value]="car.id">{{car.u_SName}}</ng-option>
+                                    </ng-select>
+
+                                    <app-validation-message [control]="f['U_Seri']" label="Series"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                             <div class="col-12 col-md-3 col-lg-3" *ngIf="form.get('Id')?.value > 0">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Series' | translate}}</label>
+                                    <input type="text" class="form-control" [value]="SeriesName" readonly
+                                        />
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Agreement' | translate}}</label>
+                                    <ng-select aria-label="Default select example" formControlName="U_AGID"
+                                        placeholder="{{'Select Agreement' | translate}}" (change)="onDropdownChange($event,'Agreements')">
+                                        <ng-option *ngFor="let car of AgreementList"
+                                            [value]="car.id">{{car.u_DocNum+"-"+car.u_BPCode+"-"+car.name}}</ng-option>
+                                    </ng-select>
+                                    <app-validation-message [control]="f['U_AGID']" label="Agreement"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                            <!-- U_Seri -->
+
+                            <!-- U_Seri -->
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Doc Num' | translate}}</label>
+                                    <input type="text" class="form-control" formControlName="U_DocNum" 
+                                        readonly
+                                        [ngClass]="{ 'is-invalid': (submitted || f['U_DocNum'].touched) && f['U_DocNum'].invalid }" />
+                                    <app-validation-message [control]="f['U_DocNum']" label="Series"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                            <!-- U_AGID -->
+
+
+                            <!-- U_BPCode -->
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'BP Code' | translate}}</label>
+                                    <input type="text" class="form-control" formControlName="U_BPCode" 
+                                        readonly
+                                        [ngClass]="{ 'is-invalid': (submitted || f['U_BPCode'].touched) && f['U_BPCode'].invalid }" />
+                                    <app-validation-message [control]="f['U_BPCode']" label="BP Code"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                            <!-- U_BPName -->
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'BP Name' | translate}}</label>
+                                    <input type="text" class="form-control" formControlName="U_BPName" 
+                                        readonly
+                                        [ngClass]="{ 'is-invalid': (submitted || f['U_BPName'].touched) && f['U_BPName'].invalid }" />
+                                    <app-validation-message [control]="f['U_BPName']" label="BP Code"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Contact Person' | translate}}</label>
+                                    <input type="text" class="form-control" formControlName="U_CPName" 
+                                        readonly
+                                        [ngClass]="{ 'is-invalid': (submitted || f['U_CPName'].touched) && f['U_CPName'].invalid }" />
+                                    <app-validation-message [control]="f['U_CPName']" label="Contact Person Name"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Ejar ID' | translate}}</label>
+                                    <input type="text" class="form-control" formControlName="U_CustRefNo"
+                                        maxlength="100" readonly
+                                        [ngClass]="{ 'is-invalid': (submitted || f['U_CustRefNo'].touched) && f['U_CustRefNo'].invalid }" />
+                                    <app-validation-message [control]="f['U_CustRefNo']" label="Contact Person Name"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Type' | translate}} </label>
+                                    <ng-select aria-label="Default select example" formControlName="u_Status"
+                                        [ngClass]="{ 'is-invalid': (submitted || f['u_Status'].touched) && f['u_Status'].invalid }"
+                                        (change)="onDropDownChange($event,'Type')">
+                                        <ng-option *ngFor="let car of U_ReturnTypeVlaues"
+                                            [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                                    </ng-select>
+                                    <app-validation-message [control]="f['u_Status']" label="Status"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Security' | translate}}</label>
+                                    <input type="text" class="form-control" formControlName="u_SecAmt" maxlength="100"
+                                        appCommaSeparated
+                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SecAmt'].touched) && f['u_SecAmt'].invalid }"  readonly/>
+                                    <app-validation-message [control]="f['u_SecAmt']" label="Charges"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">{{'Damage Deduction' | translate}} </label>
+                                    <input type="text" class="form-control" formControlName="u_DmgDeductAmt"
+                                        maxlength="100" appCommaSeparated
+                                        [ngClass]="{ 'is-invalid': (submitted || f['u_DmgDeductAmt'].touched) && f['u_DmgDeductAmt'].invalid }"  readonly />
+                                    <app-validation-message [control]="f['u_DmgDeductAmt']" label="Charges"
+                                        [submitted]="submitted"></app-validation-message>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="U_DocDate" class="form-label">{{'Doc Date' | translate}}</label>
+                                <input type="text" id="U_DocDate" class="form-control form-control-sm"
+                                    formControlName="U_DocDate" placeholder="dd-mm-yyyy" bsDatepicker
+                                    [bsConfig]="datePickerConfig" [bsValue]="bsInlineValue"
+                                    [ngClass]="{ 'is-invalid': submitted && f['U_DocDate'].errors }" />
+                                <app-validation-message [control]="f['U_DocDate']" label="Doc Date"
+                                    [submitted]="submitted"></app-validation-message>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="U_PDate" class="form-label">{{'Posting Date' | translate}}</label>
+                                <input type="text" id="U_PDate" class="form-control form-control-sm"
+                                    formControlName="U_PDate" placeholder="dd-mm-yyyy" bsDatepicker
+                                    [bsConfig]="datePickerConfig" [bsValue]="bsInlineValue"
+                                    [ngClass]="{ 'is-invalid': submitted && f['U_PDate'].errors }" />
+                                <app-validation-message [control]="f['U_PDate']" label="Posting Date"
+                                    [submitted]="submitted"></app-validation-message>
+                            </div>
+                            <div class="col-md-3" *ngIf="this.returntype==1">
+                                <label for="u_TerDate" class="form-label"> {{'Termination Date' | translate}}</label>
+                                <input type="text" id="u_TerDate" class="form-control form-control-sm"
+                                    formControlName="u_TerDate" placeholder="dd-mm-yyyy" bsDatepicker
+                                    [bsConfig]="datePickerConfig" [bsValue]="bsInlineValue"
+                                    [ngClass]="{ 'is-invalid': submitted && f['u_TerDate'].errors }" />
+                                <app-validation-message [control]="f['u_TerDate']" label="Termination Date"
+                                    [submitted]="submitted"></app-validation-message>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav class="customTab">
+                                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" (click)="switchTab('UnitDetail','header')"
+                                            [class.active]="activeTab === 'UnitDetail'">{{'Unit Detail' | translate}}</a>
+                                        <a class="nav-item nav-link active" (click)="switchTab('Attachments','header')"
+                                            [class.active]="activeTab === 'Attachments'">{{'Attachments' | translate}}</a>
+                                    </div>
+                                </nav>
+
+                                <div class="tab-content" id="nav-tabContent">
+
+                                    <!-- General Data Tab -->
+                                    <div class="tab-pane fade show active" [hidden]="activeTab !== 'UnitDetail'">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive dataTableDesign">
+                                                    <table class="table table-striped mt-3">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>
+                                                                    <input type="checkbox" [(ngModel)]="masterSelected"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (change)="toggleAll()"> Select
+                                                                </th>
+                                                                <th>{{'Unit Code' | translate}}</th>
+                                                                <th>{{'Project' | translate}}</th>
+                                                                <th>{{'Building' | translate}}</th>
+                                                                <th>{{'Zone' | translate}}</th>
+                                                                <th>{{'Sub Zone' | translate}}</th>
+                                                                <th>{{'Unit Size (SQM)' | translate}}</th>
+                                                                <th>{{'Rate per SQM' | translate}}</th>
+                                                                <th>{{'Total' | translate}}</th>
+                                                                <th>{{'Discount (%)' | translate}}</th>
+                                                                <th>{{'Discount Amount' | translate}}</th>
+                                                                <th>{{'Total After Discount' | translate}}</th>
+                                                                <th>{{'Tax (%)' | translate}}</th>
+                                                                <th>{{'Tax Amount' | translate}}</th>
+                                                                <th>{{'Total After Tax' | translate}}</th>
+                                                                 <th>{{'Damage Deduction' | translate}}</th>
+                                                                <th>{{'Action' | translate}}</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let u of SelectedAgreement.agreementItems; let i = index">
+                                                                 <td>{{i+1}}</td>
+                                                                <td>
+                                                                    <!-- <input type="checkbox" [(ngModel)]="u.isSelected"> -->
+                                                                    <input type="checkbox" [(ngModel)]="u.isSelected"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (change)="checkIfAllSelected()">
+                                                                </td>
+                                                                <td>{{ u.u_UnitCode }}</td>
+                                                                <td>{{ u.projectName }}</td>
+                                                                <td>{{ u.buildingName }}</td>
+                                                                <td>{{ u.zoneName }}</td>
+                                                                <td>{{ u.subZoneName }}</td>
+                                                                <td>{{ u.u_UnitSize }}</td>
+                                                                <td>{{ u.u_PerSQMRate | number}}</td>
+                                                                <td>{{ u.u_Total | number}}</td>
+                                                                <td>{{ u.u_DiscPrc | number}}</td>
+                                                                <td>{{ u.u_DiscAmt | number}}</td>
+                                                                <td>{{ u.u_TotAfterDisc | number}}</td>
+                                                                <td>{{ u.u_TaxPrc | number}}</td>
+                                                                <td>{{ u.u_TaxAmt | number}}</td>
+                                                                <td>{{ u.u_TotAfterTax | number}}</td>
+                                                                  <input type="text"  class="form-control" [(ngModel)]="u.DamageDeduction"   maxlength="100" appCommaSeparated
+                                                                        [ngModelOptions]="{standalone: true}" (input)="calculateDamageDeductionSum()">
+                                                                <!-- <td>{{ u.createdDate | date:GenericForma.DateFormate }}</td> -->
+                                                                <td class="action-btn">
+                                                                    <span class="me-1" (click)="AddCheckListMaster(u)">
+                                                                        <i class="fa fa-bars"></i>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show active" [hidden]="activeTab !== 'Attachments'">
+                                        <div class="row mt-4">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="Address" class="form-label">{{'Attachment Type' | translate}}<span
+                                                            class="colorRed">*</span></label>
+                                                    <ng-select aria-label="Default select example"
+                                                        [(ngModel)]="AttachmentType"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <ng-option *ngFor="let car of AttachmentTypeListValues"
+                                                            [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="Description" class="form-label">{{'Description' | translate}} <span
+                                                            class="colorRed">*</span></label>
+                                                    <input type="text" class="form-control" id="Description"
+                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="Description"
+                                                        required="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <span style="display: block;" class="form-label">{{'File' | translate}}<span
+                                                            class="colorRed">*</span></span>
+                                                    <div class="mb-3 chosaeFilebtn">
+                                                        <label class="form-label">
+                                                            <a><i class="fa fa-file-image"></i> {{'Choose File' | translate}}</a>
+                                                            <input class="" type="file" [(ngModel)]="FileURL"
+                                                                [ngModelOptions]="{standalone: true}" #fileInput
+                                                                (change)="onFileChange($event,fileInput)">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row justify-content-end">
+                                            <div class="col-md-3 mt-4 text-right btn-design">
+                                                <button type="button" class="btn btn-success"
+                                                    (click)="AddRemoveAttachments('add','')"><i
+                                                        class=""></i>{{'Add' | translate}}</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Attachment table start -->
+                                        <div class="table-responsive dataTableDesign fixed-height-wrapper mt-4">
+                                            <table class="table table-striped ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{'Attachment Type' | translate}}</th>
+                                                        <th>{{'Description' | translate}}</th>
+                                                        <th>{{'File' | translate}}</th>
+                                                        <th>{{'Action' | translate}}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let p of AttachmentsList">
+                                                        <td>{{p.attachmentType}}</td>
+                                                        <td>{{p.description}}</td>
+                                                        <td>
+                                                            <span>
+                                                                <a *ngIf="p.FileURL2.length <= 500" [href]="p.FileURL2"
+                                                                    target="_blank"><i class="fa fa-eye"></i></a>
+                                                                <img *ngIf="p.FileURL2.length > 500" [src]="p.FileURL2"
+                                                                    style="height: 30px;">
+                                                            </span>
+                                                        </td>
+                                                        <td class="action-btn">
+                                                            <!-- <span><i class="fa fa-trash" (click)="AddRemoveAttachments('remove',p)"></i></span> -->
+                                                            <span
+                                                                (click)="AddRemoveAttachments('remove',p)">
+                                                                <i class="fa fa-trash"></i>
+                                                        </span>
+
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <!-- Attachment table end -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Form Actions -->
+                            <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                                <div class="btn-group btn-design">
+                                    <button class="btn btn-success" type="submit" *ngIf="form.get('Id')?.value==0">
+                                        <i class="fa fa-save"></i><span> {{'Save' | translate}}</span>
+                                    </button>
+                                     <button class="btn btn-success" type="submit" *ngIf="form.get('Id')?.value>0">
+                                        <i class="fa fa-save"></i><span> {{'Update' | translate}}</span>
+                                    </button>
+                                    <button class="btn btn-danger" type="button" (click)="clearForm()">
+                                        <i class="fa fa-times"></i><span> {{'Cancel' | translate}}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <!-- <h4 class="sectionHeading">Roles Listing:</h4> -->
+                </div>
+
+                <div *ngIf="AllowedPermissions['canView']">
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="modal fade" id="CheckListMasterModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title">Unit Return CheckList</h5>
+                        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row py-2 border-bottom border-dashed">
+                            <div class="col-md-12">
+                                <div class="table-responsive dataTableDesign">
+                                    <table class="table table-striped mt-3">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input type="checkbox"
+                                                        [(ngModel)]="SelectUnitForCheckList.SusmasterSelected"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (change)="toggleAll('units')">
+                                                    Select
+                                                </th>
+                                                <th>{{'Unit Return CheckList' | translate}}</th>
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let u of SelectUnitForCheckList.checkListMaster; let i = index">
+                                                <td>
+                                                    <!-- <input type="checkbox" [(ngModel)]="u.isSelected"> -->
+                                                    <input type="checkbox" [(ngModel)]="u.isSelected"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </td>
+                                                <td>{{ u.name }}</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" data-bs-dismiss="modal" class="btn btn-success" type="submit">
+                            <i class="fa fa-save"></i><span> {{'Add' | translate}}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

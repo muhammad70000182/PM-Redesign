@@ -1,0 +1,1123 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">{{'Agreement Type' | translate}}</label>
+                            <!-- <select class="form-select" aria-label="Default select example">
+                            <option selected>Sale</option>
+                            <option value="1">Rent</option>
+
+                            </select> -->
+                            <ng-select aria-label="Default select example" (change)="onDropDownChange($event)">
+                                <ng-option *ngFor="let car of AgreementTypeListVlaues"
+                                    [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8 text-right">
+
+                        <div class="btn-design">
+                            <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to
+                                Excel</button>
+                            <button [routerLink]="['/agreements/sale-agreement']" class="btn btn-success"><i
+                                    class="fa fa-plus"></i> {{'Add New' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="AllowedPermissions['canCreate']">
+                </div>
+                <div *ngIf="AllowedPermissions['canView']">
+                    <div class="dataTableDesign">
+
+                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th>{{'#' | translate}}</th>
+                                    <th>{{'Doc Num' | translate}}</th>
+                                    <th>{{'Series' | translate}}</th>
+                                    <th>{{'Agreement Type' | translate}}</th>
+                                    <th>{{'BP Code' | translate}}</th>
+                                    <th>{{'BP Name' | translate}}</th>
+                                    <th>{{'Contact Person' | translate}}</th>
+                                    <th>{{'Posting Date' | translate}}</th>
+                                    <th>{{'Agreement Start Date' | translate}}</th>
+                                    <th>{{'Agreement End Date' | translate}}</th>
+                                    <th>{{'Security Posting' | translate}}</th>
+                                    <th>{{'Commission Posting' | translate}}</th>
+                                    <th>{{'Approval Status' | translate}}</th>
+                                    <!-- <th>{{'Approval Level' | translate}}</th> -->
+                                    <th>{{'Created Date' | translate}}</th>
+                                    <th>{{'Status' | translate}}</th>
+                                    <th>{{'Action' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of AgreementList; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{ item.u_DocNum }}</td>
+                                    <td>{{ item.series }}</td>
+                                    <td>{{ item.agType | translate}}</td>
+                                    <!-- <td>{{ item.u_CustRefNo }}</td> -->
+                                    <td>{{ item.u_BPCode }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.u_CPName }}</td>
+                                    <td>{{ item.u_PostingDate | date:GenericForma.DateFormate }}</td>
+                                    <td>{{ item.u_AgtSDate | date:GenericForma.DateFormate }}</td>
+                                    <td>{{ item.u_AgtEDate | date:GenericForma.DateFormate }}</td>
+                                    <td>{{ item.u_SecJE }}</td>
+                                    <td>{{ item.u_CommAP }}</td>
+                                    <td>
+                                        <span class="badge" [ngClass]="{
+                                                    'bg-warning': item.approvalStatus === 'Pending',
+                                                    'bg-success': item.approvalStatus === 'Approved',
+                                                    'bg-danger': item.approvalStatus === 'Rejected'
+                                                    }">
+                                            {{
+                                            item.approvalStatus === 'Pending'
+                                            ? 'Pending at level ' + item.applicationLevel
+                                            : item.approvalStatus
+                                            }}
+                                        </span>
+                                    </td>
+
+                                    <!-- <td>
+                                        <span class="badge" [ngClass]="{
+                                                'bg-warning': item.approvalStatus === 'Pending',
+                                                'bg-success': item.approvalStatus === 'Approved',
+                                                'bg-danger': item.approvalStatus === 'Rejected'
+                                                }">
+                                            {{ item.approvalStatus }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge" [ngClass]="{
+                                                'bg-warning': item.approvalStatus === 'Pending',
+                                                'bg-success': item.approvalStatus === 'Approved',
+                                                'bg-danger': item.approvalStatus === 'Rejected'
+                                                }">
+                                            {{ item.approvalStatus === 'Pending' ? item.applicationLevel :
+                                            item.approvalStatus }}
+                                        </span>
+                                    </td> -->
+                                    <td>{{ item.createdDate | date:GenericForma.DateFormate }}</td>
+                                    <!-- <td>{{ item.u_AGStatus }}</td> -->
+                                    <td>
+                                        <span class="badge" [ngClass]="{
+                                            'bg-secondary': +item.u_AGStatus === 1,
+                                            'bg-info text-dark': +item.u_AGStatus === 2,
+                                            'bg-success': +item.u_AGStatus === 3 ,
+                                            'bg-danger': +item.u_AGStatus === 4,
+                                            'bg-suspended': +item.u_AGStatus === 5,
+                                            'bg-terminate': +item.u_AGStatus === 6,
+                                            'bg-completed': +item.u_AGStatus === 7                                         
+                                        }">
+                                            <!-- {{
+                                            +item.u_AGStatus === 1 ? 'Draft' :
+                                            +item.u_AGStatus === 2 ? 'Submitted' :
+                                            +item.u_AGStatus === 3 ? 'Accepted' :
+                                            +item.u_AGStatus === 4 ? 'Canceled' :
+                                            +item.u_AGStatus === 5 ? 'Suspended' :
+                                            +item.u_AGStatus === 6 ? 'Terminated' :
+                                            +item.u_AGStatus === 7 ? 'Completed' :'Unknown'
+                                            }} -->
+                                            {{
+                                            +item.u_AGStatus === 1
+                                            ? ('Draft' + (item.isUnderProvision ? ' / Provisioning' : ''))
+                                            : +item.u_AGStatus === 2 ? ('Submitted'+ (item.isUnderProvision ? ' /
+                                            Provisioning' : ''))
+                                            : +item.u_AGStatus === 3 ? 'Accepted'
+                                            : +item.u_AGStatus === 4 ? 'Canceled'
+                                            : +item.u_AGStatus === 5 ? 'Suspended'
+                                            : +item.u_AGStatus === 6 ? 'Terminated'
+                                            : +item.u_AGStatus === 7 ? 'Completed'
+                                            : 'Unknown'
+                                            }}
+
+                                        </span>
+
+                                    </td>
+                                    <td class="action-btn longText">
+
+                                        <span class="" (click)="GetAgreementList(item.id)">
+                                            <i class="fa fa-eye"></i>
+                                        </span>
+                                        <!--Muhammad Maqbool 20-12-2025 -   condition changed from !=4 to <3 agreement will not edited after acceptance -->
+                                        <span *ngIf="item.u_AGStatus < 3" class="" (click)="Update(item.id)">
+                                            <i class="fa fa-edit"></i>
+                                        </span>
+                                        <span *ngIf="item.u_AGType == 3 && item.u_AGStatus != 4" class=""
+                                            (click)="GetAgreementList(item.id,true)">
+                                            <i class="fa fa-plus"></i>
+                                            <!-- <span class="tooltip-text">Add New Metered Bill</span> -->
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{'Agreement Detail' | translate}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="sectionHeading">
+                            <h6 class="fw-bold text-primary">{{'BP Details' | translate}}</h6>
+                        </div>
+                        <div class="row py-2 border-bottom border-dashed">
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Agreement Type' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.agType}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Doc. Num' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_DocNum}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'BP Code' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_BPCode}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'BP Name' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.name}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Contact Person' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_CPName}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Ejar ID' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_CustRefNo}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Status' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.agStatus}}</div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Posting Date' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_PostingDate
+                                    | date:GenericForma.DateFormate }}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Ejar Start Date' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_AgtSDateH
+                                    | date:GenericForma.DateFormate }}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Ejar End Date' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_AgtEDateH
+                                    | date:GenericForma.DateFormate }}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Delivery Date' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_DeliveryDate
+                                    | date:GenericForma.DateFormate }}</div>
+                            </div>
+                        </div>
+                        <nav class="customTab">
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" (click)="switchTab('General','header')"
+                                    [class.active]="activeTab === 'General'">{{'General' | translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('UnitDetail','header')"
+                                    [class.active]="activeTab === 'UnitDetail'">{{'Unit Detail' | translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('InstallmentPlan','header')"
+                                    [class.active]="activeTab === 'InstallmentPlan'">{{'Installment Plan' |
+                                    translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('RevenueRcog','header')"
+                                    [class.active]="activeTab === 'RevenueRcog'">{{'Revenue Recog' | translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('Attachments','header')"
+                                    [class.active]="activeTab === 'Attachments'">{{'Attachments' | translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('Notes','header')"
+                                    [class.active]="activeTab === 'Notes'">{{'Notes' | translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('approvalLog','header')"
+                                    [class.active]="activeTab === 'approvalLog'">{{'Approval Log' | translate}}</a>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'General'">
+                                <div class="sectionHeading mt-4">
+                                    <h6 class="fw-bold text-primary">{{'Agreement Detail' | translate}}</h6>
+                                </div>
+                                <div class="row py-2 border-bottom border-dashed">
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Agreement Start Date' | translate}}</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_AgtSDate |
+                                            date:GenericForma.DateFormate }}</div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Agreement End Date' | translate}}</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_AgtEDate |
+                                            date:GenericForma.DateFormate }}</div>
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Installment Plan' | translate}}</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_InstPlanID}}</div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Total No Of Installment' | translate}}
+                                        </div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_TotNoInst}}</div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Rev Recog. Plan' | translate}}</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_RevRecPlanID }}</div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Total No Of Invoices' | translate}}</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_TotNoInv |
+                                            dynamicDecimal:GenericForma.DecimelPoint}}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row" *ngIf="SelectedAgreement.agType == 'Rent'">
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">Calculation Based On</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_MonthDay}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">Value</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_MonthDayVal |
+                                            dynamicDecimal:GenericForma.DecimelPoint}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">Security</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_SecAmt |
+                                            dynamicDecimal:GenericForma.DecimelPoint}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sectionHeading mt-4">
+                                    <h6 class="fw-bold text-primary">{{'Commission Details' | translate}}</h6>
+                                </div>
+                                <div class="row py-2 border-bottom border-dashed">
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Sales Person' | translate}}</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_SPName }}</div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Commission Rate' | translate}}</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_CommPrc |
+                                            dynamicDecimal:GenericForma.DecimelPoint}}</div>
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Commission Amount' | translate}}</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_CommAmt |
+                                            dynamicDecimal:GenericForma.DecimelPoint}}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'UnitDetail'">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive fixed-height-wrapper dataTableDesign mt-4">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>{{'Name'|translate}}</th>
+                                                        <th>{{'Unit Code'|translate}}</th>
+                                                        <th>{{'Project'|translate}}</th>
+                                                        <th>{{'Building'|translate}}</th>
+                                                        <th>{{'Zone'|translate}}</th>
+                                                        <th>{{'Sub Zone'|translate}}</th>
+                                                        <th>{{'Unit Size (SQM)'|translate}}</th>
+                                                        <th>{{'Rate per SQM'|translate}}</th>
+                                                        <th>{{'Total'|translate}}</th>
+                                                        <th>{{'Discount (%)'|translate}}</th>
+                                                        <th>{{'Discount Amount'|translate}}</th>
+                                                        <th>{{'Total After Discount'|translate}}</th>
+                                                        <th>{{'Tax (%)'|translate}}</th>
+                                                        <th>{{'Tax Amount'|translate}}</th>
+                                                        <th>{{'Total After Tax'|translate}}</th>
+                                                        <th *ngIf="SelectedAgreement.agType == 'Rent'">
+                                                            {{'Security'|translate}}</th>
+                                                        <th *ngIf="SelectedAgreement.agType == 'Rent'">{{'Yearly
+                                                            Rent'|translate}}</th>
+                                                        <!-- <th *ngIf="SelectedAgreement.agType == 'Rent'">{{'Total'|translate}}</th> -->
+                                                        <th>{{'Created Date'|translate}}</th>
+                                                        <th>{{'Action'|translate}}</th>
+
+
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let u of SelectedAgreement.agreementItems; let i = index">
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{ u.name }}</td>
+                                                        <td>{{ u.u_UnitCode }}</td>
+                                                        <td>{{ u.prjname }}</td>
+                                                        <td>{{ u.bldname }}</td>
+                                                        <td>{{ u.zonename }}</td>
+                                                        <td>{{ u.subZonename }}</td>
+                                                        <td>{{ u.u_UnitSize }}</td>
+                                                        <td>{{ u.u_PerSQMRate |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td>{{ u.u_Total | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_DiscPrc | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_DiscAmt | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_TotAfterDisc |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td>{{ u.u_TaxPrc | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_TaxAmt | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_TotAfterTax |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td *ngIf="SelectedAgreement.agType == 'Rent'">{{ u.u_SecAmt |
+                                                            number}}</td>
+                                                        <!-- <td *ngIf="SelectedAgreement.agType == 'Rent'"> {{u.u_Total | dynamicDecimal:GenericForma.DecimelPoint}}</td> -->
+                                                        <td *ngIf="SelectedAgreement.agType == 'Rent'">{{
+                                                            u.u_TotAfterTax | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+
+                                                        <td>{{ u.createdDate | date:GenericForma.DateFormate }}</td>
+                                                        <td class="action-btn">
+                                                            <span class="" (click)="loadAgreementDetails(u)">
+                                                                <i class="fa fa-eye"></i>
+                                                            </span>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'InstallmentPlan'">
+
+                                <div class="table-responsive fixed-height-wrapper dataTableDesign mt-4">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ '#' | translate }}</th>
+                                                <th>{{ 'Name' | translate }}</th>
+                                                <th>{{ 'Due Date' | translate }}</th>
+                                                <th>{{ 'Amount Before Tax' | translate }}</th>
+                                                <th>{{ 'Utility Amount' | translate }}</th>
+                                                <th>{{ 'Tax' | translate }}</th>
+                                                <th>{{ 'Amount After Tax' | translate }}</th>
+                                                <th>{{ 'Amount Received' | translate }}</th>
+                                                <th>{{ 'Prof Sent' | translate }}</th>
+                                                <th>{{ 'Locked' | translate }}</th>
+                                                <th>{{ 'Canceled' | translate }}</th>
+                                                <th>{{ 'SAP Doc#' | translate }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let u of SelectedAgreement.agreementInstallments; let i = index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{ u.name }}</td>
+                                                <td>{{u.u_GDate | date:GenericForma.DateFormate }}</td>
+                                                <td>{{ u.u_AmtBeforeTax | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                </td>
+                                                <td>{{ u.u_UtilAmt | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                <td>{{ u.u_Tax | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                <td>{{u.u_AmtAfterTax | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                <td>{{ u.u_AmtRcvd | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                <td>{{ u.u_ProfSent }}</td>
+                                                <td>{{ u.u_Lock }}</td>
+                                                <td>{{ u.u_Canceled }}</td>
+                                                <td>{{ u.u_GLEntry }}</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'RevenueRcog'">
+                                <div class="table-responsive fixed-height-wrapper dataTableDesign mt-4">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ '#' | translate }}</th>
+                                                <th>{{ 'Name' | translate }}</th>
+                                                <th>{{ 'Due Date' | translate }}</th>
+                                                <th>{{ 'Amount Before Tax' | translate }}</th>
+                                                <th>{{ 'Percentage' | translate }}</th>
+                                                <th>{{ 'Utility Amount' | translate }}</th>
+                                                <th>{{ 'Tax' | translate }}</th>
+                                                <th>{{ 'Amount After Tax' | translate }}</th>
+                                                <th>{{ 'Amount Received' | translate }}</th>
+                                                <th>{{ 'Locked' | translate }}</th>
+                                                <th>{{ 'SAP Doc#' | translate }}</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let u of SelectedAgreement.agreementRevenuRecPlans; let i = index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{ u.name }}</td>
+                                                <td>{{u.u_GDate | date:GenericForma.DateFormate }}</td>
+                                                <td>{{ u.u_AmtBeforeTax | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                </td>
+                                                <td>{{ u.u_PrcUnit | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                <td>{{ u.u_UtilAmt | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                <td>{{ u.u_Tax | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                <td>{{ u.u_AmtAfterTax | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                <td>{{ u.u_AmtRcvd | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                <td>{{ u.u_Lock }}</td>
+                                                <td>{{ u.u_ARInvDoc ?? u.u_RevJE }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'Attachments'">
+                                <div class="row mt-4">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="Address" class="form-label">{{'Attachment Type' |
+                                                translate}}<span class="colorRed">*</span></label>
+                                            <ng-select aria-label="Default select example" [(ngModel)]="AttachmentType"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <ng-option *ngFor="let car of AttachmentTypeListValues"
+                                                    [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="Description" class="form-label">{{'Description' | translate}}
+                                                <span class="colorRed">*</span></label>
+                                            <input type="text" class="form-control" id="Description"
+                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="Description"
+                                                required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <span style="display: block;" class="form-label">{{'File' | translate}}<span
+                                                    class="colorRed">*</span></span>
+                                            <div class="mb-3 chosaeFilebtn">
+
+                                                <label class="form-label">
+                                                    <a><i class="fa fa-file-image"></i> {{'Choose File' |
+                                                        translate}}</a>
+                                                    <input class="" type="file" [(ngModel)]="FileURL"
+                                                        [ngModelOptions]="{standalone: true}" #fileInput
+                                                        (change)="onFileChange($event,fileInput)">
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-3 mt-4 text-right btn-design">
+                                        <button type="button" class="btn btn-success"
+                                            (click)="AddRemoveAttachments('add','')"><i class=""></i>{{'Add' |
+                                            translate}}</button>
+                                    </div>
+                                </div>
+                                <!-- Attachment table start -->
+                                <div class="table-responsive fixed-height-wrapper dataTableDesign mt-4">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Attachment Type' | translate}}</th>
+                                                <th>{{'Description' | translate}}</th>
+                                                <th>{{'File' | translate}}</th>
+                                                <!-- <th>Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let p of SelectedAgreement.agreementAttachments">
+                                                <td>{{p.u_DType}}</td>
+                                                <td>{{p.name}}</td>
+                                                <td>
+                                                    <span>
+                                                        <a *ngIf="p.FileURL2.length <= 500" [href]="p.FileURL2"
+                                                            target="_blank"><i class="fa fa-eye"></i></a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <!-- Attachment table end -->
+                            </div>
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'Notes'">
+                                <div class="row py-2 border-bottom border-dashed">
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Notes' | translate}}</div>
+                                        <div class="text-secondary small">{{SelectedAgreement.u_Notes}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'approvalLog'">
+
+                                <!-- Attachment table start -->
+                                <div class="table-responsive fixed-height-wrapper dataTableDesign mt-4">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'User Name' | translate}}</th>
+                                                <th>{{'Level' | translate}}</th>
+                                                <th>{{'Remarks' | translate}}</th>
+                                                <th>{{'Status' | translate}}</th>
+
+                                                <!-- <th>Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let p of SelectedAgreement.approvalLog">
+                                                <td>{{p.userName}}</td>
+                                                <td>{{p.levelName}}</td>
+                                                <td>{{p.remarks}}</td>
+                                                <td>{{p.docApprStatus}}</td>
+
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <!-- Attachment table end -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer btn-design">
+                        <!--Muhammad Maqbool 20-12-2025 -  Added condition that cancel button will only appear if agreement status is not cancelled, completed and terminated -->
+                        <div
+                            *ngIf="SelectedAgreement.u_AGStatus !=4 && SelectedAgreement.u_AGStatus !=6 && SelectedAgreement.u_AGStatus !=7">
+                            <button *ngIf="SelectedAgreement.cancelationPermission" type="button" class="btn btn-danger"
+                                (click)="UpdateAgreementStatus(4)">
+                                Cancel Agreement
+                            </button>
+                        </div>
+                        <!--Muhammad Maqbool 20-12-2025 -  Added condition that following button will only appear if agreement status is draft, qoutation -->
+                        <div *ngIf="SelectedAgreement.u_AGStatus < 3">
+
+                            <button *ngIf="SelectedAgreement.quotationPermission && showSubmissionButton" type="button"
+                                class="btn btn-warning" (click)="UpdateAgreementStatus(2)">
+                                Quotation Submission
+                            </button>
+                            <button *ngIf="SelectedAgreement.acceptancePermission && showAcceptenceButton" type="button"
+                                class="btn btn-success" (click)="UpdateAgreementStatus(3)">
+                                Quotation Accepted
+                            </button>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="meteredBillModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{'Metered Bill' | translate}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="sectionHeading">
+                            <h6 class="fw-bold text-primary">{{'BP Details' | translate}}</h6>
+                        </div>
+                        <div class="row py-2 border-bottom border-dashed">
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Agreement Type' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.agType}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Doc. Num' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_DocNum}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'BP Code' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_BPCode}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'BP Name' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.name}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Contact Person' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_CPName}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Ejar ID' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_CustRefNo}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Status' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.agStatus}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Posting Date' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_PostingDate
+                                    | date:GenericForma.DateFormate }}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Ejar Start Date' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_AgtSDateH
+                                    | date:GenericForma.DateFormate }}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Ejar End Date' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_AgtEDateH
+                                    | date:GenericForma.DateFormate }}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Delivery Date' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_DeliveryDate
+                                    | date:GenericForma.DateFormate }}</div>
+                            </div>
+
+                        </div>
+                        <nav class="customTab">
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" (click)="switchTab('NewBill','header')"
+                                    [class.active]="activeTab === 'NewBill'">{{'New Bill' | translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('UnitDetail','header')"
+                                    [class.active]="activeTab === 'UnitDetail'">{{'Unit Detail' | translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('History','header')"
+                                    [class.active]="activeTab === 'History'">{{'History' | translate}}</a>
+
+                            </div>
+                        </nav>
+
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'NewBill'">
+                                <div class="row py-2 border-bottom border-dashed mt-4">
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Select Utility' | translate}}</div>
+                                        <ng-select aria-label="Default select example" [(ngModel)]="NewBillItemUnitCode"
+                                            (change)="loadMeteredItems($event)">
+                                            <ng-option *ngFor="let car of SelectedAgreement.agreementItems"
+                                                [value]="car.u_UnitCode">{{car.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive fixed-height-wrapper dataTableDesign mt-4">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{'Item Code' | translate}}</th>
+                                                        <th>{{'Item Description' | translate}}</th>
+                                                        <th>{{'Rate' | translate}}</th>
+                                                        <th>{{'Previous Reading' | translate}}</th>
+                                                        <th>{{'Current Reading' | translate}}</th>
+                                                        <th>{{'Consumed' | translate}}</th>
+                                                        <th>{{'Amount' | translate}}</th>
+                                                        <th>{{'Tax' | translate}}</th>
+                                                        <th>{{'Amount After Tax' | translate}}</th>
+                                                        <th>{{'Amount Paid' | translate}}</th>
+
+                                                        <!-- <th>Action</th> -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let p of MeteredUtilities">
+                                                        <td>{{p.u_UtilItemCode}}</td>
+                                                        <td>{{p.utilItemname}}</td>
+
+                                                        <td>{{p.u_Rate | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td>{{p.U_PrReading}}</td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                (keyup)="onReadingChange(p)" [(ngModel)]="p.U_CrReading"
+                                                                appCommaSeparated>
+                                                            <!-- {{p.U_CrReading}} -->
+                                                        </td>
+                                                        <td>{{p.U_Consumed | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{p.U_AmtBeforeTax |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td>{{p.U_Tax | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td>{{p.U_AmtAfterTax |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td>{{p.U_AmtRcvd}}</td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'UnitDetail'">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive fixed-height-wrapper dataTableDesign mt-4">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>{{'Name' | translate}}</th>
+                                                        <th>{{'Unit Code' | translate}}</th>
+                                                        <th>{{'Project' | translate}}</th>
+                                                        <th>{{'Building' | translate}}</th>
+                                                        <th>{{'Zone' | translate}}</th>
+                                                        <th>{{'Sub Zone' | translate}}</th>
+                                                        <th>{{'Unit Size (SQM)' | translate}}</th>
+                                                        <th>{{'Rate per SQM' | translate}}</th>
+                                                        <th>{{'Total' | translate}}</th>
+                                                        <th>{{'Discount (%)' | translate}}</th>
+                                                        <th>{{'Discount Amount' | translate}}</th>
+                                                        <th>{{'Total After Discount' | translate}}</th>
+                                                        <th>{{'Tax (%)' | translate}}</th>
+                                                        <th>{{'Tax Amount' | translate}}</th>
+                                                        <th>{{'Total After Tax' | translate}}</th>
+                                                        <th *ngIf="SelectedAgreement.agType == 'Rent'">{{'Security' |
+                                                            translate}}</th>
+                                                        <th *ngIf="SelectedAgreement.agType == 'Rent'">{{'Yearly Rent' |
+                                                            translate}}</th>
+                                                        <th *ngIf="SelectedAgreement.agType == 'Rent'">{{'Total' |
+                                                            translate}}</th>
+                                                        <th>{{'Created Date' | translate}}</th>
+
+                                                        <!-- <th>Action</th> -->
+
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let u of SelectedAgreement.agreementItems; let i = index">
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{ u.name }}</td>
+                                                        <td>{{ u.u_UnitCode }}</td>
+                                                        <td>{{ u.prjname }}</td>
+                                                        <td>{{ u.bldname }}</td>
+                                                        <td>{{ u.zonename }}</td>
+                                                        <td>{{ u.subZonename }}</td>
+                                                        <td>{{ u.u_UnitSize }}</td>
+                                                        <td>{{ u.u_PerSQMRate |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td>{{ u.u_Total | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_DiscPrc | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_DiscAmt | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_TotAfterDisc |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td>{{ u.u_TaxPrc | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_TaxAmt | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                        </td>
+                                                        <td>{{ u.u_TotAfterTax |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+
+
+                                                        <td *ngIf="SelectedAgreement.agType == 'Rent'">{{ u.u_SecAmt |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td *ngIf="SelectedAgreement.agType == 'Rent'">
+                                                            {{SelectedAgreement.u_SecAmt |
+                                                            dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                        <td *ngIf="SelectedAgreement.agType == 'Rent'">{{ u.u_Total |
+                                                            number}}</td>
+
+                                                        <td>{{ u.createdDate | date:GenericForma.DateFormate }}</td>
+                                                        <!-- <td class="action-btn">
+                                                            <span class="" (click)="loadAgreementDetails(u)">
+                                                                <i class="fa fa-eye"></i>
+                                                            </span>
+
+                                                        </td> -->
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'History'">
+                                <div class="row py-2 border-bottom border-dashed">
+                                    <div class="col-md-4 mb-2">
+                                        <div class="fw-semibold text-dark">{{'Select Utility' | translate}}</div>
+                                        <ng-select aria-label="Default select example" (change)="loadHistory($event)"
+                                            [(ngModel)]="historyBillItemUnitCode">
+                                            <ng-option *ngFor="let car of SelectedAgreement.agreementItems"
+                                                [value]="car.u_UnitCode">{{car.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="table-responsive fixed-height-wrapper dataTableDesign mt-4">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{'Item Code' | translate}}</th>
+                                                    <th>{{'Item Description' | translate}}</th>
+                                                    <th>{{'Rate' | translate}}</th>
+                                                    <th>{{'Previous Reading' | translate}}</th>
+                                                    <th>{{'Current Reading' | translate}}</th>
+                                                    <th>{{'Consumed' | translate}}</th>
+                                                    <th>{{'Amount' | translate}}</th>
+                                                    <th>{{'Tax' | translate}}</th>
+                                                    <th>{{'Amount After Tax' | translate}}</th>
+                                                    <th>{{'Amount Paid' | translate}}</th>
+
+                                                    <!-- <th>Action</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let p of SelectedItemMaintenanceBillHistory">
+                                                    <td>{{p.u_UtilItemCode}}</td>
+                                                    <td>{{p.name}}</td>
+
+                                                    <td>{{p.u_Rate | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                    <td>{{ p.u_PrReading || 0 }}</td>
+                                                    <td>
+                                                        {{p.u_CrReading}}
+                                                    </td>
+                                                    <td>{{p.u_Consumed | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                    <td>{{p.u_AmtBeforeTax | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                    </td>
+                                                    <td>{{p.u_Tax | dynamicDecimal:GenericForma.DecimelPoint}}</td>
+                                                    <td>{{p.u_AmtAfterTax | dynamicDecimal:GenericForma.DecimelPoint}}
+                                                    </td>
+                                                    <td>{{p.u_AmtRcvd}}</td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer btn-design">
+                        <button type="button" class="btn btn-success" (click)="SaveAgreementMeteredBill()">
+                            Save
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="utilFacilModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLiveLabel">{{'Unit Utilites & Facilities' | translate}}
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="row py-2 border-bottom border-dashed">
+                            <nav class="customTab">
+                                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" (click)="switchTab('Facilities','units')"
+                                        [class.active]="UnitactiveTab === 'Facilities'">{{'Facilities' | translate}}</a>
+                                    <a class="nav-item nav-link active" (click)="switchTab('Utilites','units')"
+                                        [class.active]="UnitactiveTab === 'Utilites'">{{'Utilites' | translate}}</a>
+
+                                </div>
+                            </nav>
+                            <div class="tab-content w-100" id="nav-tabContent">
+                                <div class="tab-pane fade show active"
+                                    [ngClass]="{ active: UnitactiveTab === 'Facilities' }">
+                                    <div class="row mt-4">
+
+                                        <div class="col-md-12">
+                                            <div
+                                                class="table-responsive fixed-height-wrapper tbl-input-select dataTableDesign">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{'Facility' | translate}}<span
+                                                                    class="colorRed">*</span>
+                                                            </th>
+                                                            <th>{{'Quantity' | translate}}<span
+                                                                    class="colorRed">*</span>
+                                                            </th>
+                                                            <th>{{'Rate(Fixed)' | translate}}<span
+                                                                    class="colorRed">*</span>
+                                                            </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let p of agreementItemFacilities; index as i">
+                                                            <td>{{ p.fcltName }}</td>
+                                                            <td>{{ p.u_Qty | dynamicDecimal:GenericForma.DecimelPoint }}
+                                                            </td>
+                                                            <td>{{ p.u_Rate | dynamicDecimal:GenericForma.DecimelPoint
+                                                                }}</td>
+
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show active"
+                                    [ngClass]="{ active: UnitactiveTab === 'Utilites' }">
+                                    <div class="row mt-4">
+
+                                        <div class="col-md-12">
+                                            <div
+                                                class="dataTableDesign table-responsive tbl-input-select fixed-height-wrapper">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{'Utility' | translate}} <span
+                                                                    class="colorRed">*</span>
+                                                            </th>
+                                                            <th>{{'Tax Code' | translate}}</th>
+                                                            <th>{{'Calculation' | translate}} <span
+                                                                    class="colorRed">*</span></th>
+                                                            <th>{{'Rates' | translate}} <span class="colorRed">*</span>
+                                                            </th>
+                                                            <th>{{'Occurance' | translate}} <span
+                                                                    class="colorRed">*</span>
+                                                            </th>
+                                                            <th>{{'Amount' | translate}}</th>
+                                                            <th>{{'Tax' | translate}}</th>
+                                                            <th>{{'Amount After Tax' | translate}}</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let p of agreementUtilities; index as i">
+                                                            <td>{{ p.utilItemname }}</td>
+                                                            <td>{{ p.u_TaxCode || '-' }}</td>
+                                                            <td>
+                                                                {{
+                                                                p.u_Calculation === 1
+                                                                ? 'Fixed'
+                                                                : p.u_Calculation === 2
+                                                                ? 'By Unit Size(Per SQM)'
+                                                                : p.u_Calculation === 3
+                                                                ? 'Metered (Per Unit)'
+                                                                : '-'
+                                                                }}
+                                                            </td>
+                                                            <td>{{ p.u_Rate | dynamicDecimal:GenericForma.DecimelPoint
+                                                                }}</td>
+                                                            <td>{{ p.u_Occurance }}</td>
+                                                            <td>{{ p.u_Amount | dynamicDecimal:GenericForma.DecimelPoint
+                                                                }}</td>
+                                                            <td>{{ p.u_TaxAmt || 0 |
+                                                                dynamicDecimal:GenericForma.DecimelPoint }}</td>
+                                                            <td>{{ p.u_TotAfterTax || 0 |
+                                                                dynamicDecimal:GenericForma.DecimelPoint }}</td>
+
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                                    <div class="btn-group btn-design">
+                                        <!-- <button class="btn btn-success" type="button" (click)="onSubmitUnits('new')">
+                                            <i class="fa fa-save"></i><span> Add & New</span>
+                                        </button>
+                                        <button class="btn btn-warning" type="button" (click)="onSubmitUnits('close')">
+                                            <i class="fa fa-save"></i><span> Add & Close</span>
+                                        </button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade cancelconfirmModal" id="cancelConfirmModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-5 shadow-lg border-0" style="overflow: hidden;">
+
+                    <!-- Icon Header Section -->
+                    <div class="text-center py-4" style="background: #14213D;">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-white shadow-lg"
+                            style="width: 80px; height: 80px; border-radius: 50%; font-size: 36px; color: #e53935; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body text-center px-5 pt-4 pb-3">
+                        <h4 class="fw-semibold text-dark mb-3">Are you sure you want to cancel?</h4>
+                        <p class="text-secondary fs-6 mb-0">
+                            You are about to cancel agreement
+                            <strong class="text-danger">{{SelectedAgreement.u_DocNum}}</strong>.<br> This action cannot
+                            be undone.
+                        </p>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer border-0 justify-content-center pb-5 pt-3">
+                        <button type="button" class="btn btn-success rounded-pill px-4 me-2 shadow-sm"
+                            data-bs-dismiss="modal">
+                            <i class="fas fa-times me-1"></i> No, Keep It
+                        </button>
+                        <button type="button" class="btn btn-danger rounded-pill px-4 shadow-sm"
+                            (click)="UpdateAgreementStatus(4,'yes')">
+                            <i class="fas fa-ban me-1"></i> Yes, Cancel
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,389 @@
+<div class="row">
+    <div class="col-md-12 pl-md-0 pr-md-0">
+        <div class="card card-user">
+            <div class="card-body pb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">{{'Agreement Type' | translate}}</label>
+
+                            <ng-select aria-label="Default select example" (change)="onDropDownChange($event)">
+                                <ng-option *ngFor="let car of AgreementTypeListVlaues"
+                                    [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-right">
+                        <div class="btn-design" *ngIf="AllowedPermissions['canCreate']">
+                            <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to Excel</button>
+                            <button [routerLink]="['/agreements/performa-invoice']" class="btn btn-success"><i
+                                    class="fa fa-plus"></i> {{'Add New' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="AllowedPermissions['canCreate']">
+
+                </div>
+                <div *ngIf="AllowedPermissions['canView']" class="">
+                    <div class="table-responsive dataTableDesign">
+                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th>{{'#' | translate}}</th>
+                                    <th>{{'Doc Num' | translate}}</th>
+                                    <!-- <th>{{'Ref. N' | translate}}</th> -->
+                                    <th>{{'BP Code' | translate}}</th>
+                                    <th>{{'BP Name' | translate}}</th>
+                                    <th>{{'Contact Person' | translate}}</th>
+                                    <th>{{'Doc Date' | translate}}</th>
+                                    <th>{{'Agreement No' | translate}}</th>
+                                    <th>{{'Agreement Type' | translate}}</th>
+                                    <th>{{'A/R Downpayment/Invoice' | translate}}</th>
+                                    <th>{{'Created Date' | translate}}</th>
+                                    <th>{{'Approval Status' | translate}}</th>
+                                    <th>{{'Approval Level' | translate}}</th>
+                                    <th>{{'Status' | translate}}</th>
+                                    <th>{{'Action' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of PerformaList; let i = index">
+                                    <td>{{ i+1 }}</td>
+                                    <td>{{ item.u_DocNum }}</td>
+                                    <!-- <td>{{ item.u_CustRefNo }}</td> -->
+                                    <td>{{ item.u_BPCode }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.u_CPName }}</td>
+                                    <td>{{ item.u_DocDate | date:GenericForma.DateFormate }}</td>
+                                    <td>{{ item.u_AGID }}</td>
+                                    <td>{{ item.u_AGType }}</td>
+                                     <td>{{ item.u_GLEntry }}</td>
+                                    <td>{{item.createdDate | date:GenericForma.DateFormate}}</td>
+                                    <td>
+                                        <span class="badge" [ngClass]="{
+                                                'bg-warning': item.approvalStatus === 'Pending',
+                                                'bg-success': item.approvalStatus === 'Approved',
+                                                'bg-danger': item.approvalStatus === 'Rejected'
+                                                }">
+                                            {{ item.approvalStatus }}
+                                        </span>
+                                    </td>
+
+
+                                    <td>{{ item.applicationLevel }}</td>
+
+
+                                    <td>
+                                        <span class="badge" [ngClass]="{
+                                                            'bg-success': item.u_Stauts == 'Open',
+                                                            'bg-secondary': item.u_Stauts == 'Close',
+                                                            'bg-danger': item.u_Stauts =='Canceled'
+                                                            }">
+                                            {{ item.u_Stauts }}
+                                        </span>
+                                    </td>
+
+                                    <td class="action-btn">
+                                        <span class="" (click)=" GetperformaList(item.id)">
+                                            <i class="fa fa-eye"></i>
+                                        </span>
+                                        <!-- <span (click)="Update(item.id)"><i class="fa fa-edit"></i></span> -->
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{'Proforma Invoice' | translate}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row py-2 border-bottom border-dashed">
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Agreement Type' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_AGType}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Series' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_SeriesName}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Agreement No' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_AGID}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Doc Num' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_DocNum}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'BP Code' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_BPCode}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'BP Name' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.name}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Contact Person' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_CPName}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Cust Ref No' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_CRNDraft}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Status' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_Stauts}}</div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="fw-semibold text-dark">{{'Posting Date' | translate}}</div>
+                                <div class="text-secondary small">{{SelectedAgreement.u_PostingDate
+                                    | date:GenericForma.DateFormate }}</div>
+                            </div>
+                        </div>
+                        <nav class="customTab">
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+
+                                <a class="nav-item nav-link active" (click)="switchTab('UnitDetail','header')"
+                                    [class.active]="activeTab === 'UnitDetail'">{{'Unit Detail' | translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('InstallmentPlan','header')"
+                                    [class.active]="activeTab === 'InstallmentPlan'">{{'Installment Plan' |
+                                    translate}}</a>
+
+                                <a class="nav-item nav-link active" (click)="switchTab('Attachments','header')"
+                                    [class.active]="activeTab === 'Attachments'">{{'Attachments' | translate}}</a>
+                                <a class="nav-item nav-link active" (click)="switchTab('approvalLog','header')"
+                                    [class.active]="activeTab === 'approvalLog'">{{'Approval Log' | translate}}</a>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content" id="nav-tabContent">
+
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'UnitDetail'">
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive dataTableDesign fixed-height-wrapper">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>{{'Unit Code' | translate}}</th>
+                                                        <th>{{'Project' | translate}}</th>
+                                                        <th>{{'Building' | translate}}</th>
+                                                        <th>{{'Zone' | translate}}</th>
+                                                        <th>{{'Sub Zone' | translate}}</th>
+                                                        <th>{{'Unit Size (SQM)' | translate}}</th>
+                                                        <th>{{'Rate per SQM' | translate}}</th>
+                                                        <th *ngIf="SelectedAgreement.u_AGType=='Rent'">{{'Security' |
+                                                            translate}}</th>
+                                                        <th *ngIf="SelectedAgreement.u_AGType=='Rent'">{{'Yearly Rent' |
+                                                            translate}}</th>
+                                                            <th *ngIf="SelectedAgreement.u_AGType=='Off_PlanSales'">{{'Delivery Date' |
+                                                            translate}}</th>
+                                                        
+                                                        <th *ngIf="SelectedAgreement.u_AGType!='Maintenance'">{{'Discount (%)' | translate}}</th>
+                                                        <th *ngIf="SelectedAgreement.u_AGType!='Maintenance'">{{'Discount Amount' | translate}}</th>
+                                                        <th>{{'Total' | translate}}</th>
+                                                        <th>{{'Total After Discount' | translate}}</th>
+                                                        <th>{{'Tax (%)' | translate}}</th>
+                                                        <th>{{'Tax Amount' | translate}}</th>
+                                                        <th>{{'Total After Tax' | translate}}</th>
+                                                        <th>{{'Created Date' | translate}}</th>
+
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let u of SelectedAgreement.agreementItems; let i = index">
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{ u.u_UnitCode }}</td>
+                                                        <td>{{ u.projectName }}</td>
+                                                        <td>{{ u.buildingName }}</td>
+                                                        <td>{{ u.zoneName }}</td>
+                                                        <td>{{ u.subZoneName }}</td>
+                                                        <td>{{ u.u_UnitSize }}</td>
+                                                        <td>{{ u.u_PerSQMRate | number}}</td>
+                                                        <td *ngIf="SelectedAgreement.u_AGType=='Rent'">0</td>
+                                                        <td *ngIf="SelectedAgreement.u_AGType=='Rent'">0</td>
+                                                         <td *ngIf="SelectedAgreement.u_AGType=='Off_PlanSales'">{{ u.createdDate | date:GenericForma.DateFormate }}</td>
+                                                        
+                                                        <td *ngIf="SelectedAgreement.u_AGType!='Maintenance'">{{ u.u_DiscPrc | number}}</td>
+                                                        <td *ngIf="SelectedAgreement.u_AGType!='Maintenance'">{{ u.u_DiscAmt | number}}</td>
+                                                       <td>{{ u.u_Total | number}}</td>
+                                                        <td >{{ u.u_TotAfterDisc | number}}</td>
+                                                        <td>{{ u.u_TaxPrc | number}}</td>
+                                                        <td>{{ u.u_TaxAmt | number}}</td>
+                                                        <td>{{ u.u_TotAfterTax | number}}</td>
+                                                        <td>{{ u.createdDate | date:GenericForma.DateFormate }}</td>
+
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'InstallmentPlan'">
+
+                                <div class="table-responsive dataTableDesign fixed-height-wrapper mt-4">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'#' | translate}}</th>
+                                                <th>{{'Installment No' | translate}}</th>
+                                                <th>{{'Installment %' | translate}}</th>
+                                                <th>{{'Date' | translate}}</th>
+                                                <th>{{'Amount Before Tax' | translate}}</th>
+                                                <th>{{'Utility Amount' | translate}}</th>
+                                                <th>{{'Tax' | translate}}</th>
+                                                <th>{{'Amount After Tax' | translate}}</th>
+                                                <th>{{'Amount Received' | translate}}</th>
+                                                <th>{{'A/R Downpayment/Invoice' | translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let u of SelectedAgreement.agreementInstallments; let i = index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{u.u_InstID}}</td>
+                                                <td>{{ u.u_PrcUnit }}</td>
+                                                <td>{{ u.u_GDate | date:GenericForma.DateFormate}}</td>
+
+                                                <td>{{u.u_AmtBeforeTax | number}}</td>
+                                                <td>{{u.u_UtilAmt | number}}</td>
+                                                <td>{{u.u_Tax | number}}</td>
+                                                <td>{{u.u_AmtAfterTax | number}}</td>
+                                                <td>{{u.u_AmtRcvd | number}}</td>
+                                                <td>{{SelectedAgreement.u_GLEntry}}</td>
+
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'Attachments'">
+
+                                <!-- Attachment table start -->
+                                <div class="table-responsive dataTableDesign fixed-height-wrapper mt-4">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Attachment Type' | translate}}</th>
+                                                <th>{{'Description' | translate}}</th>
+                                                <th>{{'File' | translate}}</th>
+                                                <!-- <th>Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let p of SelectedAgreement.attachements">
+                                                <td>{{p.u_UniqueName}}</td>
+                                                <td>{{p.name}}</td>
+                                                <td>
+                                                    <span>
+                                                        <a *ngIf="p.FileURL2.length <= 500" [href]="p.FileURL2"
+                                                            target="_blank"><i class="fa fa-eye"></i></a>
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <!-- Attachment table end -->
+                            </div>
+                            <div class="tab-pane fade show active" [hidden]="activeTab !== 'approvalLog'">
+
+                                <!-- Attachment table start -->
+                                <div class="table-responsive fixed-height-wrapper dataTableDesign mt-4">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'User Name' | translate}}</th>
+                                                <th>{{'Level' | translate}}</th>
+                                                <th>{{'Remarks' | translate}}</th>
+                                                <th>{{'Status' | translate}}</th>
+
+                                                <!-- <th>Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let p of SelectedAgreement.approvalLog">
+                                                <td>{{p.userName}}</td>
+                                                <td>{{p.levelName}}</td>
+                                                <td>{{p.remarks}}</td>
+                                                <td>{{p.docApprStatus}}</td>
+
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <!-- Attachment table end -->
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <!-- Form Actions -->
+                            <div class="d-flex justify-content-end gap-2">
+                                <div class="btn-group btn-design">
+                                    <button class="btn btn-warning"
+                                        *ngIf="this.SelectedAgreement.u_Stauts!='Close' 
+                                        && this.SelectedAgreement.u_Stauts!='Canceled' 
+                                        && SelectedAgreement.u_AGType!='Rent'
+                                        && SelectedAgreement.approvalStatus ==='Approved'"
+
+                                        (click)="performaDownPayment(SelectedAgreement.id)" type="submit">
+                                        <span> {{'Post DownPayment' | translate}}</span>
+                                    </button>
+                                    <button class="btn btn-warning"
+                                        *ngIf="this.SelectedAgreement.u_Stauts!='Close' 
+                                        && this.SelectedAgreement.u_Stauts!='Canceled' 
+                                        && SelectedAgreement.u_AGType=='Rent'
+                                        && SelectedAgreement.approvalStatus ==='Approved'"
+                                        (click)="performaDownPayment(SelectedAgreement.id)" type="submit">
+                                        <span> {{'Post Invoice' | translate}}</span>
+                                    </button>
+                                    <button class="btn btn-danger"
+                                        *ngIf="SelectedAgreement.u_Stauts!='Close' && SelectedAgreement.u_Stauts!='Canceled'"
+                                        (click)="canclperforma(SelectedAgreement.id)" type="button">
+                                        <span> {{'Cancel Invoice' | translate}}</span>
+                                    </button>
+                                    <button class="btn btn-success" type="button">
+                                        <span> {{'Print' | translate}}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="card card-user">
+  <div class="card-body">
+
+    <div class="sectionHeading">
+      <h6 class="mb-4">{{'Document Approval Template'|translate}}</h6>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive dataTableDesign tbl-input-select fixed-height-wrapper">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>{{'Document Type'|translate}}</th>
+              <th>{{'Document Sub Type'|translate}}</th>
+              <th>{{'Stage'|translate}}</th>
+              <th>{{'Level'|translate}}</th>
+              <th>{{'Active'|translate}}</th>
+              <th>{{'Action'|translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+               <input type="hidden" [(ngModel)]="md_id" />
+                <td>
+                  <ng-select [(ngModel)]="md_DocumentType">
+                    <ng-option *ngFor="let emp of DocumentType" [value]="emp.value">{{emp.name}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select [(ngModel)]="md_DocumentSubType">
+                    <ng-option *ngFor="let emp of DocumentSubType" [value]="emp.value">{{emp.name}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select [(ngModel)]="md_stageId">
+                    <ng-option *ngFor="let emp of StageMasterList" [value]="emp.id">{{emp.stageName}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select [(ngModel)]="md_level">
+                    <ng-option *ngFor="let emp of LevelsList" [value]="emp.value">{{emp.name}}</ng-option>
+                  </ng-select>
+                </td>
+                <td>
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="md_activeCheckBox" id="activeCheckbox" />
+                </td>
+                <td class="action-btn">
+                  <span class="" (click)="addTemplate()"><i class="fa fa-plus"></i></span>
+                </td>
+              </tr>
+              <tr *ngFor="let stage of TemplateDeatilList; let i = index">
+                <td>{{ stage.docType }}</td>
+                <td>{{ stage.subType }}</td>
+                <td>{{ getStageName(stage.stageId) }}</td>
+                <td>{{ stage.level }}</td>
+                <td>
+                  <span [ngClass]="stage.flgActive ? 'badge bg-success' : 'badge bg-danger'">
+                    {{ stage.flgActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </td>
+                <td class="action-btn">
+                  <span (click)="editTemplate(stage, i)"><i class="fa fa-edit"></i></span>
+                  <span (click)="removeTemplate(i)"><i class="fa fa-trash"></i></span>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mb-4 text-right btn-design mt-4">
+        <button class="btn btn-success" type="button" (click)="onSubmit()">{{'Save'|translate}}</button>
+        <button class="btn btn-secondary" type="button" (click)="clearForm()">{{'Clear'|translate}}</button>
+
+      </div>
+    </div>
+
+    <div class="sectionHeading">
+      <h6 class="mb-4">{{'Template Listing'|translate}}</h6>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive dataTableDesign">
+          <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>{{'Document Type'|translate}}</th>
+              <th>{{'Document Sub Type'|translate}}</th>
+              <th>{{'Stage'|translate}}</th>
+              <th>{{'Level'|translate}}</th>
+              <th>{{'Active'|translate}}</th>
+              <th>{{'Action'|translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr *ngFor="let stage of TemplateListing; let i = index">
+                 <td>{{i+1}}</td>
+                <td>{{ stage.docType }}</td>
+                <td>{{ stage.subType }}</td>
+                <td>{{ getStageName(stage.stageId) }}</td>
+                <td>{{ stage.level }}</td>
+                <td>
+                  <span [ngClass]="stage.flgActive ? 'badge bg-success' : 'badge bg-danger'">
+                    {{ stage.flgActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </td>
+                <td class="action-btn">
+                  <span (click)="editTemplate(stage, i)"><i class="fa fa-edit"></i></span>
+                  <!-- <span (click)="removeTemplate(i)"><i class="fa fa-trash"></i></span> -->
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+</div>
