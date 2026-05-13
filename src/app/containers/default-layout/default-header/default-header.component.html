@@ -5,42 +5,42 @@
       <svg cIcon name="cilMenu" size="lg"></svg>
     </button>
 
-    <c-header-nav class="d-none d-lg-flex me-auto header-nav" _nghost-ng-c1721759406="" role="navigation">
+    <c-header-nav class=" d-lg-flex me-auto header-nav" _nghost-ng-c1721759406="" role="navigation">
       <c-nav-item _nghost-ng-c3971377937="" class="nav-item">
         <!-- <a cnavlink="" routerlink="/dashboard" routerlinkactive="active" href="#/dashboard" class="nav-link active" style="cursor: pointer;"> Welcome, Naveed Rasheed </a>
     <p>Today is Thursday, 28th August 2025.</p> -->
         <a cNavLink routerLink="/dashboard" routerLinkActive="active">
           Welcome, {{UserFullName}}
         </a>
-        <p>{{CUrrentDate}}</p>
+        <div class="header-inline-data">
+          <c-breadcrumb-router class="ms-2"></c-breadcrumb-router>
+           <p>{{CUrrentDate}}</p>
+         
+        </div>
+       
       </c-nav-item>
     </c-header-nav>
-    <c-header-nav class=" d-lg-flex align-items-center">
+    <c-header-nav class="d-lg-flex align-items-center">
 
-      <div class="d-flex justify-content-end align-items-center">
+      <div class="d-flex justify-content-end align-items-center lng-btn">
 
-<div class="langDropdown d-flex align-items-center">
+        <div class="langDropdown d-flex align-items-center">
 
-   <span class="fi fi-gb"></span>
-  <span
-    [ngClass]="{
+          <span class="fi fi-gb"></span>
+          <span [ngClass]="{
       'fi fi-gb': currentLang === 'en',
       'fi fi-sa': currentLang === 'ar'
-    }"
-  ></span>
+    }"></span>
 
-  <select
-    class="form-select border-0 w-auto custom-select"
-    [(ngModel)]="currentLang"
-    (change)="switchLang(currentLang)"
-  >
-    <option value="en">English</option>
-    <option value="ar">Arabic</option>
-  </select>
-</div>
+          <select class="form-select border-0 w-auto custom-select" [(ngModel)]="currentLang"
+            (change)="switchLang(currentLang)">
+            <option value="en">English</option>
+            <option value="ar">Arabic</option>
+          </select>
+        </div>
 
 
-  <!-- <div class="dropdown langDropdown">
+        <!-- <div class="dropdown langDropdown">
   <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fi fi-gb me-2"></span> English
   </button>
@@ -59,16 +59,18 @@
 </div> -->
 
 
-</div>
+      </div>
       <c-nav-item>
         <a routerLink="/approvals/pending-documents" cNavLink class="bellIcon">
+          <!-- <i class="fa fa-bell"></i> -->
+          <i class="fa-regular fa-bell"></i>
           <!-- <svg cIcon name="cilBell" size="lg"></svg> -->
-          <img src="../../../../assets/images/bell-icon.png">
+          <!-- <img src="../../../../assets/images/bell-icon.png"> -->
           <span class="countSe">{{PendingDocumentList ?? 0}}</span>
         </a>
       </c-nav-item>
-       
-      <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
+
+      <ng-container *ngTemplateOutlet="userDropdown" ></ng-container>
       <!-- <c-nav-item>
         <a routerLink="./" cNavLink>
           <svg cIcon name="cilList" size="lg"></svg>
@@ -79,7 +81,7 @@
           <svg cIcon name="cilEnvelopeOpen" size="lg"></svg>
         </a>
       </c-nav-item> -->
-          <div class="nameRole">
+      <div class="nameRole">
         <h4 class="userName">{{UserFullName}}.</h4>
         <p>{{UserType}}</p>
       </div>
@@ -96,18 +98,18 @@
     </c-header-nav> -->
 
   </c-container>
-  <c-header-divider style="margin: 0 -8px;"></c-header-divider>
+  <!-- <c-header-divider style="margin: 0 -8px;"></c-header-divider>
   <c-container [fluid]="true">
-    <c-breadcrumb-router class="ms-2"></c-breadcrumb-router>
-  </c-container>
+   
+  </c-container> -->
 </ng-container>
 <!--</c-header>-->
 
 
 
 <ng-template #userDropdown>
-  
-  <c-dropdown alignment="end" variant="nav-item">
+
+  <c-dropdown alignment="end" variant="nav-item" class="u-spacing">
     <!-- <button cButton color="" [caret]="false" cDropdownToggle class="py-0">
       <c-avatar cTextColor="primary" shape="rounded-1" size="md" src="./assets/img/avatars/dummy3.png" status="success">
       </c-avatar>
@@ -128,5 +130,5 @@
     </ul>
   </c-dropdown>
 
- 
+
 </ng-template>

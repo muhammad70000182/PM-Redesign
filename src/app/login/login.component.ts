@@ -19,6 +19,7 @@ export class LoginComponent {
   otpVerificationFrom: FormGroup;
   resetPasswordForm: FormGroup;
   submitted: boolean = false;
+  showPassword: boolean = false;
   showPasswordConfirm: boolean = false;
   showConfirmPassword: boolean = false;
   Forgotsubmitted: boolean;

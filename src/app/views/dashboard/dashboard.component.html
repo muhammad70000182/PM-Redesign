@@ -1,282 +1,160 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-<div class="dashboard-design">
-  <div class="card">
-    <div class="card-body">
-      <div class="sectionHeading">
-        <h6> {{'Agreements'|translate}}</h6>
-      </div>
-
-      <div class="row g-3">
-
-        <div class="col-md-3 col-sm-6">
-          <div class="card cardShadow p-3 rounded-4 bg-gradient-info tile-deisgn">
-            <div class="d-flex justify-content-between align-items-center tileContent">
-              <h6 class="text-muted fw-bold mb-0">{{'Sale'|translate}}</h6>
-              <img src="../../../assets/images/circle.svg" alt=""/>
-              <div class="rounded-circle p-2">
-                <i class="fa-solid fa-handshake"></i>
-              </div>
-            </div>
-            <h4 class="mt-2 mb-2 fw-bold">{{SaleAgreementData?.total ?? 0}}</h4>
-            <div class="statusBadges">
-              <div class="badge green">
-                <div class="badge-content">
-                  <span>{{'Approved'|translate}}</span>
-                  <span class="badge-counter">{{SaleAgreementData?.approved ?? 0}}</span>
-                </div>
-              </div>
-              <div class="badge yallow">
-                <div class="badge-content">
-                <span> {{'Pending'|translate}}</span>
-                <span class="badge-counter">{{SaleAgreementData?.pending ?? 0}}</span>
-                </div>
-                
-              </div>
-              <div class="badge red">
-                <div class="badge-content">
-                  <span> {{'Rejected'|translate}}</span>
-                  <span class="badge-counter">{{SaleAgreementData?.rejected ?? 0}}</span>
-                </div>
-                
-              </div>
-              <!-- <div class="badge info">
-                <span>Pending Ejar</span>
-                <div class="badge-counter">{{SaleAgreementData?.pendingEjar ?? 0}}</div>
-              </div> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="card cardShadow p-3 rounded-4  bg-gradient-danger tile-deisgn">
-            <div class="d-flex justify-content-between align-items-center tileContent">
-              <h6 class="text-muted fw-bold mb-0"> {{'Rent'|translate}}</h6>
-              <img src="../../../assets/images/circle.svg" alt=""/>
-              <div class="rounded-circle p-2">
-
-                <i class="fa-solid fa-building fs-4 text-warning"></i>
-              </div>
-            </div>
-            <h4 class="mt-2 mb-2 fw-bold">{{RentAgreementData?.total ?? 0}}</h4>
-            <div class="statusBadges">
-              <div class="badge green">
-                <div class="badge-content">
-                  <span>{{'Approved'|translate}}</span>
-                  <span class="badge-counter">{{RentAgreementData?.approved ?? 0}}</span>
-                </div>
-                
-              </div>
-              <div class="badge yallow">
-                <div class="badge-content">
-                  <span>{{'Pending'|translate}}</span>
-                  <span class="badge-counter">{{RentAgreementData?.pending ?? 0}}</span>
-                </div>
-                
-              </div>
-              <div class="badge red">
-                <div class="badge-content">
-                  <span>{{'Rejected'|translate}}</span>
-                  <span class="badge-counter">{{RentAgreementData?.rejected ?? 0}}</span>
-                </div>
-                
-              </div>
-              <!-- <div class="badge info">
-                <span>Pending Ejar</span>
-                <div class="badge-counter">{{RentAgreementData?.pendingEjar ?? 0}}</div>
-              </div> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="card cardShadow p-3 rounded-4 bg-gradient-success tile-deisgn">
-            <div class="d-flex justify-content-between align-items-center tileContent">
-              <h6 class="text-muted fw-bold mb-0">{{'Maintenance'|translate}}</h6>
-              <img src="../../../assets/images/circle.svg" alt=""/>
-              <div class=" rounded-circle p-2">
-
-                <i class="fa-solid fa-screwdriver-wrench fs-4 text-success"></i>
-              </div>
-            </div>
-            <h4 class="mt-2 mb-2 fw-bold">{{MaintenanceAgreementData?.total ?? 0}}</h4>
-            <div class="statusBadges">
-              <div class="badge green">
-                <div class="badge-content">
-                  <span>{{'Approved'|translate}}</span>
-                  <span class="badge-counter">{{MaintenanceAgreementData?.approved ?? 0}}</span>
-                </div>
-                
-              </div>
-              <div class="badge yallow">
-                <div class="badge-content">
-                  <span>{{'Pending'|translate}}</span>
-                  <span class="badge-counter">{{MaintenanceAgreementData?.pending ?? 0}}</span>
-                </div>
-                
-              </div>
-              <div class="badge red">
-                <div class="badge-content">
-                  <span>{{'Rejected'|translate}}</span>
-                  <span class="badge-counter">{{MaintenanceAgreementData?.rejected ?? 0}}</span>
-                </div>
-               
-              </div>
-              <!-- <div class="badge info">
-                <span>Pending Ejar</span>
-                <div class="badge-counter">{{MaintenanceAgreementData?.pendingEjar ?? 0}}</div>
-              </div> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="card cardShadow p-3 rounded-4 bg-gradient-warning tile-deisgn">
-            <div class="d-flex justify-content-between align-items-center tileContent">
-              <h6 class="text-muted fw-bold mb-0">{{'Off Plan '|translate}}</h6>
-              <img src="../../../assets/images/circle.svg" alt=""/>
-              <div class="rounded-circle p-2">
-
-                <i class="fa-solid fa-file-contract fs-4 text-danger"></i>
-              </div>
-            </div>
-            <h4 class="mt-2 mb-2 fw-bold">{{OffPlanAgreementData?.total ?? 0}}</h4>
-            <div class="statusBadges">
-              <div class="badge green">
-                <div class="badge-content">
-                    <span>{{'Approved'|translate}}</span>
-                    <span class="badge-counter">{{OffPlanAgreementData?.approved ?? 0}}</span>
-              </div>
-                </div>
-                
-              <div class="badge yallow">
-                <div class="badge-content">
-                  <span>{{'Pending'|translate}}</span>
-                  <span class="badge-counter">{{OffPlanAgreementData?.pending ?? 0}}</span>
-                </div>
-                
-              </div>
-              <div class="badge red">
-                <div class="badge-content">
-                  <span>{{'Rejected'|translate}}</span>
-                  <span class="badge-counter">{{OffPlanAgreementData?.rejected ?? 0}}</span>
-                </div>
-                
-              </div>
-               <!-- <div class="badge info">
-                <span>Pending Ejar</span>
-                <div class="badge-counter">{{OffPlanAgreementData?.pendingEjar ?? 0}}</div>
-              </div> -->
-            </div>
-          </div>
+<div class="dashboard-wrapper">
+  <!-- Welcome Card Section -->
+  <div class="welcome-section mb-4">
+    <div class="welcome-card">
+      <div class="welcome-content">
+        <h2>Welcome Back, Admin</h2>
+        <p>Stay updated with property activities, approvals, and pending tasks in real time.</p>
+        <div class="summary-badge">
+          <span>Total Requests: {{summaryData?.totalRequests ?? 120}}</span>
+          <span class="separator">|</span>
+          <span>Approved: {{summaryData?.approved ?? 85}}</span>
+          <span class="separator">|</span>
+          <span>Pending: {{summaryData?.pending ?? 25}}</span>
+          <span class="separator">|</span>
+          <span>Rejected: {{summaryData?.rejected ?? 10}}</span>
         </div>
       </div>
-      <div class="row mt-4">
-        <div class="col-md-3 col-sm-6">
-          <div class="card cardShadow p-3 rounded-4 bg-gradient-danger tile-deisgn">
-            <div class="d-flex justify-content-between align-items-center tileContent cont-expire-tile">
-              <h6 class="text-muted fw-bold mb-0">{{'Expire in 3 Months '|translate}}</h6>
-              <img src="../../../assets/images/circle.svg" alt=""/>
-              <div class=" rounded-circle p-2">
+    </div>
+  </div>
 
-                <i class="fa-solid fa-handshake-slash"></i>
-              </div>
-            </div>
-            <h4 class="mt-2 mb-2 fw-bold">{{totalExpiringIn3Months ?? 0}}</h4>
-            <div class="statusBadges">
-              <div class="badge blue">
-                <div class="badge-content">
-                  <span>{{'Sale'|translate}}</span>
-                  <div class="badge-counter">{{SaleAgreementData?.expiringIn3Months ?? 0}}</div>
-                </div>
-                
-              </div>
-              <div class="badge yallow">
-                <div class="badge-content">
-                  <span>{{'Rent'|translate}}</span>
-                  <div class="badge-counter">{{RentAgreementData?.expiringIn3Months ?? 0}}</div>
-                </div>
-                
-              </div>
-              <div class="badge green">
-                <div class="badge-content">
-                  <span>{{'Maintenance'|translate}} </span>
-                  <div class="badge-counter">{{MaintenanceAgreementData?.expiringIn3Months ?? 0}}</div>
-                </div>
-                
-              </div>
-               <div class="badge info">
-                <div class="badge-content">
-                  <span>{{'Off Plan'|translate}}</span>
-                  <div class="badge-counter">{{OffPlanAgreementData?.expiringIn3Months ?? 0}}</div>
-                </div>
-                
-              </div>
-            </div>
+  <!-- Agreements Section -->
+  <div class="agreements-section">
+    <div class="section-header">
+      <h3>{{'Agreements'|translate}}</h3>
+    </div>
+
+    <!-- Tiles Grid -->
+    <div class="tiles-grid">
+      <!-- Sale Tile -->
+      <div class="tile tile-blue">
+        <div class="tile-header">
+          <h4>{{'SALE'|translate}}</h4>
+          <div class="tile-icon">
+            <i class="fas fa-handshake"></i>
           </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="card cardShadow p-3 rounded-4 bg-gradient-success tile-deisgn">
-            <div class="d-flex justify-content-between align-items-center tileContent cont-expire-tile">
-              <h6 class="text-muted fw-bold mb-0"> {{'Pending Ejar'|translate}}</h6>
-              <img src="../../../assets/images/circle.svg" alt=""/>
-              <div class=" rounded-circle p-2">
-
-                <!-- <i class="fa-solid fa-handshake-slash"></i> -->
-                <!-- <i class="fa-solid fa-hourglass-end"></i> -->
-                <!-- <i class="fa-solid fa-hourglass-end"></i> -->
-                <i class="fa-solid fa-hourglass-start"></i>
-              </div>
-            </div>
-            <h4 class="mt-2 mb-2 fw-bold">{{totalPendingEjar ?? 0}}</h4>
-            <div class="statusBadges">
-              <div class="badge blue">
-                <div class="badge-content">
-                  <span>{{'Sale'|translate}}</span>
-                  <div class="badge-counter">{{SaleAgreementData?.pendingEjar ?? 0}}</div>
-                </div>
-                
-              </div>
-              <div class="badge yallow">
-                <div class="badge-content">
-                  <span>{{'Rent'|translate}}</span>
-                  <div class="badge-counter">{{RentAgreementData?.pendingEjar ?? 0}}</div>
-                </div>
-                
-              </div>
-              <div class="badge green">
-                <div class="badge-content">
-                  <span>{{'Maintenance'|translate}} </span>
-                  <div class="badge-counter">{{MaintenanceAgreementData?.pendingEjar ?? 0}}</div>
-                </div>
-                
-              </div>
-               <div class="badge info">
-                <div class="badge-content">
-                    <span>{{'Off Plan'|translate}}</span>
-                    <div class="badge-counter">{{OffPlanAgreementData?.pendingEjar ?? 0}}</div>
-                </div>
-                
-              </div>
-            </div>
-          </div>
+        <div class="tile-counter">{{SaleAgreementData?.total ?? 0}}</div>
+        <div class="tile-progress">
+          <div class="progress-bar" style="width: 80%"></div>
+        </div>
+        <div class="tile-status">Approval Rate 80%</div>
+        <div class="tile-badges">
+          <span class="badge badge-success">Approved <span class="badge-counter">{{SaleAgreementData?.approved ?? 0}}</span></span>
+          <span class="badge badge-warning">Pending <span class="badge-counter">{{SaleAgreementData?.pending ?? 0}}</span></span>
+          <span class="badge badge-danger">Rejected <span class="badge-counter">{{SaleAgreementData?.rejected ?? 0}}</span></span>
         </div>
       </div>
 
-      <!-- <div class="row mt-4" *ngIf="mainChart?.data">
-        <div class="col-12">
-          <div class="card cardShadow p-3 rounded-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <h6 class="text-muted fw-bold mb-0">{{'Agreement Trends'|translate}}</h6>
+      <!-- Rent Tile -->
+      <div class="tile tile-pink">
+        <div class="tile-header">
+          <h4>{{'RENT'|translate}}</h4>
+          <div class="tile-icon">
+            <i class="fas fa-building"></i>
+          </div>
+        </div>
+        <div class="tile-counter">{{RentAgreementData?.total ?? 0}}</div>
+        <div class="tile-progress">
+          <div class="progress-bar" style="width: 98%"></div>
+        </div>
+        <div class="tile-status">Approval Rate 98%</div>
+        <div class="tile-badges">
+          <span class="badge badge-success">Approved <span class="badge-counter">{{RentAgreementData?.approved ?? 0}}</span></span>
+          <span class="badge badge-warning">Pending <span class="badge-counter">{{RentAgreementData?.pending ?? 0}}</span></span>
+          <span class="badge badge-danger">Rejected <span class="badge-counter">{{RentAgreementData?.rejected ?? 0}}</span></span>
+        </div>
+      </div>
+
+      <!-- Maintenance Tile -->
+      <div class="tile tile-teal">
+        <div class="tile-header">
+          <h4>{{'MAINTENANCE'|translate}}</h4>
+          <div class="tile-icon">
+            <i class="fas fa-screwdriver-wrench"></i>
+          </div>
+        </div>
+        <div class="tile-counter">{{MaintenanceAgreementData?.total ?? 0}}</div>
+        <div class="tile-progress">
+          <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        <div class="tile-status">Approval Rate 0%</div>
+        <div class="tile-badges">
+          <span class="badge badge-success">Approved <span class="badge-counter">{{MaintenanceAgreementData?.approved ?? 0}}</span></span>
+          <span class="badge badge-warning">Pending <span class="badge-counter">{{MaintenanceAgreementData?.pending ?? 0}}</span></span>
+          <span class="badge badge-danger">Rejected <span class="badge-counter">{{MaintenanceAgreementData?.rejected ?? 0}}</span></span>
+        </div>
+      </div>
+
+      <!-- Off Plan Tile -->
+      <div class="tile tile-yellow">
+        <div class="tile-header">
+          <h4>{{'OFF PLAN'|translate}}</h4>
+          <div class="tile-icon">
+            <i class="fas fa-file-contract"></i>
+          </div>
+        </div>
+        <div class="tile-counter">{{OffPlanAgreementData?.total ?? 0}}</div>
+        <div class="tile-progress">
+          <div class="progress-bar" style="width: 50%"></div>
+        </div>
+        <div class="tile-status">Approval Rate 50%</div>
+        <div class="tile-badges">
+          <span class="badge badge-success">Approved <span class="badge-counter">{{OffPlanAgreementData?.approved ?? 0}}</span></span>
+          <span class="badge badge-warning">Pending <span class="badge-counter">{{OffPlanAgreementData?.pending ?? 0}}</span></span>
+          <span class="badge badge-danger">Rejected <span class="badge-counter">{{OffPlanAgreementData?.rejected ?? 0}}</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Info Cards -->
+
+
+    <!-- Charts Section -->
+    <div class="charts-section mt-5">
+      <div class="row">
+        <!-- Analytics Overview Chart -->
+        <div class="col-lg-8 mb-4">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h5>{{'Analytics Overview'|translate}}</h5>
               <small class="text-muted">{{'Live data from summary'|translate}}</small>
             </div>
-            <c-chart
-              type="bar"
-              [data]="mainChart.data"
-              [options]="mainChart.options"
-              height="400">
-            </c-chart>
+            <div class="chart-body">
+              <div style="height: 300px;" *ngIf="mainChart?.data">
+                <c-chart
+                  type="bar"
+                  [data]="mainChart.data"
+                  [options]="mainChart.options"
+                  height="300">
+                </c-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly Analytics Chart -->
+        <div class="col-lg-4 mb-4">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h5>{{'Monthly Analytics'|translate}}</h5>
+              <small class="text-muted">+24.68%</small>
+            </div>
+            <div class="chart-body">
+              <div style="height: 300px; display: flex; align-items: flex-end; justify-content: space-around; padding: 20px 0;">
+                <div style="width: 30px; height: 80px; background: rgba(95, 72, 184, 0.3); border-radius: 4px;"></div>
+                <div style="width: 30px; height: 120px; background: rgba(95, 72, 184, 0.5); border-radius: 4px;"></div>
+                <div style="width: 30px; height: 150px; background: rgba(95, 72, 184, 0.7); border-radius: 4px;"></div>
+                <div style="width: 30px; height: 100px; background: rgba(95, 72, 184, 0.4); border-radius: 4px;"></div>
+                <div style="width: 30px; height: 180px; background: rgba(95, 72, 184, 0.8); border-radius: 4px;"></div>
+                <div style="width: 30px; height: 140px; background: rgba(95, 72, 184, 0.6); border-radius: 4px;"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    -->
     </div>
   </div>
 </div>

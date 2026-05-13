@@ -9,21 +9,21 @@
     // background: #5F48B8;
     // background: linear-gradient(0deg, rgba(95, 72, 184, 1) 66%, rgba(52, 102, 201, 1) 100%);
 
-    background: #14213D;
-  &::after{
-    content: "";
-    position: absolute;
-    background: url(../../../assets/images/sidebar-img.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    height: auto;
-    width: 255px;
-    height: 220px;
-    opacity: 1;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-  }
+    background: #ffffff;
+  // &::after{
+  //   content: "";
+  //   position: absolute;
+  //   background: url(../../../assets/images/sidebar-img.png);
+  //   background-repeat: no-repeat;
+  //   background-size: 100% 100%;
+  //   height: auto;
+  //   width: 255px;
+  //   height: 220px;
+  //   opacity: 1;
+  //   bottom: 0;
+  //   left: 0;
+  //   z-index: -1;
+  // }
   &.hide{
     &::after{
       display: none;
@@ -36,7 +36,7 @@
   // border-bottom: 1px solid rgba(255,255,255,.1);
   // padding: 0 40px;
   text-align: center;
-    background-image: url(../../../assets/images/abc-logo.png);
+    background-image: url(../../../assets/images/abacus-logo.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -56,7 +56,7 @@
   width: 30px;
 }
 .customSidebar.sidebar-narrow-unfoldable:hover .menuHeader{
-    background-image: url(../../../assets/images/abc-logo.png);
+    background-image: url(../../../assets/images/abacus-logo.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
