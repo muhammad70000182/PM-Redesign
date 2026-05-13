@@ -28,11 +28,11 @@ const routes: Routes = [
   { path: 'unit-delivery', component: UnitDeliveryNewComponent, canActivate: [PermissionsGuard], data: { title: 'Unit Delivery' } },
   { path: 'suspension', component: SuspensionsComponent, canActivate: [PermissionsGuard], data: { title: 'Suspension' } },
   { path: 'suspension-listing', component: SuspensionListingComponent, canActivate: [PermissionsGuard], data: { title: 'Suspension Listing' } },
-   { path: 'unit-return-list', component: unitreturnlistComponent , canActivate: [PermissionsGuard], data: { title: 'Unit Return List' } },
-   { path: 'unit-return', component: unitreturnComponent , canActivate: [PermissionsGuard], data: { title: 'Unit Return' } },
-   { path: 'bulk-installments-posting', component: BulkInstallmentsComponent , canActivate: [PermissionsGuard], data: { title: 'Bulk Installments Posting' } },
-   { path: 'bulk-installments-list', component: BulkInstallmentsListComponent , canActivate: [PermissionsGuard], data: { title: 'Bulk Installments List' } },
-   { path: 'bulk-submitted-agreements', component: BulkSubmittedAgreementsComponent , canActivate: [PermissionsGuard], data: { title: 'Bulk Submitted Agreements' } },
+  { path: 'unit-return-list', component: unitreturnlistComponent, canActivate: [PermissionsGuard], data: { title: 'Unit Return List' } },
+  { path: 'unit-return', component: unitreturnComponent, canActivate: [PermissionsGuard], data: { title: 'Unit Return' } },
+  { path: 'bulk-installments-posting', component: BulkInstallmentsComponent, canActivate: [PermissionsGuard], data: { title: 'Bulk Installments Posting' } },
+  { path: 'bulk-installments-list', component: BulkInstallmentsListComponent, canActivate: [PermissionsGuard], data: { title: 'Bulk Installments List' } },
+  { path: 'bulk-submitted-agreements', component: BulkSubmittedAgreementsComponent, canActivate: [PermissionsGuard], data: { title: 'Bulk Submitted Agreements' } },
 ];
 
 @NgModule({

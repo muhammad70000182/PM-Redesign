@@ -27,6 +27,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
   showForm: boolean = false;
   addBreadcrumb: boolean = false;
   showHidetable: boolean = true;
+  showModal: boolean = false;
   baseUrl: any = '/RoleManagement/';
   p: any;
   constructor(
@@ -94,8 +95,9 @@ export class RolesComponent implements OnInit, AfterViewInit {
     this._service.Post(this.form.value, url).subscribe({
       next: (result: any) => {
         if (result.status) {
-          this.clearForm();
-          this.toastr.success(result.message, "Success", {
+            this.clearForm();
+            this.closeModal();
+            this.toastr.success(result.message, "Success", {
             progressBar: true,
             closeButton: true
           });
@@ -134,6 +136,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
       IsActive: false,
       Id: 0
     });
+    this.showModal = false;
   }
   Update(data: any) {
     debugger;
@@ -149,5 +152,16 @@ export class RolesComponent implements OnInit, AfterViewInit {
     this.form.controls['OffPlanAgreement'].setValue(data['offPlanAgreement']);
     this.form.controls['MaintenanceAgreement'].setValue(data['maintenanceAgreement']);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.showModal = true;
+  }
+
+  openAdd() {
+    this.clearForm();
+    this.isUpdate = false;
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 }

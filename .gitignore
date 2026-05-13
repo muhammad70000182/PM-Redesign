@@ -10,7 +10,7 @@
 /node_modules
 npm-debug.log
 yarn-error.log
-
+config.json
 # profiling files
 chrome-profiler-events*.json
 
@@ -43,3 +43,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+.vs/VSWorkspaceState.json
+.vs/PM_Redesign/v17/.wsuo
+.vs/PM_Redesign/v17/DocumentLayout.json
+src/assets/config.json
+src/assets/config.json
+src/assets/config.json
+src/assets/config.json

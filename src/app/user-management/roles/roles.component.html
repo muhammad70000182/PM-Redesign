@@ -2,59 +2,9 @@
     <div class="col-md-12 pl-md-0 pr-md-0">
         <div class="card card-user">
             <div class="card-body pb-4">
-                <!-- <h4 class="sectionHeading">New Role:</h4> -->
-                <div class="sectionHeading">
-                    <h6 class="fw-bold text-primary mt-2">{{'New Role'| translate}}</h6>
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add New'| translate}}</button>
                 </div>
-                <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                    <input type="hidden" formControlName="Id" />
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                            <div class="form-group">
-                                <label for="RoleName" class="form-label">{{'Role Name'| translate}} <span
-                                        class="colorRed">*</span></label>
-                                <input type="text" class="form-control" formControlName="RoleName"
-                                    [ngClass]="{ 'is-invalid': submitted && f['RoleName'].errors }">
-                                <div *ngIf="submitted && f['RoleName'].errors" class="invalid-feedback">
-                                    <div *ngIf="f['RoleName'].errors['required']">
-                                        {{'Role Name is required'| translate}}
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-
-                            <div class="form-group">
-                                <label for="Description" class="form-label">{{'Description'| translate}}<span
-                                        class="colorRed">*</span></label>
-                                <input type="text" class="form-control" formControlName="Description"
-                                    [ngClass]="{ 'is-invalid': submitted && f['Description'].errors }">
-                                <div *ngIf="submitted && f['Description'].errors" class="invalid-feedback">
-                                    <div *ngIf="f['Description'].errors['required']">
-                                        {{'Description is required'|translate}}
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                            <div class="form-group">
-                                <input type="checkbox" formControlName="IsActive">
-                                <label for="Description" class="form-label checkboxstyle">{{'Active'| translate}}</label>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
-                            <div class="btn-group btn-design">
-                                <button class="btn btn-success" type="submit"><i
-                                        class="fa fa-save"></i><span>{{'Add'| translate}}</span></button>
-                                <button class="btn btn-danger" type="button" (click)="clearForm()"><i
-                                        class="fa fa-times"></i><span>{{'Cancel'| translate}}</span></button>
-                            </div>
-                        </div>
-
-                    </div>
-                </form>
                 <!-- <h4 class="sectionHeading">Roles Listing:</h4> -->
 
                 <div class="dataTableDesign table-responsive">
@@ -92,6 +42,57 @@
                     </table>
                     <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
                 </div>
+                <!-- Roles Modal -->
+                <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ isUpdate ? ('Edit Role'| translate) : ('New Role'| translate) }}</h5>
+                                <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                                    <input type="hidden" formControlName="Id" />
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                            <div class="form-group">
+                                                <label for="RoleName" class="form-label">{{'Role Name'| translate}} <span class="colorRed">*</span></label>
+                                                <input type="text" class="form-control" formControlName="RoleName" [ngClass]="{ 'is-invalid': submitted && f['RoleName'].errors }">
+                                                <div *ngIf="submitted && f['RoleName'].errors" class="invalid-feedback">
+                                                    <div *ngIf="f['RoleName'].errors['required']">{{'Role Name is required'| translate}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                            <div class="form-group">
+                                                <label for="Description" class="form-label">{{'Description'| translate}}<span class="colorRed">*</span></label>
+                                                <input type="text" class="form-control" formControlName="Description" [ngClass]="{ 'is-invalid': submitted && f['Description'].errors }">
+                                                <div *ngIf="submitted && f['Description'].errors" class="invalid-feedback">
+                                                    <div *ngIf="f['Description'].errors['required']">{{'Description is required'|translate}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                            <div class="form-group">
+                                                <input type="checkbox" formControlName="IsActive">
+                                                <label for="Description" class="form-label checkboxstyle">{{'Active'| translate}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                                            <div class="btn-group btn-design">
+                                                <button class="btn btn-success" type="submit"><i class="fa fa-save"></i><span>{{'Add'| translate}}</span></button>
+                                                <button class="btn btn-danger" type="button" (click)="clearForm(); closeModal()"><i class="fa fa-times"></i><span>{{'Cancel'| translate}}</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-backdrop fade" [class.show]="showModal" *ngIf="showModal"></div>
             </div>
         </div>
     </div>

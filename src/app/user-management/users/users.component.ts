@@ -33,6 +33,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
   modelRoleId: any;
   FileURL: any;
   LocationsList: any;
+  showPassword: boolean = false;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -111,6 +113,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
         debugger;
         if (result.status) {
           this.clearForm();
+          this.closeModal();
           this.toastr.success(result.message, "Success", {
             progressBar: true,
             closeButton: true
@@ -180,6 +183,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     });
     //this.form.controls.BranchID.setValue(0);
     //this.form.controls['RoleID'].setValue(0);
+    this.showModal = false;
   }
   omitSpecialCharacterAndSpace(event: any) {
 
@@ -206,6 +210,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
   Update(data: any) {
     debugger;
+    this.isUpdate = true;
     this.form.controls['Id'].setValue(data['id']);
     this.form.controls['FirstName'].setValue(data['firstName']);
     this.form.controls['LastName'].setValue(data['lastName']);
@@ -228,6 +233,21 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.FileURL = data['image'];
     this.form.controls['Image'].setValue(data['image']);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.showModal = true;
+  }
+
+  openAdd() {
+    this.clearForm();
+    this.isUpdate = false;
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
   rerender(): void {

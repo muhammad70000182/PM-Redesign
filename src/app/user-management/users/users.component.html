@@ -4,46 +4,106 @@
       <div class="card-body pb-4">
         <div class="row">
           <div class="col-md-12">
-            <div class="sectionHeading">
-              <h6 class="fw-bold text-primary mt-2">{{'New User'|translate}}</h6>
+            <div class="mb-3">
+              <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add
+                New'|translate}}</button>
             </div>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <input type="hidden" formControlName="Id" />
-              <div class="row">
-                <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                  <div class="form-group">
-                    <label for="FirstName" class="form-label">{{'First Name'|translate}}<span class="colorRed">*</span></label>
-                    <input type="text" class="form-control" formControlName="FirstName"
-                      [ngClass]="{ 'is-invalid': submitted && f['FirstName'].errors }">
-                    <div *ngIf="submitted && f['FirstName'].errors" class="invalid-feedback">
-                      <div *ngIf="f['FirstName'].errors['required']">
-                        {{'First Name is required'|translate}}
+             <div class="row">
+                      <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-4">{{'Users Listing'|translate}}</h6>
                       </div>
+
                     </div>
+            <div class="col-md-12">
+              <div class=" dataTableDesign table-responsive">
+                <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                  <thead>
+                    <tr>
+                      <th>{{'Sr#'|translate}}</th>
+                      <!-- <th>{{'User Code'|translate}}</th> -->
+                      <th>{{'Name'|translate}}</th>
+                      <th>{{'Role'|translate}}</th>
+                      <th>{{'Mobile#'|translate}}</th>
+                      <th>{{'Email'|translate}}</th>
+                      <th>{{'Address'|translate}}</th>
+                      <th>{{'Image'|translate}}</th>
+                      <th>{{'Action'|translate}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let p of UsersList ; let i = index">
+                      <td>{{i+1}}</td>
+                      <!-- <td>{{p.userCode}}</td> -->
+                      <td>{{p.firstName+' '+ p.lastName}}</td>
+                      <td>{{p.roleName}}</td>
+                      <td>{{p.mobileNo}}</td>
+                      <td>{{p.email}}</td>
+                      <td>{{p.homeAddress}}</td>
+
+                      <td>
+                        <span>
+                          <img *ngIf="!p.smallImage" src="../../../assets/img/default.png">
+                          <img *ngIf="p.smallImage" [src]="p.smallImage">
+                        </span>
+                      </td>
+                      <td>
+                        <div class="action-btn">
+                          <span><i class="fa fa-edit" (click)="Update(p)"></i></span>
+                          <!-- <span><a href="#"><i class="fa fa-trash"></i></a></span>
+                                        <span><a href="#" title="add row"><i class="fa fa-plus"></i></a></span> -->
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+                <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+              </div>
+            </div>
+            <!-- Users Modal -->
+            <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal"
+              [style.display]="showModal ? 'block' : 'none'">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">{{ isUpdate ? ('Edit User'|translate) : ('New User'|translate) }}</h5>
+                    <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span
+                        aria-hidden="true">&times;</span></button>
                   </div>
-                </div>
-                <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                  <div class="form-group">
-                    <label for="Description" class="form-label">{{'Last Name'|translate}}</label>
-                    <input type="text" class="form-control" formControlName="LastName">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1" class="form-label"> {{'Email'|translate}} </label>
-                    <input type="Email" class="form-control" placeholder="Email@Email.com" formControlName="Email"
-                      [ngClass]="{ 'is-invalid': submitted && f['Email'].errors }" />
-                    <div *ngIf="submitted && f['Email'].errors" class="invalid-feedback">
-                      <div *ngIf="f['Email'].errors['required']">
-                        {{'Email ID is required'|translate}}
-                      </div>
-                      <div *ngIf="f['Email'].errors['pattern']">
-                        {{'Invalid Email Format.'|translate}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                  <div class="modal-body">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                      <input type="hidden" formControlName="Id" />
+                      <div class="row">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                          <div class="form-group">
+                            <label for="FirstName" class="form-label">{{'First Name'|translate}}<span
+                                class="colorRed">*</span></label>
+                            <input type="text" class="form-control" formControlName="FirstName"
+                              [ngClass]="{ 'is-invalid': submitted && f['FirstName'].errors }">
+                            <div *ngIf="submitted && f['FirstName'].errors" class="invalid-feedback">
+                              <div *ngIf="f['FirstName'].errors['required']">{{'First Name is required'|translate}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                          <div class="form-group">
+                            <label for="Description" class="form-label">{{'Last Name'|translate}}</label>
+                            <input type="text" class="form-control" formControlName="LastName">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label"> {{'Email'|translate}} </label>
+                            <input type="Email" class="form-control" placeholder="Email@Email.com"
+                              formControlName="Email" [ngClass]="{ 'is-invalid': submitted && f['Email'].errors }" />
+                            <div *ngIf="submitted && f['Email'].errors" class="invalid-feedback">
+                              <div *ngIf="f['Email'].errors['required']">{{'Email ID is required'|translate}}</div>
+                              <div *ngIf="f['Email'].errors['pattern']">{{'Invalid Email Format.'|translate}}</div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
                   <div class="form-group">
                     <label for="UserCode" class="form-label">{{'User Code'|translate}}<span class="colorRed">*</span></label>
                     <input type="text" class="form-control" formControlName="UserCode" (keypress)="onlyNumber($event)"
@@ -64,167 +124,123 @@
                     </div>
                   </div>
                 </div> -->
-                <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                  <div class="form-group">
-                    <label for="UserCode" class="form-label">{{'Password'|translate}}<span class="colorRed">*</span></label>
-                    <input type="password" class="form-control" formControlName="Password"
-                      [ngClass]="{ 'is-invalid': submitted && f['Password'].errors }">
-                    <div *ngIf="submitted && f['Password'].errors" class="invalid-feedback">
-                      <div *ngIf="f['Password'].errors['required']">
-                        {{'Password is required'|translate}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                 <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                  <div class="form-group">
-                    <label class="form-label"> {{'Mobile Number'|translate}}<span class="colorRed">*</span> </label>
-                    <input type="text" class="form-control" placeholder="009661234567891"
-                      (keypress)="onlyNumber($event)" (paste)="(false)" maxlength="15" value=""
-                      formControlName="MobileNo" [ngClass]="{ 'is-invalid': submitted && f['MobileNo'].errors }" />
-                    <div *ngIf="submitted && f['MobileNo'].errors" class="invalid-feedback">
-                      <div *ngIf="f['MobileNo'].errors['required']">
-                        {{'Mobiel No is required'|translate}}
-                      </div>
-                      <div *ngIf="f['MobileNo'].errors['minlength']">
-                        {{'Tel. No must be at least 15 characters long.'|translate}}
-                      </div>
-                      <div *ngIf="f['MobileNo'].errors['maxlength']">
-                        {{'Tel. No must 15 characters long.'|translate}}
-                      </div>
-                      <div *ngIf="f['MobileNo'].errors['pattern']">
-                        {{'Only Numeric value required.'|translate}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                  <div class="form-group">
-                    <label for="TelNo" class="form-label">{{'Tel No'|translate}}</label>
-                    <input type="text" class="form-control" formControlName="TelNo">
-                  </div>
-                </div>
-                <div class="col-12 col-md-4 col-sm-6 col-lg-4 col-xl-4">
-                  <div class="form-group">
-                    <label for="dealerName" class="form-label">{{'Role'|translate}}<span class="colorRed">*</span> </label>
-                    <ng-select [(ngModel)]="modelRoleId" formControlName="RoleId"
-                      [ngClass]="{ 'is-invalid': submitted && f['RoleId'].errors }">
-                      <ng-option *ngFor="let car of RolesList" [value]="car.id">{{car.roleName}}</ng-option>
-                    </ng-select>
-                    <div *ngIf="submitted && f['RoleId'].errors" class="invalid-feedback">
-                      <div *ngIf="f['RoleId'].errors['required']">
-                        {{'Role is required'|translate}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                  <div class="form-group">
-                    <span style="display: block;" class="form-label">{{'Image'|translate}}</span>
-                    <div class="mb-3 chosaeFilebtn">
-                      <label class="form-label">
-                        <a><i class="fa fa-file-image"></i> {{'Choose File'|translate}}</a>
-                        <!-- //<input class="" type="file" [(ngModel)]="FileURL" #file (change)="preview(file.files)" > -->
-                        <input type="file" #fileInput (change)="onFileChange($event,fileInput)" />
-                      </label>
-                    </div>
-                  </div>
-                </div>
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                          <div class="form-group">
+                            <label for="UserCode" class="form-label">{{'Password'|translate}}<span class="colorRed">*</span></label>
+                            <div class="input-group">
+                              <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="Password" [ngClass]="{ 'is-invalid': submitted && f['Password'].errors }">
+                              <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()" aria-label="Toggle password visibility">
+                                <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                              </button>
+                            </div>
+                            <div *ngIf="submitted && f['Password'].errors" class="invalid-feedback">
+                              <div *ngIf="f['Password'].errors['required']">{{'Password is required'|translate}}</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                          <div class="form-group">
+                            <label class="form-label"> {{'Mobile Number'|translate}}<span class="colorRed">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="009661234567891"
+                              (keypress)="onlyNumber($event)" (paste)="(false)" maxlength="15" value=""
+                              formControlName="MobileNo"
+                              [ngClass]="{ 'is-invalid': submitted && f['MobileNo'].errors }" />
+                            <div *ngIf="submitted && f['MobileNo'].errors" class="invalid-feedback">
+                              <div *ngIf="f['MobileNo'].errors['required']">
+                                {{'Mobiel No is required'|translate}}
+                              </div>
+                              <div *ngIf="f['MobileNo'].errors['minlength']">
+                                {{'Tel. No must be at least 15 characters long.'|translate}}
+                              </div>
+                              <div *ngIf="f['MobileNo'].errors['maxlength']">
+                                {{'Tel. No must 15 characters long.'|translate}}
+                              </div>
+                              <div *ngIf="f['MobileNo'].errors['pattern']">
+                                {{'Only Numeric value required.'|translate}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                          <div class="form-group">
+                            <label for="TelNo" class="form-label">{{'Tel No'|translate}}</label>
+                            <input type="text" class="form-control" formControlName="TelNo">
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-sm-6 col-lg-4 col-xl-4">
+                          <div class="form-group">
+                            <label for="dealerName" class="form-label">{{'Role'|translate}}<span
+                                class="colorRed">*</span> </label>
+                            <ng-select [(ngModel)]="modelRoleId" formControlName="RoleId"
+                              [ngClass]="{ 'is-invalid': submitted && f['RoleId'].errors }">
+                              <ng-option *ngFor="let car of RolesList" [value]="car.id">{{car.roleName}}</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['RoleId'].errors" class="invalid-feedback">
+                              <div *ngIf="f['RoleId'].errors['required']">
+                                {{'Role is required'|translate}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                          <div class="form-group">
+                            <span style="display: block;" class="form-label">{{'Image'|translate}}</span>
+                            <div class="mb-3 chosaeFilebtn">
+                              <label class="form-label">
+                                <a><i class="fa fa-file-image"></i> {{'Choose File'|translate}}</a>
+                                <!-- //<input class="" type="file" [(ngModel)]="FileURL" #file (change)="preview(file.files)" > -->
+                                <input type="file" #fileInput (change)="onFileChange($event,fileInput)" />
+                              </label>
+                            </div>
+                          </div>
+                        </div>
 
-                <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                  <div class="form-group">
-                    <label for="HomeAddress" class="form-label">{{'Home Address'|translate}}<span class="colorRed">*</span></label>
-                    <textarea type="text" class="form-control" formControlName="HomeAddress"
-                      [ngClass]="{ 'is-invalid': submitted && f['HomeAddress'].errors }"></textarea>
-                    <div *ngIf="submitted && f['HomeAddress'].errors" class="invalid-feedback">
-                      <div *ngIf="f['HomeAddress'].errors['required']">
-                        {{'Home Address is required'|translate}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                  <div class="form-group">
-                    <label for="OfficeAddress" class="form-label">{{'Office Address'|translate}}</label>
-                    <textarea type="text" class="form-control" formControlName="OfficeAddress"></textarea>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                  <div class="form-group">
-                    <input type="checkbox" formControlName="IsActive">
-                     <label for="Description" class="form-label checkboxstyle">{{'Active'|translate}}</label>
-                  </div>
-                </div>
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                          <div class="form-group">
+                            <label for="HomeAddress" class="form-label">{{'Home Address'|translate}}<span
+                                class="colorRed">*</span></label>
+                            <textarea type="text" class="form-control" formControlName="HomeAddress"
+                              [ngClass]="{ 'is-invalid': submitted && f['HomeAddress'].errors }"></textarea>
+                            <div *ngIf="submitted && f['HomeAddress'].errors" class="invalid-feedback">
+                              <div *ngIf="f['HomeAddress'].errors['required']">
+                                {{'Home Address is required'|translate}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                          <div class="form-group">
+                            <label for="OfficeAddress" class="form-label">{{'Office Address'|translate}}</label>
+                            <textarea type="text" class="form-control" formControlName="OfficeAddress"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                          <div class="form-group">
+                            <input type="checkbox" formControlName="IsActive">
+                            <label for="Description" class="form-label checkboxstyle">{{'Active'|translate}}</label>
+                          </div>
+                        </div>
 
-                <div class="d-flex justify-content-end mt-4 gap-2">
-                 <div class="btn-group btn-design">
-                  <button class="btn btn-success" type="submit"><i class="fa fa-save"></i><span>{{'Add'|translate}}</span></button>
-                  <button class="btn btn-danger" type="button" (click)="clearForm()"><i class="fa fa-times"></i><span>{{'Cancel'|translate}}</span></button>
+                        <div class="d-flex justify-content-end mt-4 gap-2">
+                          <div class="btn-group btn-design">
+                            <button class="btn btn-success" type="submit"><i
+                                class="fa fa-save"></i><span>{{'Add'|translate}}</span></button>
+                            <button class="btn btn-danger" type="button" (click)="clearForm()"><i
+                                class="fa fa-times"></i><span>{{'Cancel'|translate}}</span></button>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </form>
+                    <!-- <h4 class="sectionHeading">Users Listing:</h4> -->
+                   
+                  </div>
+
                 </div>
-                </div>
-            
 
               </div>
-            </form>
-            <!-- <h4 class="sectionHeading">Users Listing:</h4> -->
-            <div class="row">
-              <div class="sectionHeading">
-                <h6 class="fw-bold text-primary mt-4">{{'Users Listing'|translate}}</h6>
-              </div>
-              
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class=" dataTableDesign table-responsive">
-              <table class="table table-striped" 
-              datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-                <thead>
-                  <tr>
-                    <th>{{'Sr#'|translate}}</th>
-                    <!-- <th>{{'User Code'|translate}}</th> -->
-                    <th>{{'Name'|translate}}</th>
-                    <th>{{'Role'|translate}}</th>
-                    <th>{{'Mobile#'|translate}}</th>
-                    <th>{{'Email'|translate}}</th>
-                    <th>{{'Address'|translate}}</th>
-                    <th>{{'Image'|translate}}</th>
-                    <th>{{'Action'|translate}}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    *ngFor="let p of UsersList ; let i = index">
-                    <td>{{i+1}}</td>
-                    <!-- <td>{{p.userCode}}</td> -->
-                    <td>{{p.firstName+' '+ p.lastName}}</td>
-                    <td>{{p.roleName}}</td>
-                    <td>{{p.mobileNo}}</td>
-                    <td>{{p.email}}</td>
-                    <td>{{p.homeAddress}}</td>
-
-                    <td>
-                      <span>
-                        <img *ngIf="!p.smallImage" src="../../../assets/img/default.png">
-                        <img *ngIf="p.smallImage" [src]="p.smallImage">
-                      </span>
-                    </td>
-                    <td>
-                      <div class="action-btn">
-                        <span><i class="fa fa-edit" (click)="Update(p)"></i></span>
-                        <!-- <span><a href="#"><i class="fa fa-trash"></i></a></span>
-                                        <span><a href="#" title="add row"><i class="fa fa-plus"></i></a></span> -->
-                      </div>
-                    </td>
-                  </tr>
-
-                </tbody>
-              </table>
-              <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
             </div>
           </div>
         </div>
-
-      </div>
-    </div>
-  </div>
-</div>
