@@ -30,6 +30,7 @@ export class SAPConnectionSettingsComponent implements OnInit, AfterViewInit {
   showForm: boolean = false;
   addBreadcrumb: boolean = false;
   showHidetable: boolean = true;
+  showModal: boolean = false;
   baseUrl: any = '/RoleManagement/';
   p: any;
   CurrentUserInfo: any | { Id: number; UserCode: string; FullName: string; RoleName: string; RoleID: number; UserImage: string; };
@@ -131,6 +132,7 @@ export class SAPConnectionSettingsComponent implements OnInit, AfterViewInit {
       next: (result: any) => {
         if (result.status) {
           this.clearForm();
+          this.closeModal();
           this.toastr.success(result.message, "Success", {
             progressBar: true,
             closeButton: true
@@ -179,9 +181,11 @@ export class SAPConnectionSettingsComponent implements OnInit, AfterViewInit {
       CreatedDate: new Date(),
       UpdatedDate: new Date()
     });
+    this.showModal = false;
   }
   Update(data: any) {
     debugger;
+    this.isUpdate = true;
     this.form.patchValue({
       Id: data.id,
       SapUserName: data.sapUserName,
@@ -207,6 +211,17 @@ export class SAPConnectionSettingsComponent implements OnInit, AfterViewInit {
       EmailPort: data.emailPort,
       OffPlanMultiUnit: data.offPlanMultiUnit
     });
+    this.showModal = true;
+  }
+
+  openAdd() {
+    this.clearForm();
+    this.isUpdate = false;
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 
 }

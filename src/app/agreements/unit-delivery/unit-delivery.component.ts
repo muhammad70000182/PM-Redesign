@@ -52,19 +52,17 @@ export class UnitDelivery implements OnInit, AfterViewInit {
     private configService: ConfigService,
     private router: Router,
     private enumService: EnumService,
-    private expExcel:ExcelExportService
+    private expExcel: ExcelExportService
   ) {
     this.AllowedPermissions = this._permService.getPermissions();
     this.GenericForma = this._sharedHelper.getGenericFormate();
 
   }
 
-
   ngAfterViewInit(): void {
     this.dtTrigger.next(null); // no need to pass 0
 
   }
-
   ngOnDestroy(): void {
     // ✅ Prevent memory leaks
     this.dtTrigger.unsubscribe();
@@ -92,7 +90,6 @@ export class UnitDelivery implements OnInit, AfterViewInit {
 
   }
   GetUnitDeliveryList(Id: any = 0, isUpdate = false) {
-
     let url = '/UnitDelivery/unitDelivery?id=' + Id
     this._service.Get(url).subscribe({
       next: result => {

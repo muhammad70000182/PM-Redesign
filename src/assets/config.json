@@ -1,5 +1,5 @@
 {
-    "apiUrl":"http://localhost:7005/api",
-    "baseUrl":"http://localhost:7005",
+    "apiUrl":"http://localhost:7004/api",
+    "baseUrl":"http://localhost:7004",
     "rptURL":"https://localhost:44374/"
 }

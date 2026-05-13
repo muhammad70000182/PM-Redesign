@@ -151,7 +151,6 @@ export class AgreementListingComponent implements OnInit, AfterViewInit {
               //-----------------End Button Permissions------------
             }
 
-
             this.activeTab = 'General';
             if (isMeteredBill) {
               this.activeTab = 'NewBill';
@@ -270,23 +269,7 @@ export class AgreementListingComponent implements OnInit, AfterViewInit {
     this.agreementItemFacilities = data.agreementItemFacilities || [];
     ($('#utilFacilModal') as any).modal('show');
   }
-  // loadMeteredItems(unitCode: any) {
-  //   debugger;
-  //   let exist = this.SelectedAgreement.agreementItems.find((m: any) => m.u_UnitCode == unitCode);
-  //   if (exist) {
-  //     let currentHistory =  exist.agreementMaintenceBills;
-  //     //this.MeteredUtilities = exist.agreementUtilities?.filter((u: any) => u.u_Calculation === 2) || [];
-  //     this.MeteredUtilities = exist.agreementUtilities
-  //       ?.filter((u: any) => u.u_Calculation === 3)
-  //       .map((u: any) => ({
-  //         ...u,
-  //         AgreementItemsId: exist.id,
-  //         U_UDetailUtilLineID: u.id,
-  //         name: u.utilItemname,
-  //         CreatedBy: parseInt(this.CurrentUserInfo.Id)
-  //       })) || [];
-  //   }
-  // }
+
   loadMeteredItems(unitCode: any) {
     debugger;
     const exist = this.SelectedAgreement.agreementItems.find((m: any) => m.u_UnitCode == unitCode);
