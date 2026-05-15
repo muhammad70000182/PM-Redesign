@@ -37,6 +37,8 @@ export class ParentPermissionsComponent implements OnInit, AfterViewInit {
     private _inputField: InputFieldValidator
   ) { }
 
+  showModal: boolean = false;
+
   ngAfterViewInit(): void {
     this.dtTrigger.next(null); // no need to pass 0
   }
@@ -129,7 +131,7 @@ export class ParentPermissionsComponent implements OnInit, AfterViewInit {
   clearForm() {
     this.submitted = false;
     this.isUpdate = false;
-    this.form.reset();
+    this.form.reset({ Id: 0, Title: '', Sorting: null, Icon: '', Url: '' });
   }
   Update(data: any) {
     debugger;
@@ -139,6 +141,17 @@ export class ParentPermissionsComponent implements OnInit, AfterViewInit {
     this.form.controls['Sorting'].setValue(data['sorting']);
     this.form.controls['Icon'].setValue(data['icon']);
     this.form.controls['Url'].setValue(data['url']);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // open modal for editing
+    this.showModal = true;
+  }
+
+  openAdd() {
+    this.isUpdate = false;
+    this.clearForm();
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 }

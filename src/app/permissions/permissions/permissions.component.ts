@@ -29,6 +29,7 @@ export class PermissionsComponent implements OnInit, AfterViewInit {
   p: any;
   baseUrl: any = '/Permissions/';
   PermissionsList: any;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -146,11 +147,19 @@ export class PermissionsComponent implements OnInit, AfterViewInit {
   clearForm() {
     this.submitted = false;
     this.isUpdate = false;
-    this.form.reset();
-    this.form.patchValue({
+    this.form.reset({
       Id: 0,
-      ShowInMenu: false
-    })
+      ParrentId: null,
+      Title: '',
+      Icon: '',
+      FormUrl: '',
+      Sorting: null,
+      ShowInMenu: false,
+      CreatedBy: '',
+      CreatedDate: null,
+      UpdatedBy: '',
+      UpdatedDate: null
+    });
   }
   Update(data: any) {
     debugger;
@@ -163,6 +172,17 @@ export class PermissionsComponent implements OnInit, AfterViewInit {
     this.form.controls['Icon'].setValue(data['icon']);
     this.form.controls['FormUrl'].setValue(data['formUrl']);
     this.form.controls['ShowInMenu'].setValue(data['showInMenu']);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Open modal for editing
+    this.showModal = true;
+  }
+
+  openAdd() {
+    this.isUpdate = false;
+    this.clearForm();
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 }
