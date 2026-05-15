@@ -3,101 +3,120 @@
         <div class="card card-user">
             <div class="card-body pb-4">
                 <!-- <h4 class="sectionHeading">New Permission:</h4> -->
-                <div class="sectionHeading">
+                <!-- <div class="sectionHeading">
 
                     <h6 class="fw-bold text-primary mt-2 mb-2">{{'New Permissions' | translate}} </h6>
 
+                </div> -->
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add
+                        New' | translate}}</button>
                 </div>
-                <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                    <input type="hidden" formControlName="Id" />
-                    <div class="row">
-                        <div class="col-12 col-md-4 col-sm-6 col-lg-4 col-xl-4">
-                            <div class="form-group">
-                                <label for="dealerName" class="form-label">{{'Parent' | translate}}<span class="colorRed">*</span>
-                                </label>
-                                <ng-select [(ngModel)]="modelParrentId" formControlName="ParrentId"
-                                    [ngClass]="{ 'is-invalid': submitted && f['ParrentId'].errors }">
-                                    <ng-option *ngFor="let car of ParentPermissionsList"
-                                        [value]="car.id">{{car.title}}</ng-option>
-                                </ng-select>
-                                <div *ngIf="submitted && f['ParrentId'].errors" class="invalid-feedback">
-                                    <div *ngIf="f['ParrentId'].errors['required']">
-                                        {{'Parent is required'}}
+
+                <!-- Modal for Add/Edit Permission -->
+                <div *ngIf="true">
+                    <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal"
+                        [style.display]="showModal ? 'block' : 'none'">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ isUpdate ? ('Edit Permission' | translate) : ('New
+                                        Permission' | translate) }}</h5>
+                                    <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span
+                                            aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                                        <input type="hidden" formControlName="Id" />
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 col-sm-6 col-lg-4 col-xl-4">
+                                                <div class="form-group">
+                                                    <label for="dealerName" class="form-label">{{'Parent' |
+                                                        translate}}<span class="colorRed">*</span></label>
+                                                    <ng-select [(ngModel)]="modelParrentId" formControlName="ParrentId"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['ParrentId'].errors }">
+                                                        <ng-option *ngFor="let car of ParentPermissionsList"
+                                                            [value]="car.id">{{car.title}}</ng-option>
+                                                    </ng-select>
+                                                    <div *ngIf="submitted && f['ParrentId'].errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f['ParrentId'].errors['required']">{{'Parent is
+                                                            required'}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                                <div class="form-group">
+                                                    <label for="Title" class="form-label">{{'Title' | translate}}<span
+                                                            class="colorRed">*</span></label>
+                                                    <input type="text" class="form-control" formControlName="Title"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['Title'].errors }">
+                                                    <div *ngIf="submitted && f['Title'].errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f['Title'].errors['required']">{{'Title is
+                                                            required'}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                                <div class="form-group">
+                                                    <label for="FormUrl" class="form-label">{{'Form Url' |
+                                                        translate}}<span class="colorRed">*</span></label>
+                                                    <input type="text" class="form-control" formControlName="FormUrl"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['FormUrl'].errors }">
+                                                    <div *ngIf="submitted && f['FormUrl'].errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f['FormUrl'].errors['required']">{{'FormUrl is
+                                                            required'}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                                <div class="form-group">
+                                                    <label for="Icon" class="form-label">{{'Icon' | translate}}</label>
+                                                    <input type="text" class="form-control" formControlName="Icon">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                                <div class="form-group">
+                                                    <label for="Sorting" class="form-label">{{'Sorting' |
+                                                        translate}}<span class="colorRed">*</span></label>
+                                                    <input type="text" class="form-control" (paste)="(false)"
+                                                        formControlName="Sorting"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['Sorting'].errors }"
+                                                        (keypress)="onlyNumber($event)">
+                                                    <div *ngIf="submitted && f['Sorting'].errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f['Sorting'].errors['required']">{{'Sorting is
+                                                            required'}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                                <div class="form-group">
+                                                    <input type="checkbox" formControlName="ShowInMenu">
+                                                    <label for="Description" class="form-label checkboxstyle">{{'Show
+                                                        Menu' | translate}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="btn-group btn-design">
+                                        <button class="btn btn-success" type="button" (click)="onSubmit()"><i
+                                                class="fa fa-save"></i><span>{{'Add' | translate}}</span></button>
+                                        <button class="btn btn-secondary" type="button" (click)="clearForm()"><i
+                                                class="fa fa-eraser"></i><span>{{'Clear' | translate}}</span></button>
+                                        <button class="btn btn-danger" type="button" (click)="closeModal()"><i
+                                                class="fa fa-times"></i><span>{{'Cancel' | translate}}</span></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                            <div class="form-group">
-                                <label for="Title" class="form-label">{{'Title' | translate}}<span class="colorRed">*</span></label>
-                                <input type="text" class="form-control" formControlName="Title"
-                                    [ngClass]="{ 'is-invalid': submitted && f['Title'].errors }">
-                                <div *ngIf="submitted && f['Title'].errors" class="invalid-feedback">
-                                    <div *ngIf="f['Title'].errors['required']">
-                                        {{'Title is required'}}
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-
-                            <div class="form-group">
-                                <label for="FormUrl" class="form-label">{{'Form Url' | translate}}<span class="colorRed">*</span></label>
-                                <input type="text" class="form-control" formControlName="FormUrl"
-                                    [ngClass]="{ 'is-invalid': submitted && f['FormUrl'].errors }">
-                                <div *ngIf="submitted && f['FormUrl'].errors" class="invalid-feedback">
-                                    <div *ngIf="f['FormUrl'].errors['required']">
-                                        {{'FormUrl is required'}}
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-
-                            <div class="form-group">
-                                <label for="Icon" class="form-label">{{'Icon' | translate}}</label>
-                                <input type="text" class="form-control" formControlName="Icon">
-                            </div>
-
-                        </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
-
-                            <div class="form-group">
-                                <label for="Sorting" class="form-label">{{'Sorting' | translate}}<span class="colorRed">*</span></label>
-                                <input type="text" class="form-control" (paste)="(false)" formControlName="Sorting"
-                                    [ngClass]="{ 'is-invalid': submitted && f['Sorting'].errors }"
-                                    (keypress)="onlyNumber($event)">
-                                <div *ngIf="submitted && f['Sorting'].errors" class="invalid-feedback">
-                                    <div *ngIf="f['Sorting'].errors['required']">
-                                        {{'Sorting is required'}}
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                            <div class="form-group">
-                                <input type="checkbox" formControlName="ShowInMenu">
-                                <label for="Description" class="form-label checkboxstyle">{{'Show Menu' | translate}}</label>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
-                            <div class="btn-group btn-design">
-                                <button class="btn btn-success" type="submit"><i
-                                        class="fa fa-save"></i><span>{{'Add' | translate}}</span></button>
-                                <button class="btn btn-danger" type="button" (click)="clearForm()"><i
-                                        class="fa fa-times"></i><span>{{'Cancel' | translate}}</span></button>
-                            </div>
-                        </div>
-
                     </div>
-                </form>
+                    <div class="modal-backdrop fade" [class.show]="showModal" *ngIf="showModal"></div>
+                </div>
 
                 <div class="row rowFlex">
                     <div class="col-md-8">
@@ -110,48 +129,48 @@
                 </div>
                 <div class="demo-html">
                     <div class="dataTableDesign table-responsive">
-                    <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>{{'Parent'|translate}}</th>
-                                <th>{{'Title'|translate}}</th>
-                                <th>{{'Icon'|translate}}</th>
-                                <th>{{'Url'|translate}}</th>
-                                <th>{{'Show Menu'|translate}}</th>
-                                <th>{{'Sorting'|translate}}</th>
-                                <th>{{'Action'|translate}}</th>
+                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'Parent'|translate}}</th>
+                                    <th>{{'Title'|translate}}</th>
+                                    <th>{{'Icon'|translate}}</th>
+                                    <th>{{'Url'|translate}}</th>
+                                    <th>{{'Show Menu'|translate}}</th>
+                                    <th>{{'Sorting'|translate}}</th>
+                                    <th>{{'Action'|translate}}</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let p of PermissionsList; let i = index">
-                                 <td>{{i+1}}</td>
-                                <td>{{p.parentName}}</td>
-                                <td>{{p.title}}</td>
-                                <td>{{p.icon}}</td>
-                                <td>{{p.formUrl}}</td>
-                                <td>
-                                    <span class="badge" [ngClass]="p.showInMenu ? 'bg-success' : 'bg-danger'">
-                                        {{ p.showInMenu ? 'Yes' : 'No' }}
-                                    </span>
-                                </td>
-                                <td>{{p.sorting}}</td>
-                                <td>
-                                    <div class="action-btn">
-                                        <span><i class="fa fa-edit" (click)="Update(p)"></i></span>
-                                        <!-- <span><a href="#"><i class="fa fa-trash"></i></a></span>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of PermissionsList; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{p.parentName}}</td>
+                                    <td>{{p.title}}</td>
+                                    <td>{{p.icon}}</td>
+                                    <td>{{p.formUrl}}</td>
+                                    <td>
+                                        <span class="badge" [ngClass]="p.showInMenu ? 'bg-success' : 'bg-danger'">
+                                            {{ p.showInMenu ? 'Yes' : 'No' }}
+                                        </span>
+                                    </td>
+                                    <td>{{p.sorting}}</td>
+                                    <td>
+                                        <div class="action-btn">
+                                            <span><i class="fa fa-edit" (click)="Update(p)"></i></span>
+                                            <!-- <span><a href="#"><i class="fa fa-trash"></i></a></span>
                                         <span><a href="#" title="add row"><i class="fa fa-plus"></i></a></span> -->
-                                    </div>
-                                </td>
-                            </tr>
+                                        </div>
+                                    </td>
+                                </tr>
 
-                        </tbody>
-                    </table>
-                    <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+                            </tbody>
+                        </table>
+                        <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+                    </div>
                 </div>
-                </div>
-                
+
             </div>
         </div>
     </div>

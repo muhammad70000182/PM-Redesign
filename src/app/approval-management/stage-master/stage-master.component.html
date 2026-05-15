@@ -1,134 +1,141 @@
 <div class="card card-user">
   <div class="card-body">
-    <div class="sectionHeading">
+    <!-- <div class="sectionHeading">
       <h6 class="mb-4">{{'Stage Master' | translate}}</h6>
-    </div>
+    </div> -->
 
 
     <!-- Form Row -->
+  
+
+    <!-- Modal for Create/Edit (guarded by permissions) -->
     <div *ngIf="AllowedPermissions['canCreate']">
-
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <input type="hidden" formControlName="Id" />
-
-        <div class="row">
-          <!-- Stage Name -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <label class="form-label">{{'Stage Name' | translate}}</label>
-              <input type="text" class="form-control" formControlName="StageName"
-                [ngClass]="{ 'is-invalid': (submitted || f['StageName'].touched) && f['StageName'].invalid }" />
-              <app-validation-message [control]="f['StageName']" label="Stage Name"
-                [submitted]="submitted"></app-validation-message>
+      <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal"
+        [style.display]="showModal ? 'block' : 'none'">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{ isUpdate ? ('Edit Stage' | translate) : ('New Stage' | translate) }}</h5>
+              <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-          </div>
+            <div class="modal-body">
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <input type="hidden" formControlName="Id" />
+                <div class="row">
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group">
+                      <label class="form-label">{{'Stage Name' | translate}}</label>
+                      <input type="text" class="form-control" formControlName="StageName"
+                        [ngClass]="{ 'is-invalid': (submitted || f['StageName'].touched) && f['StageName'].invalid }" />
+                      <app-validation-message [control]="f['StageName']" label="Stage Name"
+                        [submitted]="submitted"></app-validation-message>
+                    </div>
+                  </div>
 
-          <!-- Description -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <label class="form-label">{{'Description' | translate}}</label>
-              <input type="text" class="form-control" formControlName="Description"
-                [ngClass]="{ 'is-invalid': (submitted || f['Description'].touched) && f['Description'].invalid }" />
-              <app-validation-message [control]="f['Description']" label="Description"
-                [submitted]="submitted"></app-validation-message>
-            </div>
-          </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group">
+                      <label class="form-label">{{'Description' | translate}}</label>
+                      <input type="text" class="form-control" formControlName="Description"
+                        [ngClass]="{ 'is-invalid': (submitted || f['Description'].touched) && f['Description'].invalid }" />
+                      <app-validation-message [control]="f['Description']" label="Description"
+                        [submitted]="submitted"></app-validation-message>
+                    </div>
+                  </div>
 
-          <!-- Number of Approvals -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <label class="form-label">{{'Number of Approvals' | translate}}</label>
-              <input type="text" class="form-control" formControlName="NumApprovals" appCommaSeparated  [allowDecimal]="false"
-                [ngClass]="{ 'is-invalid': (submitted || f['NumApprovals'].touched) && f['NumApprovals'].invalid }" />
-              <app-validation-message [control]="f['NumApprovals']" label="Number of Approvals"
-                [submitted]="submitted"></app-validation-message>
-            </div>
-          </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group">
+                      <label class="form-label">{{'Number of Approvals' | translate}}</label>
+                      <input type="text" class="form-control" formControlName="NumApprovals" appCommaSeparated
+                        [allowDecimal]="false"
+                        [ngClass]="{ 'is-invalid': (submitted || f['NumApprovals'].touched) && f['NumApprovals'].invalid }" />
+                      <app-validation-message [control]="f['NumApprovals']" label="Number of Approvals"
+                        [submitted]="submitted"></app-validation-message>
+                    </div>
+                  </div>
 
-          <!-- Number of Rejections -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <label class="form-label">{{'Number of Rejections' | translate}}</label>
-              <input type="text" class="form-control" formControlName="NumRejections" appCommaSeparated  [allowDecimal]="false"
-                [ngClass]="{ 'is-invalid': (submitted || f['NumRejections'].touched) && f['NumRejections'].invalid }" />
-              <app-validation-message [control]="f['NumRejections']" label="Number of Rejections"
-                [submitted]="submitted"></app-validation-message>
-            </div>
-          </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group">
+                      <label class="form-label">{{'Number of Rejections' | translate}}</label>
+                      <input type="text" class="form-control" formControlName="NumRejections" appCommaSeparated
+                        [allowDecimal]="false"
+                        [ngClass]="{ 'is-invalid': (submitted || f['NumRejections'].touched) && f['NumRejections'].invalid }" />
+                      <app-validation-message [control]="f['NumRejections']" label="Number of Rejections"
+                        [submitted]="submitted"></app-validation-message>
+                    </div>
+                  </div>
 
-          <!-- Active Checkbox -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-check mt-4">
-              <input class="form-check-input" type="checkbox" formControlName="IsActive" id="activeCheckbox" />
-              <label class="form-check-label" for="activeCheckbox">{{'Active' | translate}}</label>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-check mt-4">
+                      <input class="form-check-input" type="checkbox" formControlName="IsActive"
+                        id="modalActiveCheckbox" />
+                      <label class="form-check-label" for="modalActiveCheckbox">{{'Active' | translate}}</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Approver Detail inside modal -->
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <div class="sectionHeading">
+                      <h6 class="mb-4">{{'Approver Detail' | translate}}</h6>
+                    </div>
+
+                    <div class="table-responsive dataTableDesign tbl-input-select fixed-height-wrapper">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>{{'Users' | translate}}</th>
+                            <th>{{'Action' | translate}}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <ng-select [(ngModel)]="md_currentEmployeeId" (change)="onEmployeeChange($event)"
+                                [ngModelOptions]="{standalone: true}">
+                                <ng-option *ngFor="let emp of EmployeeList" [value]="emp.id">{{emp.firstName+' '+
+                                  emp.lastName}}</ng-option>
+                              </ng-select>
+                            </td>
+                            <td class="action-btn">
+                              <span class="" (click)="addStage()"><i class="fa fa-plus"></i></span>
+                            </td>
+                          </tr>
+                          <tr *ngFor="let stage of StageDetail; let i = index">
+                            <td>{{ stage.userName }}</td>
+                            <td class="action-btn">
+                              <span class="" (click)="removeStage(i)"><i class="fa fa-trash"></i></span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                  <div class="btn-group btn-design">
+                    <button class="btn btn-success" type="submit"><i class="fa fa-save"></i><span>{{'Save' |
+                        translate}}</span></button>
+                    <button class="btn btn-secondary" type="button" (click)="clearForm()"><i class="fa fa-eraser"></i><span>{{'Clear' | translate}}</span></button>
+                    <button class="btn btn-danger" type="button" (click)="closeModal()"><i class="fa fa-times"></i><span>{{'Cancel' | translate}}</span></button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="sectionHeading">
-              <h6 class="mb-4">{{'Approver Detail' | translate}}</h6>
-            </div>
-
-            <div class="table-responsive dataTableDesign tbl-input-select fixed-height-wrapper">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>{{'Users' | translate}}</th>
-                    <th>{{'Action' | translate}}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <ng-select [(ngModel)]="md_currentEmployeeId" (change)="onEmployeeChange($event)"
-                        [ngModelOptions]="{standalone: true}">
-                        <ng-option *ngFor="let emp of EmployeeList" [value]="emp.id">{{emp.firstName+' '+
-                          emp.lastName}}</ng-option>
-                      </ng-select>
-                    </td>
-                    <td class="action-btn">
-                      <span class="" (click)="addStage()"><i class="fa fa-plus"></i></span>
-                    </td>
-                  </tr>
-                  <tr *ngFor="let stage of StageDetail; let i = index">
-                    <td>{{ stage.userName }}</td>
-                    <td class="action-btn">
-                      <span class="" (click)="removeStage(i)"><i class="fa fa-trash"></i></span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- <div formArrayName="StageDetail" class="row">
-
-          <div class="col-12 col-md-6 col-lg-4" *ngFor="let approval of approvals.controls; let i = index "
-            [formGroupName]="i">
-            <div class="form-group">
-              <label class="form-label">Approval {{ i + 1 }} (User)</label>
-              <ng-select formControlName="UserId" (change)="onEmployeeChangeOld($event, i)">
-                <ng-option *ngFor="let emp of EmployeeList" [value]="emp.id">{{emp.firstName+' '+
-                  emp.lastName}}</ng-option>
-              </ng-select>
-              <app-validation-message [control]="approval.get('UserId')" label="User"
-                [submitted]="submitted"></app-validation-message>
-            </div>
-          </div>
-        </div> -->
-
-
-        <div class="mb-4 text-right btn-design mt-4">
-          <button class="btn btn-success" type="submit">{{'Save' | translate}}</button>
-          <button class="btn btn-secondary" type="button" (click)="clearForm()">{{'Clear' | translate}}</button>
-
-        </div>
-      </form>
+      </div>
+      <div class="modal-backdrop fade" [class.show]="showModal" *ngIf="showModal"></div>
     </div>
+
     <div *ngIf="AllowedPermissions['canView']">
+      <div class="mb-3" *ngIf="AllowedPermissions['canCreate']">
+        <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add New'|
+          translate}}</button>
+      </div>
       <div class="sectionHeading">
         <h6>{{'Stages' | translate}}</h6>
       </div>

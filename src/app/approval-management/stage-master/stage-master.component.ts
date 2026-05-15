@@ -41,6 +41,7 @@ export class StageMasterComponent implements OnInit, AfterViewInit {
   editIndex: number | null = null;
   StageDetail: any = [];
   md_currentEmployeeId: any;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -52,6 +53,16 @@ export class StageMasterComponent implements OnInit, AfterViewInit {
     private _permService: PermissionsSharingService
   ) {
     this.AllowedPermissions = this._permService.getPermissions();
+  }
+
+  openAdd() {
+    this.isUpdate = false;
+    this.clearForm();
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 
 
@@ -260,7 +271,8 @@ export class StageMasterComponent implements OnInit, AfterViewInit {
     if (stage.stageDetail && stage.stageDetail.length > 0) {
       this.StageDetail = stage.stageDetail
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Open modal so user can edit inside modal
+    this.showModal = true;
   }
   addStage() {
     if (!this.md_currentEmployeeId) {

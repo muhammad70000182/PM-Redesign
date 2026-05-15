@@ -59,6 +59,7 @@ export class ApprovalHierarchyComponent implements OnInit, AfterViewInit {
   TemplateDeatilList: any = [];
   md_id: number = 0;
   TemplateListing: any;
+  showModal: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -130,6 +131,7 @@ export class ApprovalHierarchyComponent implements OnInit, AfterViewInit {
             closeButton: true
           });
           this.GetTemplateList();
+          this.closeModal();
         } else {
           this.toastr.error(result.message, "Error", {
             progressBar: true,
@@ -141,6 +143,18 @@ export class ApprovalHierarchyComponent implements OnInit, AfterViewInit {
 
       },
     });
+  }
+
+  openAdd() {
+    this.isUpdate = false;
+    this.showModal = true;
+    // ensure fields reset for a new entry
+    this.resetFields();
+    this.md_id = 0;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
   GetTemplateList() {
 
@@ -159,7 +173,9 @@ export class ApprovalHierarchyComponent implements OnInit, AfterViewInit {
     this.submitted = false;
     this.isUpdate = false;
     this.TemplateDeatilList = [];
+    this.md_id = 0;
     this.resetFields();
+    this.editIndex = null;
   }
   Update(data: any) {
 
@@ -252,12 +268,13 @@ export class ApprovalHierarchyComponent implements OnInit, AfterViewInit {
   }
 
   resetFields() {
-    // reset fields
-    //this.md_DocumentType = null;
-    //this.md_DocumentSubType = null;
+    // reset all modal/input fields to initial state
+    this.md_DocumentType = null;
+    this.md_DocumentSubType = null;
     this.md_stageId = null;
     this.md_level = null;
-    //this.md_activeCheckBox = false;
+    this.md_activeCheckBox = false;
+    this.md_id = 0;
   }
   removeTemplate(index: number) {
     this.TemplateDeatilList.splice(index, 1);
@@ -275,7 +292,9 @@ export class ApprovalHierarchyComponent implements OnInit, AfterViewInit {
     this.md_level = stage.level;
     this.md_activeCheckBox = stage.flgActive;
     this.editIndex = index; // mark row being edited
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.isUpdate = true;
+    // Open modal so user can edit values in the modal form
+    this.showModal = true;
   }
 
 }
