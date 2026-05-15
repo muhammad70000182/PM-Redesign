@@ -2,7 +2,7 @@
     <div class="col-md-12 pl-md-0 pr-md-0">
         <div class="card card-user">
             <div class="card-body pb-4">
-                <div *ngIf="AllowedPermissions['canCreate']" class="mb-3">
+                <div *ngIf="AllowedPermissions['canCreate']" class="mb-3 add-new-btn">
                     <button class="btn btn-primary" type="button" (click)="openAdd()">
                         <i class="fa fa-plus"></i><span> {{'Add New'|translate}}</span>
                     </button>
@@ -51,7 +51,7 @@
             </div>
             <!-- Modal for Add / Edit -->
             <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
-                <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-dialog modal-xl" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{{ isUpdate ? ('Edit SAP Setting'|translate) : ('New SAP Setting'|translate) }}</h5>

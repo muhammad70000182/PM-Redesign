@@ -245,9 +245,9 @@ html, body {
 }
 
 .btn-danger {
-  background-color: #ef4444 !important;
-  border-color: #ef4444 !important;
-  color: white !important;
+  background-color: #ef4444 ;
+  border-color: #ef4444 ;
+  color: white ;
 
   &:hover {
     background-color: #dc2626 !important;
@@ -257,11 +257,11 @@ html, body {
 
 /* Forms */
 .form-control {
-  border: 1px solid #e5e7eb !important;
-  border-radius: 8px !important;
-  padding: 0.5rem 0.75rem !important;
-  font-size: 0.875rem !important;
-  transition: all 0.3s ease !important;
+//   border: 1px solid #e5e7eb !important;
+//   border-radius: 8px !important;
+//   padding: 0.5rem 0.75rem !important;
+//   font-size: 0.875rem !important;
+//   transition: all 0.3s ease !important;
 
   &:focus {
     outline: none;
@@ -410,14 +410,17 @@ html, body {
 
 /* Modals */
 .modal-content {
-  border: 1px solid #e5e7eb !important;
-  border-radius: 12px !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+//   border: 1px solid #e5e7eb !important;
+  border-radius: 30px !important;
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+	color: #fff;
 }
 
 .modal-header {
-  border-bottom: 1px solid #e5e7eb !important;
-  padding: 1.5rem !important;
+	border-bottom: 1px solid #e5e7eb !important;
+    padding: 1.5rem !important;
+    background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+    padding: 15px 30px !important;
 }
 
 .modal-body {
@@ -616,11 +619,13 @@ div.dataTables_wrapper div.dataTables_scrollBody {
 .wrapper {
 
 	.form-control {
-		height: 36px;
+		height: 44px;
 		font-size: 13px;
 		border-color: #e3e3e3;
 		box-shadow: none;
-		border: 1px solid #d9d9d9;
+		border: 1px solid #E5E7EB;
+		border-radius: 30px;
+		background: #F6F7FB;
 	}
 
 	.form-select {
@@ -756,6 +761,7 @@ div.dataTables_wrapper div.dataTables_scrollBody {
 			padding: 4px 10px;
 			border-radius: 0 20px 19px 0;
 			font-weight: 500 !important;
+			background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
 		}
 
 	}
@@ -1084,22 +1090,24 @@ div#forgotPasswordModal label {
 
 .btn-design {
 	.btn {
-		padding: 8px 20px;
+		padding: 8px 30px;
 		font-size: 16px;
 		font-weight: bold;
 		border: unset;
 		margin-left: 10px !important;
-		border-radius: 10px !important;
+		border-radius: 30px !important;
 		background-color: transparent;
 
 		&.btn-success {
-			background-color: #14213d;
+			background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
 			color: #fff;
+			
 		}
 
 		&.btn-danger {
-			background: #DFE0E5;
+			background: #F1F1F1;
 			color: #000;
+			border: 1px solid #E5E7EB;
 		}
 
 		&.btn-warning {
@@ -1897,8 +1905,8 @@ table.table.dataTable.table-striped>tbody>tr:nth-of-type(2n+1)>* {
 	border: unset;
 	border-radius: 430px;
 	position: absolute;
-	right: 10px;
-	top: 10px;
+	right: 20px;
+    top: 15px;
 	width: 26px;
 	height: 26px;
 	background: red;
@@ -2138,6 +2146,14 @@ table.table.dataTable.table-striped>tbody>tr:nth-of-type(2n+1)>* {
 
 }
 
+.add-new-btn  {
+	text-align: right;
+	.btn{
+	background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+    border-radius: 30px;
+	}
+    
+}
 // .t-footer {
 // 	tr{
 // 		background-color: #072c1717 !important;
