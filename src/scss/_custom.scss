@@ -223,13 +223,12 @@ html, body {
 }
 
 .btn-secondary {
-  background-color: #6b7280 !important;
-  border-color: #6b7280 !important;
-  color: white !important;
+//   background-color: #6b7280 !important;
+//   border-color: #6b7280 !important;
+//   color: white !important;
 
   &:hover {
-    background-color: #4b5563 !important;
-    border-color: #4b5563 !important;
+	background-color: #F1F1F1;
   }
 }
 
@@ -250,8 +249,9 @@ html, body {
   color: white ;
 
   &:hover {
-    background-color: #dc2626 !important;
-    border-color: #dc2626 !important;
+	    background-color: #F1F1F1 !important;
+    // background-color: #dc2626 !important;
+    // border-color: #dc2626 !important;
   }
 }
 
@@ -279,10 +279,10 @@ html, body {
 }
 
 .form-select {
-  border: 1px solid #e5e7eb !important;
-  border-radius: 8px !important;
-  font-size: 0.875rem !important;
-  transition: all 0.3s ease !important;
+//   border: 1px solid #e5e7eb !important;
+//   border-radius: 8px !important;
+//   font-size: 0.875rem !important;
+//   transition: all 0.3s ease !important;
 
   &:focus {
     outline: none;
@@ -627,15 +627,27 @@ div.dataTables_wrapper div.dataTables_scrollBody {
 		border-radius: 30px;
 		background: #F6F7FB;
 	}
-
+m
 	.form-select {
-		height: 35px;
+		height: 44px;
 		font-size: 13px;
 		border-color: #e3e3e3;
 		box-shadow: none;
 		border: 1px solid #d9d9d9;
+		border-radius: 30px;
+		background-color: #F6F7FB;
 	}
-
+.ng-select-searchable{
+	.ng-select-container{
+		height: 44px !important;
+		font-size: 13px;
+		border-color: #e3e3e3 !important;
+		box-shadow: none;
+		border: 1px solid #d9d9d9 !important;
+		border-radius: 30px;
+		background-color: #F6F7FB !important;
+	}
+}
 	.form-switch {
 		.form-check-input {
 			// font-size: 16px;
@@ -650,7 +662,7 @@ div.dataTables_wrapper div.dataTables_scrollBody {
 			.modal-content {
 				height: 100%;
 				max-height: 850px;
-				min-height: 650px;
+				// min-height: 650px;
 				overflow-y: auto;
 
 				.border-bottom {
@@ -737,7 +749,7 @@ div.dataTables_wrapper div.dataTables_scrollBody {
 		padding: 6px 20px;
 		font-size: 14px;
 		color: #fff;
-		border-radius: 10px;
+		// border-radius: 10px;
 		// border-left: 2px solid #083019;
 	}
 
@@ -762,6 +774,7 @@ div.dataTables_wrapper div.dataTables_scrollBody {
 			border-radius: 0 20px 19px 0;
 			font-weight: 500 !important;
 			background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+			margin: 0;
 		}
 
 	}
@@ -1116,8 +1129,9 @@ div#forgotPasswordModal label {
 		}
 
 		&.btn-secondary {
-			background: #DFE0E5;
+			background-color: #F1F1F1;
 			color: #000;
+			border: 1px solid #E5E7EB;
 		}
 
 		i {
@@ -2146,14 +2160,6 @@ table.table.dataTable.table-striped>tbody>tr:nth-of-type(2n+1)>* {
 
 }
 
-.add-new-btn  {
-	text-align: right;
-	.btn{
-	background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
-    border-radius: 30px;
-	}
-    
-}
 // .t-footer {
 // 	tr{
 // 		background-color: #072c1717 !important;
@@ -2340,9 +2346,9 @@ table td.wrap-text {
 		padding: 10px;
 	}
 
-	.chosaeFilebtn input {
-		left: 34px;
-	}
+	// .chosaeFilebtn input {
+	// 	left: 34px;
+	// }
 }
 
 .customSidebar .sidebar-toggler {
@@ -2407,10 +2413,10 @@ table td.wrap-text {
 	position: relative;
 }
 
-.chosaeFilebtn input {
-	position: absolute;
-	left: 22px;
-}
+// .chosaeFilebtn input {
+// 	position: absolute;
+// 	left: 22px;
+// }
 
 span img {
 	height: 15px;
@@ -2871,7 +2877,7 @@ body {
 	cursor: pointer;
     margin-right: 20px;
     border: 1px solid #ccc;
-    padding: 10px !important;
+    padding: 8px 10px !important;
     border-radius: 10px;
 	.countSe {
 		display: flex;
@@ -2898,9 +2904,10 @@ body {
         .langDropdown{
           border: 1px solid #cccc;
           border-radius: 10px;
-          padding: 5px 0 5px 15px;
+          padding: 0px 0 0px 15px;
           .custom-select{
                 border: unset !important;
+				background-color: unset;
           }
         }
   }
@@ -3093,10 +3100,10 @@ html[dir="rtl"] {
 		// justify-content: flex-start;
 	}
 
-	.chosaeFilebtn input {
-		left: unset;
-		right: 22px;
-	}
+	// .chosaeFilebtn input {
+	// 	left: unset;
+	// 	right: 22px;
+	// }
 
 	.adv-acc-design {
 		.accordion-button {
@@ -3177,4 +3184,30 @@ html[dir="rtl"] {
 		text-align: right;
 	}
 
+}
+.chosaeFilebtn {
+	height: 44px;
+    font-size: 13px;
+    border-color: #e3e3e3;
+    box-shadow: none;
+    border: 1px solid #E5E7EB;
+    border-radius: 30px;
+    background: #F6F7FB;
+}
+.chosaeFilebtn input[type="file"]::file-selector-button{
+	background: #306BC6;
+    border: unset;
+	border-radius: 30px;
+    color: #fff;
+    padding: 11px 12px;
+}
+.title-add-new-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+	button{
+		background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+		border-radius: 30px;
+	}
 }

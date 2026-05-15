@@ -8,7 +8,10 @@
                     <h6 class="fw-bold text-primary mt-2 mb-2">{{'New Permissions' | translate}} </h6>
 
                 </div> -->
-                <div class="mb-3">
+                <div class="mb-3 title-add-new-btn">
+                     <div class="sectionHeading">
+                            <h6 class="fw-bold text-primary mt-2">{{'Permissions' | translate}}</h6>
+                        </div>
                     <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add
                         New' | translate}}</button>
                 </div>
@@ -29,7 +32,7 @@
                                     <form [formGroup]="form" (ngSubmit)="onSubmit()">
                                         <input type="hidden" formControlName="Id" />
                                         <div class="row">
-                                            <div class="col-12 col-md-4 col-sm-6 col-lg-4 col-xl-4">
+                                            <div class="col-12 col-md-6 col-sm-6 ">
                                                 <div class="form-group">
                                                     <label for="dealerName" class="form-label">{{'Parent' |
                                                         translate}}<span class="colorRed">*</span></label>
@@ -45,7 +48,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                                                 <div class="form-group">
                                                     <label for="Title" class="form-label">{{'Title' | translate}}<span
                                                             class="colorRed">*</span></label>
@@ -58,7 +61,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                                                 <div class="form-group">
                                                     <label for="FormUrl" class="form-label">{{'Form Url' |
                                                         translate}}<span class="colorRed">*</span></label>
@@ -71,13 +74,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                                                 <div class="form-group">
                                                     <label for="Icon" class="form-label">{{'Icon' | translate}}</label>
                                                     <input type="text" class="form-control" formControlName="Icon">
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                                                 <div class="form-group">
                                                     <label for="Sorting" class="form-label">{{'Sorting' |
                                                         translate}}<span class="colorRed">*</span></label>
@@ -92,7 +95,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6  checkBox">
                                                 <div class="form-group">
                                                     <input type="checkbox" formControlName="ShowInMenu">
                                                     <label for="Description" class="form-label checkboxstyle">{{'Show
@@ -118,15 +121,7 @@
                     <div class="modal-backdrop fade" [class.show]="showModal" *ngIf="showModal"></div>
                 </div>
 
-                <div class="row rowFlex">
-                    <div class="col-md-8">
-                        <!-- <h4 class="sectionHeading">Permissions Listing:</h4> -->
-                        <div class="sectionHeading">
-                            <h6 class="fw-bold text-primary mt-2">{{'Permissions' | translate}}</h6>
-                        </div>
-                    </div>
-
-                </div>
+            
                 <div class="demo-html">
                     <div class="dataTableDesign table-responsive">
                         <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">

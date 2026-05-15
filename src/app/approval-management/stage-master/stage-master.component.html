@@ -12,7 +12,7 @@
     <div *ngIf="AllowedPermissions['canCreate']">
       <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal"
         [style.display]="showModal ? 'block' : 'none'">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">{{ isUpdate ? ('Edit Stage' | translate) : ('New Stage' | translate) }}</h5>
@@ -24,7 +24,7 @@
               <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <input type="hidden" formControlName="Id" />
                 <div class="row">
-                  <div class="col-12 col-md-6 col-lg-4">
+                  <div class="col-12 col-md-6 ">
                     <div class="form-group">
                       <label class="form-label">{{'Stage Name' | translate}}</label>
                       <input type="text" class="form-control" formControlName="StageName"
@@ -34,7 +34,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-md-6 col-lg-4">
+                  <div class="col-12 col-md-6 ">
                     <div class="form-group">
                       <label class="form-label">{{'Description' | translate}}</label>
                       <input type="text" class="form-control" formControlName="Description"
@@ -44,7 +44,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-md-6 col-lg-4">
+                  <div class="col-12 col-md-6 ">
                     <div class="form-group">
                       <label class="form-label">{{'Number of Approvals' | translate}}</label>
                       <input type="text" class="form-control" formControlName="NumApprovals" appCommaSeparated
@@ -55,7 +55,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-md-6 col-lg-4">
+                  <div class="col-12 col-md-6 ">
                     <div class="form-group">
                       <label class="form-label">{{'Number of Rejections' | translate}}</label>
                       <input type="text" class="form-control" formControlName="NumRejections" appCommaSeparated
@@ -66,8 +66,8 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-md-6 col-lg-4">
-                    <div class="form-check mt-4">
+                  <div class="col-12 col-md-6 ">
+                    <div class="form-check">
                       <input class="form-check-input" type="checkbox" formControlName="IsActive"
                         id="modalActiveCheckbox" />
                       <label class="form-check-label" for="modalActiveCheckbox">{{'Active' | translate}}</label>
@@ -132,13 +132,15 @@
     </div>
 
     <div *ngIf="AllowedPermissions['canView']">
-      <div class="mb-3" *ngIf="AllowedPermissions['canCreate']">
+
+      <div class="mb-3 title-add-new-btn" *ngIf="AllowedPermissions['canCreate']">
+         <div class="sectionHeading">
+        <h6>{{'Stages' | translate}}</h6>
+      </div>
         <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add New'|
           translate}}</button>
       </div>
-      <div class="sectionHeading">
-        <h6>{{'Stages' | translate}}</h6>
-      </div>
+     
 
       <div class="table-responsive dataTableDesign">
         <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">

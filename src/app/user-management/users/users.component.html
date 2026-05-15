@@ -4,15 +4,12 @@
       <div class="card-body pb-4">
         <div class="row">
           <div class="col-md-12">
-            <div class="mb-3">
-              <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add
-                New'|translate}}</button>
-            </div>
-             <div class="row">
+             <div class="title-add-new-btn">
                       <div class="sectionHeading">
-                        <h6 class="fw-bold text-primary mt-4">{{'Users Listing'|translate}}</h6>
+                        <h6 class="fw-bold text-primary">{{'Users Listing'|translate}}</h6>
                       </div>
-
+                    <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add
+                New'|translate}}</button>
                     </div>
             <div class="col-md-12">
               <div class=" dataTableDesign table-responsive">
@@ -74,7 +71,7 @@
                     <form [formGroup]="form" (ngSubmit)="onSubmit()">
                       <input type="hidden" formControlName="Id" />
                       <div class="row">
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                           <div class="form-group">
                             <label for="FirstName" class="form-label">{{'First Name'|translate}}<span
                                 class="colorRed">*</span></label>
@@ -86,13 +83,13 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                           <div class="form-group">
                             <label for="Description" class="form-label">{{'Last Name'|translate}}</label>
                             <input type="text" class="form-control" formControlName="LastName">
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                           <div class="form-group">
                             <label for="exampleInputEmail1" class="form-label"> {{'Email'|translate}} </label>
                             <input type="Email" class="form-control" placeholder="Email@Email.com"
@@ -103,7 +100,7 @@
                             </div>
                           </div>
                         </div>
-                        <!-- <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <!-- <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                   <div class="form-group">
                     <label for="UserCode" class="form-label">{{'User Code'|translate}}<span class="colorRed">*</span></label>
                     <input type="text" class="form-control" formControlName="UserCode" (keypress)="onlyNumber($event)"
@@ -124,13 +121,13 @@
                     </div>
                   </div>
                 </div> -->
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                           <div class="form-group">
                             <label for="UserCode" class="form-label">{{'Password'|translate}}<span class="colorRed">*</span></label>
                             <div class="input-group">
                               <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="Password" [ngClass]="{ 'is-invalid': submitted && f['Password'].errors }">
                               <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()" aria-label="Toggle password visibility">
-                                <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'" style="color: #000;"></i>
                               </button>
                             </div>
                             <div *ngIf="submitted && f['Password'].errors" class="invalid-feedback">
@@ -138,7 +135,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                           <div class="form-group">
                             <label class="form-label"> {{'Mobile Number'|translate}}<span class="colorRed">*</span>
                             </label>
@@ -162,13 +159,13 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                           <div class="form-group">
                             <label for="TelNo" class="form-label">{{'Tel No'|translate}}</label>
                             <input type="text" class="form-control" formControlName="TelNo">
                           </div>
                         </div>
-                        <div class="col-12 col-md-4 col-sm-6 col-lg-4 col-xl-4">
+                        <div class="col-12 col-md-6 col-sm-6 ">
                           <div class="form-group">
                             <label for="dealerName" class="form-label">{{'Role'|translate}}<span
                                 class="colorRed">*</span> </label>
@@ -183,12 +180,12 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                        <div class="col-12 col-sm-6 col-md-6">
                           <div class="form-group">
                             <span style="display: block;" class="form-label">{{'Image'|translate}}</span>
                             <div class="mb-3 chosaeFilebtn">
                               <label class="form-label">
-                                <a><i class="fa fa-file-image"></i> {{'Choose File'|translate}}</a>
+                                <!-- <a><i class="fa fa-file-image"></i> {{'Choose File'|translate}}</a> -->
                                 <!-- //<input class="" type="file" [(ngModel)]="FileURL" #file (change)="preview(file.files)" > -->
                                 <input type="file" #fileInput (change)="onFileChange($event,fileInput)" />
                               </label>
@@ -196,7 +193,7 @@
                           </div>
                         </div>
 
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                           <div class="form-group">
                             <label for="HomeAddress" class="form-label">{{'Home Address'|translate}}<span
                                 class="colorRed">*</span></label>
@@ -209,13 +206,13 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                           <div class="form-group">
                             <label for="OfficeAddress" class="form-label">{{'Office Address'|translate}}</label>
                             <textarea type="text" class="form-control" formControlName="OfficeAddress"></textarea>
                           </div>
                         </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6  checkBox">
                           <div class="form-group">
                             <input type="checkbox" formControlName="IsActive">
                             <label for="Description" class="form-label checkboxstyle">{{'Active'|translate}}</label>

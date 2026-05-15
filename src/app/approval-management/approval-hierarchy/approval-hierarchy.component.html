@@ -7,7 +7,10 @@
     <!-- Add Template button opens modal (if allowed) -->
     <div class="row mb-3">
       <div class="col-md-12">
-        <div *ngIf="AllowedPermissions['canCreate']" class="mb-2">
+        <div *ngIf="AllowedPermissions['canCreate']" class="mb-2 title-add-new-btn">
+          <div class="sectionHeading">
+      <h6 class="mb-4">{{'Template Listing'|translate}}</h6>
+    </div>
           <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add New Template'|translate}}</button>
         </div>
       </div>
@@ -82,7 +85,7 @@
                 </table>
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer btn-design">
               <button class="btn btn-success" type="button" (click)="onSubmit()">{{'Save'|translate}}</button>
               <button class="btn btn-secondary" type="button" (click)="clearForm()">{{'Clear'|translate}}</button>
             </div>
@@ -92,9 +95,7 @@
       <div class="modal-backdrop fade" [class.show]="showModal" *ngIf="showModal"></div>
     </div>
 
-    <div class="sectionHeading">
-      <h6 class="mb-4">{{'Template Listing'|translate}}</h6>
-    </div>
+    
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive dataTableDesign">

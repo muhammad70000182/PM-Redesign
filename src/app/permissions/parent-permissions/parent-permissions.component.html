@@ -6,14 +6,17 @@
                  <!-- <div class="sectionHeading">
                         <h6 class="fw-bold text-primary mt-2">{{'New Permissions' | translate}}</h6>
                     </div> -->
-                                <div class="mb-3">
+                                <div class="mb-3 title-add-new-btn">
+                                     <div class="sectionHeading">
+                        <h6 class="fw-bold text-primary mt-2">{{'Permissions Listing' | translate}}</h6>
+                    </div>
                                         <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add New' | translate}}</button>
                                 </div>
 
                                 <!-- Modal for Add/Edit Permission -->
                                 <div *ngIf="true">
                                     <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">{{ isUpdate ? ('Edit Permission' | translate) : ('New Permission' | translate) }}</h5>
@@ -23,28 +26,28 @@
                                                     <form [formGroup]="form" (ngSubmit)="onSubmit()">
                                                         <input type="hidden" formControlName="Id" />
                                                         <div class="row">
-                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                                                                 <div class="form-group">
                                                                     <label for="Title" class="form-label">{{'Title' | translate}}<span class="colorRed">*</span></label>
                                                                     <input type="text" class="form-control" formControlName="Title" [ngClass]="{ 'is-invalid': submitted && f['Title'].errors }">
                                                                     <div *ngIf="submitted && f['Title'].errors" class="invalid-feedback"><div *ngIf="f['Title'].errors['required']">{{'Title is required'}}</div></div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                                                                 <div class="form-group">
                                                                     <label for="Sorting" class="form-label">{{'Sorting' | translate}}<span class="colorRed">*</span></label>
                                                                     <input type="text" class="form-control" (paste)="(false)" formControlName="Sorting" [ngClass]="{ 'is-invalid': submitted && f['Sorting'].errors }" (keypress)="onlyNumber($event)">
                                                                     <div *ngIf="submitted && f['Sorting'].errors" class="invalid-feedback"><div *ngIf="f['Sorting'].errors['required']">{{'Sorting is required'}}</div></div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                                                                 <div class="form-group">
                                                                     <label for="Icon" class="form-label">{{'Icon' | translate}}<span class="colorRed">*</span></label>
                                                                     <input type="text" class="form-control" formControlName="Icon" [ngClass]="{ 'is-invalid': submitted && f['Icon'].errors }">
                                                                     <div *ngIf="submitted && f['Icon'].errors" class="invalid-feedback"><div *ngIf="f['Icon'].errors['required']">{{'Icon is required'}}</div></div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                                                                 <div class="form-group">
                                                                     <label for="Url" class="form-label">{{'Url' | translate}}<span class="colorRed">*</span></label>
                                                                     <input type="text" class="form-control" formControlName="Url" [ngClass]="{ 'is-invalid': submitted && f['Url'].errors }">
@@ -67,14 +70,7 @@
                                     <div class="modal-backdrop fade" [class.show]="showModal" *ngIf="showModal"></div>
                                 </div>
 
-                <div class="row rowFlex">
-                    <div class="col-md-8">
-                        <!-- <h4 class="sectionHeading">Permissions Listing:</h4> -->
-                         <div class="sectionHeading">
-                        <h6 class="fw-bold text-primary mt-2">{{'Permissions Listing' | translate}}</h6>
-                    </div>
-                    </div>
-                </div>
+             
                 <div class="dataTableDesign table-responsive">
                     <table class="table table-striped" 
                     datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
