@@ -17,7 +17,7 @@ export class ChecklistComponent implements OnInit {
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
- 
+
 
   form: FormGroup;
   submitted: boolean;
@@ -36,6 +36,7 @@ export class ChecklistComponent implements OnInit {
   DataList: any;
   LovsList: any;
   CheckListMasterTypeListValues: any;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -64,11 +65,11 @@ export class ChecklistComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: false,
-      autoWidth:false,
-      ordering:false
+      autoWidth: false,
+      ordering: false
       // scrollCollapse: true,
       // scrollX: true
-     
+
     };
     this.form = this.formBuilder.group({
       id: [0],  // auto identity, usually not editable
@@ -85,7 +86,7 @@ export class ChecklistComponent implements OnInit {
     this.GetMasterData();
     this.GetLovs()
   }
-    GetLovs() {
+  GetLovs() {
 
     let url = '/MasterData/GetLovs?Form=CheckListMaster';
     this._service.Get(url).subscribe({
@@ -93,7 +94,7 @@ export class ChecklistComponent implements OnInit {
         if (result.status) {
           this.LovsList = result.data;
           this.CheckListMasterTypeListValues = result.data.filter((item: any) => item.field === 'Type');
-          
+
         }
       },
       error: (err: any) => { },
@@ -107,27 +108,27 @@ export class ChecklistComponent implements OnInit {
     }
     this.loading = true;
 
- const { code, name, id } = this.form.value;
+    const { code, name, id } = this.form.value;
 
     // 🔍 Check duplicate CODE
-    const duplicateCode = this.DataList.some((item:any) => item.code?.trim().toLowerCase() === code.trim().toLowerCase()
-        && item.id !== id   // allow update of the same record
+    const duplicateCode = this.DataList.some((item: any) => item.code?.trim().toLowerCase() === code.trim().toLowerCase()
+      && item.id !== id   // allow update of the same record
     );
 
     // 🔍 Check duplicate NAME
     const duplicateName = this.DataList.some(
-      (item:any) => item.name?.trim().toLowerCase() === name.trim().toLowerCase()
+      (item: any) => item.name?.trim().toLowerCase() === name.trim().toLowerCase()
         && item.id !== id
     );
-  if (duplicateCode) {
-    this.toastr.warning('Code already exists. Please use a different code.');
-    return;
-  }
+    if (duplicateCode) {
+      this.toastr.warning('Code already exists. Please use a different code.');
+      return;
+    }
 
-  if (duplicateName) {
-    this.toastr.warning('Name already exists. Please use a different name.');
-    return;
-  }
+    if (duplicateName) {
+      this.toastr.warning('Name already exists. Please use a different name.');
+      return;
+    }
     let url = '/MasterData/PostMasterData';
     this._service.Post(this.form.value, url).subscribe({
       next: (result: any) => {
@@ -139,6 +140,7 @@ export class ChecklistComponent implements OnInit {
           // });
           this.GetMasterData();
           this.clearForm();
+          this.closeModal();
         } else {
           this.toastr.error(result.message, "Error", {
             progressBar: true,
@@ -193,5 +195,16 @@ export class ChecklistComponent implements OnInit {
       updatedDate: new Date(),
       masterDataType: 'CheckList'
     });
+    this.showModal = true;
+  }
+
+  openAdd() {
+    this.clearForm();
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.submitted = false;
   }
 }
