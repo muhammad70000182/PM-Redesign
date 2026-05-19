@@ -7,140 +7,162 @@
                     <div class="sectionHeading">
                         <h6 class="fw-bold text-primary mt-2">{{'Series Master' | translate}}</h6>
                     </div>
-                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                        <input type="hidden" formControlName="id" />
+                    <div class="title-add-new-btn">
+                        <div class="sectionHeading">
+                            <h6 class="fw-bold text-primary">&nbsp;</h6>
+                        </div>
+                        <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add New'| translate}}</button>
+                    </div>
 
-                        <div class="row">
-                            <!-- Prefix -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label">{{'Name' | translate}}</label>
-                                    <input type="text" class="form-control" formControlName="u_SName"
-                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SName'].touched) && f['u_SName'].invalid }" />
-                                    <app-validation-message [control]="f['u_SName']" label="Name"
-                                        [submitted]="submitted"></app-validation-message>
-                                </div>
-                            </div>
-
-                            <!-- Agreement Type -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label"> {{'Agreement Type' | translate}}</label>
-                                    <ng-select aria-label="Default select example" formControlName="u_AGRType"
-                                        [ngClass]="{ 'is-invalid': (submitted || f['u_AGRType'].touched) && f['u_AGRType'].invalid }">
-                                        <ng-option *ngFor="let car of AgreementTypeListVlaues"
-                                            [value]="car.fieldValue">{{car.fieldName}}</ng-option>
-                                    </ng-select>
-                                    <app-validation-message [control]="f['u_AGRType']" label="Agreement Type"
-                                        [submitted]="submitted"></app-validation-message>
-                                </div>
-                            </div>
-                            <!-- Item Group -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label">{{'Item Group' | translate}}</label>
-                                    <ng-select aria-label="Default select example" formControlName="u_ItmGrpCode"
-                                        [ngClass]="{ 'is-invalid': (submitted || f['u_ItmGrpCode'].touched) && f['u_ItmGrpCode'].invalid }">
-                                        <ng-option *ngFor="let car of ItemGroupListVlaues"
-                                            [value]="car.itmsGrpCod">{{car.itmsGrpNam}}</ng-option>
-                                    </ng-select>
-                                    <app-validation-message [control]="f['u_ItmGrpCode']" label="Item Group"
-                                        [submitted]="submitted"></app-validation-message>
-                                </div>
-                            </div>
-                            <!-- Document Type -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label">{{'Document Type' | translate}}</label>
-                                    <ng-select aria-label="Default select example" formControlName="u_DocType"
-                                        [ngClass]="{ 'is-invalid': (submitted || f['u_DocType'].touched) && f['u_DocType'].invalid }">
-                                        <ng-option value="">Select Document Type</ng-option>
-                                        <ng-option value="1">Agreement</ng-option>
-                                        <ng-option value="2">ProformaInovice</ng-option>
-                                        <ng-option value="3">RevenuePosting</ng-option>
-                                        <ng-option value="4">UnitDelivery</ng-option>
-                                        <ng-option value="5">TransferOfOwnerShip</ng-option>
-                                        <ng-option value="6">UnitReturn</ng-option>
-                                        <ng-option value="7">RevenuePopulation</ng-option>
-                                    </ng-select>
-                                    <app-validation-message [control]="f['u_DocType']" label="Document Type"
-                                        [submitted]="submitted"></app-validation-message>
-                                </div>
-                            </div>
-
-
-                            <!-- Prefix -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label">{{'Prefix' | translate}}</label>
-                                    <input type="text" class="form-control" formControlName="u_SPrefix"
-                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SPrefix'].touched) && f['u_SPrefix'].invalid }" />
-                                    <app-validation-message [control]="f['u_SPrefix']" label="Prefix"
-                                        [submitted]="submitted"></app-validation-message>
-                                </div>
-                            </div>
-
-                            <!-- Start -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label">{{'Start' | translate}}</label>
-                                    <input type="text" class="form-control" formControlName="u_SStart"
-                                        [(ngModel)]="S_next" maxlength="100" appCommaSeparated
-                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SStart'].touched) && f['u_SStart'].invalid }" />
-                                    <app-validation-message [control]="f['u_SStart']" label="Start"
-                                        [submitted]="submitted"></app-validation-message>
-                                </div>
-                            </div>
-
-                            <!-- End -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label">{{'End' | translate}}</label>
-                                    <input type="text" class="form-control" formControlName="u_SEnd" maxlength="100"
-                                        appCommaSeparated
-                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SEnd'].touched) && f['u_SEnd'].invalid }" />
-                                    <app-validation-message [control]="f['u_SEnd']" label="End"
-                                        [submitted]="submitted"></app-validation-message>
-                                </div>
-                            </div>
-
-                            <!-- Next -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label">{{'Next' | translate}}</label>
-                                    <input type="text" class="form-control" formControlName="u_SNext"
-                                        [(ngModel)]="S_next" readonly
-                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SNext'].touched) && f['u_SNext'].invalid }" />
-                                    <app-validation-message [control]="f['u_SNext']" label="Next"
-                                        [submitted]="submitted"></app-validation-message>
-                                </div>
-                            </div>
-
-                            <!-- Checkboxes -->
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" formControlName="u_IsDefault" />
-                                    <label class="form-check-label">{{'Default' | translate}}</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" formControlName="u_Lock" />
-                                    <label class="form-check-label">{{'Lock' | translate}}</label>
-                                </div>
-                            </div>
-
-                            <!-- Buttons -->
-                            <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
-                                <div class="btn-group btn-design">
-                                    <button class="btn btn-success" type="submit">
-                                        <i class="fa fa-save"></i><span> {{'Save' | translate}}</span>
+                    <!-- Modal for Add / Edit -->
+                    <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ isUpdate ? ('Edit Series'| translate) : ('New Series'| translate) }}</h5>
+                                    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                                        <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <button class="btn btn-danger" type="button" (click)="clearForm()">
-                                        <i class="fa fa-times"></i><span> {{'Cancel' | translate}}</span>
-                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                                        <input type="hidden" formControlName="id" />
+                                        <div class="row">
+                                            <!-- Name -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">{{'Name' | translate}}</label>
+                                                    <input type="text" class="form-control" formControlName="u_SName"
+                                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SName'].touched) && f['u_SName'].invalid }" />
+                                                    <app-validation-message [control]="f['u_SName']" label="Name"
+                                                        [submitted]="submitted"></app-validation-message>
+                                                </div>
+                                            </div>
+
+                                            <!-- Agreement Type -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label"> {{'Agreement Type' | translate}}</label>
+                                                    <ng-select aria-label="Default select example" formControlName="u_AGRType"
+                                                        [ngClass]="{ 'is-invalid': (submitted || f['u_AGRType'].touched) && f['u_AGRType'].invalid }">
+                                                        <ng-option *ngFor="let car of AgreementTypeListVlaues"
+                                                            [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                                                    </ng-select>
+                                                    <app-validation-message [control]="f['u_AGRType']" label="Agreement Type"
+                                                        [submitted]="submitted"></app-validation-message>
+                                                </div>
+                                            </div>
+
+                                            <!-- Item Group -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">{{'Item Group' | translate}}</label>
+                                                    <ng-select aria-label="Default select example" formControlName="u_ItmGrpCode"
+                                                        [ngClass]="{ 'is-invalid': (submitted || f['u_ItmGrpCode'].touched) && f['u_ItmGrpCode'].invalid }">
+                                                        <ng-option *ngFor="let car of ItemGroupListVlaues"
+                                                            [value]="car.itmsGrpCod">{{car.itmsGrpNam}}</ng-option>
+                                                    </ng-select>
+                                                    <app-validation-message [control]="f['u_ItmGrpCode']" label="Item Group"
+                                                        [submitted]="submitted"></app-validation-message>
+                                                </div>
+                                            </div>
+
+                                            <!-- Document Type -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">{{'Document Type' | translate}}</label>
+                                                    <ng-select aria-label="Default select example" formControlName="u_DocType"
+                                                        [ngClass]="{ 'is-invalid': (submitted || f['u_DocType'].touched) && f['u_DocType'].invalid }">
+                                                        <ng-option value="">Select Document Type</ng-option>
+                                                        <ng-option value="1">Agreement</ng-option>
+                                                        <ng-option value="2">ProformaInovice</ng-option>
+                                                        <ng-option value="3">RevenuePosting</ng-option>
+                                                        <ng-option value="4">UnitDelivery</ng-option>
+                                                        <ng-option value="5">TransferOfOwnerShip</ng-option>
+                                                        <ng-option value="6">UnitReturn</ng-option>
+                                                        <ng-option value="7">RevenuePopulation</ng-option>
+                                                    </ng-select>
+                                                    <app-validation-message [control]="f['u_DocType']" label="Document Type"
+                                                        [submitted]="submitted"></app-validation-message>
+                                                </div>
+                                            </div>
+
+                                            <!-- Prefix -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">{{'Prefix' | translate}}</label>
+                                                    <input type="text" class="form-control" formControlName="u_SPrefix"
+                                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SPrefix'].touched) && f['u_SPrefix'].invalid }" />
+                                                    <app-validation-message [control]="f['u_SPrefix']" label="Prefix"
+                                                        [submitted]="submitted"></app-validation-message>
+                                                </div>
+                                            </div>
+
+                                            <!-- Start -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">{{'Start' | translate}}</label>
+                                                    <input type="text" class="form-control" formControlName="u_SStart"
+                                                        [(ngModel)]="S_next" maxlength="100" appCommaSeparated
+                                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SStart'].touched) && f['u_SStart'].invalid }" />
+                                                    <app-validation-message [control]="f['u_SStart']" label="Start"
+                                                        [submitted]="submitted"></app-validation-message>
+                                                </div>
+                                            </div>
+
+                                            <!-- End -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">{{'End' | translate}}</label>
+                                                    <input type="text" class="form-control" formControlName="u_SEnd" maxlength="100"
+                                                        appCommaSeparated
+                                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SEnd'].touched) && f['u_SEnd'].invalid }" />
+                                                    <app-validation-message [control]="f['u_SEnd']" label="End"
+                                                        [submitted]="submitted"></app-validation-message>
+                                                </div>
+                                            </div>
+
+                                            <!-- Next -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">{{'Next' | translate}}</label>
+                                                    <input type="text" class="form-control" formControlName="u_SNext"
+                                                        [(ngModel)]="S_next" readonly
+                                                        [ngClass]="{ 'is-invalid': (submitted || f['u_SNext'].touched) && f['u_SNext'].invalid }" />
+                                                    <app-validation-message [control]="f['u_SNext']" label="Next"
+                                                        [submitted]="submitted"></app-validation-message>
+                                                </div>
+                                            </div>
+
+                                            <!-- Checkboxes -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" formControlName="u_IsDefault" />
+                                                    <label class="form-check-label">{{'Default' | translate}}</label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" formControlName="u_Lock" />
+                                                    <label class="form-check-label">{{'Lock' | translate}}</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Buttons -->
+                                            <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                                                <div class="btn-group btn-design">
+                                                    <button class="btn btn-success" type="submit">
+                                                        <i class="fa fa-save"></i><span> {{'Save' | translate}}</span>
+                                                    </button>
+                                                    <button class="btn btn-danger" type="button" (click)="clearForm(); closeModal()">
+                                                        <i class="fa fa-times"></i><span> {{'Cancel' | translate}}</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
 
 
                     <!-- <h4 class="sectionHeading">Roles Listing:</h4> -->

@@ -298,6 +298,12 @@ html, body {
   margin-bottom: 0.5rem !important;
 }
 
+/* Ensure checkbox labels are readable (override any dark-bg contexts) */
+.form-check-label {
+	color: #1a1a1a !important;
+	font-weight: 600 !important;
+}
+
 /* Tables */
 .table {
   border-collapse: collapse;

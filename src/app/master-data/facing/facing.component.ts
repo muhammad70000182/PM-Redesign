@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../_services/shared.service';
 import { SharedHelper } from '../../_Helper/SharedHelper';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-facing',
   templateUrl: './facing.component.html',
   styleUrls: ['./facing.component.css']
 })
-export class FacingComponent implements OnInit {
+export class FacingComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  form: FormGroup;
-  submitted: boolean;
-  loading: boolean;
-  isUpdate: boolean;
+  form!: FormGroup;
+  submitted!: boolean;
+  loading!: boolean;
+  isUpdate!: boolean;
   RolesList: any;
   searchData = "";
   RecordCount: any;
@@ -26,6 +28,11 @@ export class FacingComponent implements OnInit {
   typesList: string[] = ['Delivery check List', 'QA Review', 'Testing'];
   CurrentUserInfo: any | { Id: number; UserCode: string; FullName: string; RoleName: string; RoleID: number; UserImage: string; };
   DataList: any;
+  @ViewChild(DataTableDirective)
+  dtElement!: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -50,6 +57,20 @@ export class FacingComponent implements OnInit {
       masterDataType: ['Facing', [Validators.maxLength(50)]]
     });
     this.GetMasterData();
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        processing: false,
+        autoWidth: false,
+        ordering: false
+      };
+  }
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(null);
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
   get f() { return this.form.controls; }
   onSubmit() {
@@ -92,6 +113,7 @@ export class FacingComponent implements OnInit {
           // });
           this.GetMasterData();
           this.clearForm();
+          this.closeModal();
         } else {
           this.toastr.error(result.message, "Error", {
             progressBar: true,
@@ -111,7 +133,7 @@ export class FacingComponent implements OnInit {
       next: result => {
         if (result.status) {
           this.DataList = result.data;
-          console.log(this.RolesList)
+          this.rerender();
         }
       },
       error: (err: any) => { },
@@ -145,6 +167,25 @@ export class FacingComponent implements OnInit {
       updatedBy: parseInt(this.CurrentUserInfo?.Id) || 0,
       updatedDate: new Date(),
       masterDataType: 'Facing'
+    });
+      this.showModal = true;
+  }
+
+  openAdd() {
+    this.clearForm();
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.submitted = false;
+  }
+
+  rerender(): void {
+    if (!this.dtElement) return;
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next(null);
     });
   }
 }

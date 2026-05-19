@@ -32,6 +32,7 @@ export class FacilityComponent implements OnInit {
   typesList: string[] = ['Delivery check List', 'QA Review', 'Testing'];
   CurrentUserInfo: any | { Id: number; UserCode: string; FullName: string; RoleName: string; RoleID: number; UserImage: string; };
   DataList: any;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -118,6 +119,7 @@ export class FacilityComponent implements OnInit {
           // });
           this.GetMasterData();
           this.clearForm();
+          this.closeModal();
         } else {
           this.toastr.error(result.message, "Error", {
             progressBar: true,
@@ -172,5 +174,16 @@ export class FacilityComponent implements OnInit {
       updatedDate: new Date(),
       masterDataType: 'Facility'
     });
+    this.showModal = true;
+  }
+
+  openAdd() {
+    this.clearForm();
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.submitted = false;
   }
 }
