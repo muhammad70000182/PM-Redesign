@@ -39,6 +39,7 @@ export class ownershiptransferlistComponent implements OnInit, AfterViewInit {
   UnitactiveTab: string;
   GenericForma: { DateFormate: string; };
   AgreementTypeListVlaues: any;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -192,6 +193,23 @@ export class ownershiptransferlistComponent implements OnInit, AfterViewInit {
   onDropDownChange(data: 0) {
     debugger
     //this.GetperformaFilterList(data);
+  }
+
+  openAdd() {
+    if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
+      this.showModal = true;
+    } else {
+      this.toastr.error("You don't have permission to create Ownership Transfer", "Permission Denied", {
+        progressBar: true,
+        closeButton: true
+      });
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+    // refresh list after modal close
+    this.GettransferList();
   }
 
   Update(TId: any) {

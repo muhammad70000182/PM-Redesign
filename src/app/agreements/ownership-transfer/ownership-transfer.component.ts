@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../_services/shared.service';
@@ -18,11 +18,11 @@ import { DatePipe } from '@angular/common';
 export class OwnershipTransferComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
+  dtElement!: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  form: FormGroup;
+  form!: FormGroup;
   submitted: boolean = false;
   loading: boolean = false;
   isUpdate: boolean = false;
@@ -54,6 +54,7 @@ export class OwnershipTransferComponent implements OnInit, AfterViewInit {
   AttachmentsList: any = [];
   SeriesName: any;
   agrinfo: string;
+  @Output() saved: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -166,6 +167,7 @@ export class OwnershipTransferComponent implements OnInit, AfterViewInit {
             progressBar: true,
             closeButton: true
           });
+          try { this.saved.emit(true); } catch (e) { }
 
         } else {
           this.toastr.error(result.message, "Error", {

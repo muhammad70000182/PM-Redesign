@@ -14,16 +14,13 @@
                         </div>
                     </div>
                     <div class="col-md-8 text-right">
-                        <div class="btn-design" *ngIf="AllowedPermissions['canCreate']">
+                        <div class="btn-design">
                             <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to Excel</button>
-                            <button [routerLink]="['/agreements/performa-invoice']" class="btn btn-success"><i
-                                    class="fa fa-plus"></i> {{'Add New' | translate}}</button>
+                                <button *ngIf="AllowedPermissions['canCreate']" (click)="openAdd()" class="btn btn-success"><i class="fa fa-plus"></i> {{'Add New' | translate}}</button>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="AllowedPermissions['canCreate']">
-
-                </div>
+              
                 <div *ngIf="AllowedPermissions['canView']" class="">
                     <div class="table-responsive dataTableDesign">
                         <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
@@ -95,6 +92,22 @@
                         </table>
                     </div>
 
+                </div>
+            </div>
+        </div>
+        <!-- Modal for Add New Performa Invoice (embed PerformaInvoiceComponent) -->
+        <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{'New Proforma Invoice' | translate}}</h5>
+                        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <app-performa-invoice (saved)="closeModal()"></app-performa-invoice>
+                    </div>
                 </div>
             </div>
         </div>
