@@ -59,7 +59,7 @@
                                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
                                     <input type="hidden" formControlName="Id" />
                                     <div class="row">
-                                        <div class="col-12">
+                                        <div class="col-12 col-md-6">
                                             <div class="form-group">
                                                 <label for="RoleName" class="form-label">{{'Role Name'| translate}} <span class="colorRed">*</span></label>
                                                 <input type="text" class="form-control" formControlName="RoleName" [ngClass]="{ 'is-invalid': submitted && f['RoleName'].errors }">
@@ -68,7 +68,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="col-12 col-md-6">
                                             <div class="form-group">
                                                 <label for="Description" class="form-label">{{'Description'| translate}}<span class="colorRed">*</span></label>
                                                 <input type="text" class="form-control" formControlName="Description" [ngClass]="{ 'is-invalid': submitted && f['Description'].errors }">

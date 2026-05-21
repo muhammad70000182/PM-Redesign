@@ -5,7 +5,7 @@
                 <div *ngIf="AllowedPermissions['canCreate']">
                     <!-- <h4 class="sectionHeading">New Role:</h4> -->
                     <div class="sectionHeading">
-                        <h6 class="fw-bold text-primary mt-2">{{'Unit Detail Search'|translate}}</h6>
+                        <h6 class="fw-bold text-primary mb-3">{{'Unit Detail Search'|translate}}</h6>
                     </div>
                     <form [formGroup]="form" (ngSubmit)="onSubmit()">
                         <div class="accordion adv-acc-design" id="DetailList">
@@ -16,8 +16,8 @@
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#ProjectSearch" aria-expanded="true"
                                         aria-controls="ProjectSearch">
-                                        <span class="acc-icon"><i class="fas fa-project-diagram"></i></span>{{'Project
-                                        Search'|translate}}
+                                        <span class="acc-icon"><i class="fas fa-project-diagram"></i></span><span class="acc-heading">{{'Project
+                                        Search'|translate}}</span>
                                     </button>
                                 </h2>
                                 <div id="ProjectSearch" class="accordion-collapse collapse show"
@@ -128,7 +128,7 @@
                                         data-bs-target="#FacilitiesSearch" aria-expanded="false"
                                         aria-controls="FacilitiesSearch">
                                         <span class="acc-icon"><i
-                                                class="fa-solid fa-building"></i></span>{{'Facilities'|translate}}
+                                                class="fa-solid fa-building"></i></span><span class="acc-heading">{{'Facilities'|translate}}</span>
                                     </button>
                                 </h2>
                                 <div id="FacilitiesSearch" class="accordion-collapse collapse"
@@ -137,25 +137,25 @@
                                         <div class="row">
 
                                             <div class="col-md-4">
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_Electricity" id="U_Electricity">
                                                     <label class="form-check-label" for="U_Electricity">{{'Electricity'
                                                         | translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_Water" id="U_Water">
                                                     <label class="form-check-label" for="U_Water">{{'Water' |
                                                         translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_Gas" id="U_Gas">
                                                     <label class="form-check-label" for="U_Gas">{{'Gas' |
                                                         translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_Furnished" id="U_Furnished">
                                                     <label class="form-check-label" for="U_Furnished">{{'Furnished' |
@@ -164,25 +164,25 @@
                                             </div>
 
                                             <div class="col-md-4">
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_Basement" id="U_Basement">
                                                     <label class="form-check-label" for="U_Basement">{{'Basement' |
                                                         translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_SwmPool" id="U_SwmPool">
                                                     <label class="form-check-label" for="U_SwmPool">{{'Swimming Pool' |
                                                         translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_AC" id="U_AC">
                                                     <label class="form-check-label" for="U_AC">{{'Air Conditioning' |
                                                         translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_FullKitchen" id="U_FullKitchen">
                                                     <label class="form-check-label" for="U_FullKitchen">{{'Full Kitchen'
@@ -191,25 +191,25 @@
                                             </div>
 
                                             <div class="col-md-4">
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_Elevator" id="U_Elevator">
                                                     <label class="form-check-label" for="U_Elevator">{{'Elevator' |
                                                         translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_OpenSpace" id="U_OpenSpace">
                                                     <label class="form-check-label" for="U_OpenSpace">{{'Open Space' |
                                                         translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_Garden" id="U_Garden">
                                                     <label class="form-check-label" for="U_Garden">{{'Garden' |
                                                         translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="U_NearbyPark" id="U_NearbyPark">
                                                     <label class="form-check-label" for="U_NearbyPark">{{'Nearby Park' |
@@ -222,25 +222,25 @@
                                         <!-- <div class="row">
 
                                             <div class="col-md-4">
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="electricity" id="electricity">
                                                     <label class="form-check-label"
                                                         for="electricity">{{'Electricity'|translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="water" id="water">
                                                     <label class="form-check-label"
                                                         for="water">{{'Water'|translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="gas" id="gas">
                                                     <label class="form-check-label"
                                                         for="gas">{{'Gas'|translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="furnished" id="furnished">
                                                     <label class="form-check-label"
@@ -249,25 +249,25 @@
                                             </div>
 
                                             <div class="col-md-4">
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="basement" id="basement">
                                                     <label class="form-check-label"
                                                         for="basement">{{'Basement'|translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="swimmingPool" id="swimmingPool">
                                                     <label class="form-check-label" for="swimmingPool">{{'Swimming
                                                         Pool'|translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox" formControlName="ac"
                                                         id="ac">
                                                     <label class="form-check-label" for="ac">{{'Air
                                                         Conditioning'|translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="fullKitchen" id="fullKitchen">
                                                     <label class="form-check-label" for="fullKitchen">{{'Full
@@ -276,25 +276,25 @@
                                             </div>
 
                                             <div class="col-md-4">
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="elevator" id="elevator">
                                                     <label class="form-check-label"
                                                         for="elevator">{{'Elevator'|translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="openSpace" id="openSpace">
                                                     <label class="form-check-label" for="openSpace">{{'Open
                                                         Space'|translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="garden" id="garden">
                                                     <label class="form-check-label"
                                                         for="garden">{{'Garden'|translate}}</label>
                                                 </div>
-                                                <div class="form-check mb-2">
+                                                <div class="form-check mb-3">
                                                     <input class="form-check-input" type="checkbox"
                                                         formControlName="nearbyPark" id="nearbyPark">
                                                     <label class="form-check-label" for="nearbyPark">{{'Near By
@@ -313,7 +313,7 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#OtherSearch" aria-expanded="false" aria-controls="OtherSearch">
                                         <span class="acc-icon"><i class="fa-solid fa-list"></i></span>
-                                        {{'Other'|translate}}
+                                       <span class="acc-heading">{{'Other'|translate}}</span> 
                                     </button>
                                 </h2>
                                 <div id="OtherSearch" class="accordion-collapse collapse" data-bs-parent="#DetailList">
@@ -745,7 +745,7 @@
                                     <td>{{ p.u_ConstYear }}</td>
                                 </tr>
                             </tbody>
-
+                            <tfoot></tfoot>
                         </table>
                     </div>
                 </div>

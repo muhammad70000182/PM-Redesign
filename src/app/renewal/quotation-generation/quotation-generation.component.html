@@ -5,12 +5,14 @@
                 <div *ngIf="AllowedPermissions['canCreate']">
                     <div class="wizard-container customWizardDesign">
                         <ul class="wizard-steps">
-                            <li [ngClass]="getStepClass(1)" class="right">
-                                <span class="step-number">1</span>
+                            <li [ngClass]="getStepClass(1)">
+                                <span class="step-number" *ngIf="getStepClass(1) !== 'completed'; else checkmark1">1</span>
+                                <ng-template #checkmark1><span class="step-number">✓</span></ng-template>
                                 <span class="step-title">{{'Parameters'|translate}}</span>
                             </li>
-                            <li [ngClass]="getStepClass(2)" class="left right">
-                                <span class="step-number">2</span>
+                            <li [ngClass]="getStepClass(2)">
+                                <span class="step-number" *ngIf="getStepClass(2) !== 'completed'; else checkmark2">2</span>
+                                <ng-template #checkmark2><span class="step-number">✓</span></ng-template>
                                 <span class="step-title">{{'Quotation Generation'|translate}}</span>
                             </li>
 

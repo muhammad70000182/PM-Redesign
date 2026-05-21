@@ -5,16 +5,19 @@
                 <div *ngIf="AllowedPermissions['canCreate']">
                     <div class="wizard-container customWizardDesign">
                         <ul class="wizard-steps">
-                            <li [ngClass]="getStepClass(1)" class="right" (click)="chnageWizard(1)">
-                                <span class="step-number">1</span>
+                            <li [ngClass]="getStepClass(1)" (click)="chnageWizard(1)">
+                                <span class="step-number" *ngIf="getStepClass(1) !== 'completed'; else checkmark1">1</span>
+                                <ng-template #checkmark1><span class="step-number">✓</span></ng-template>
                                 <span class="step-title">{{'Parameters' | translate}}</span>
                             </li>
-                            <li [ngClass]="getStepClass(2)" class="left right" (click)="chnageWizard(2)">
-                                <span class="step-number">2</span>
+                            <li [ngClass]="getStepClass(2)" (click)="chnageWizard(2)">
+                                <span class="step-number" *ngIf="getStepClass(2) !== 'completed'; else checkmark2">2</span>
+                                <ng-template #checkmark2><span class="step-number">✓</span></ng-template>
                                 <span class="step-title">{{'Revenue' | translate}}</span>
                             </li>
-                            <li [ngClass]="getStepClass(3)" class="left right" (click)="chnageWizard(3)">
-                                <span class="step-number">3</span>
+                            <li [ngClass]="getStepClass(3)" (click)="chnageWizard(3)">
+                                <span class="step-number" *ngIf="getStepClass(3) !== 'completed'; else checkmark3">3</span>
+                                <ng-template #checkmark3><span class="step-number">✓</span></ng-template>
                                 <span class="step-title">{{'Draft' | translate}}</span>
                             </li>
 

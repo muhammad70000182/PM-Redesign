@@ -943,12 +943,17 @@ m
 
 ////////////////////////////////////////////////////////////////////////////
 //Custom Wizard Design
-////////////////////////////////////////////////////////////////////////////]
+////////////////////////////////////////////////////////////////////////////
 
 .wizard-container {
 	display: flex;
 	justify-content: center;
-	margin: 20px 0;
+	align-items: center;
+	margin: 30px 0;
+	padding: 30px 20px;
+	background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+	border-radius: 12px;
+	border: 1px solid #e5e7eb;
 }
 
 .wizard-steps {
@@ -956,128 +961,155 @@ m
 	display: flex;
 	padding: 0;
 	margin: 0;
+	gap: 0;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	flex-wrap: nowrap;
 }
 
 .wizard-steps li {
 	position: relative;
-	display: flex;
-	align-items: center;
-	padding: 10px 30px 10px 40px;
-	/* more space on left for text */
-	margin-right: 6px;
-	background: #fff;
-	border: 1px solid #ddd;
-	font-weight: 500;
-	color: #999;
-	transition: all 0.3s ease;
-
-	/* only right side angled */
-	/* clip-path: polygon(
-    0 0,
-    calc(100% - 15px) 0,
-    100% 50%,
-    calc(100% - 15px) 100%,
-    0 100%
-  ); */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: #f0f0f0;
+    color: #999;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 0 37px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+    z-index: 2;
 }
 
-/* Active Step */
+.wizard-steps li:hover {
+	background: #e9ecef;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Active Step - Blue to Purple Gradient */
 .wizard-steps li.active {
-	background: #14213d;
+	background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
 	color: #fff;
+	box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+	font-weight: 600;
 }
 
 .wizard-steps li.active .step-number {
-	//   background: #0d6efd;
+	background: rgba(255, 255, 255, 0.3);
 	color: #fff;
+	font-weight: bold;
+	// border: 2px solid rgba(255, 255, 255, 0.4);
 }
 
-/* Completed Step */
+/* Completed Step - Green with Checkmark */
 .wizard-steps li.completed {
-	color: #000;
+	background: #10b981;
+	color: #fff;
+	box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+	font-weight: 600;
 }
 
 .wizard-steps li.completed .step-number {
-	background: #28a745;
-	/* green */
+	background: rgba(255, 255, 255, 0.3);
 	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+	// border: 2px solid rgba(255, 255, 255, 0.4);
 }
 
-/* Pending Step */
+/* Pending Step - Light Grey */
 .wizard-steps li.pending {
+	background: #f0f0f0;
 	color: #999;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .wizard-steps li.pending .step-number {
 	background: #ccc;
-	/* gray */
 	color: #fff;
+	font-weight: bold;
+	border: 2px solid #e5e7eb;
 }
 
 /* Step Number Style */
 .step-number {
 	border-radius: 50%;
-	padding: 5px 10px;
-	margin-right: 8px;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	font-weight: bold;
-	display: inline-block;
+	font-size: 14px;
+	flex-shrink: 0;
+	transition: all 0.3s ease;
 }
-
 
 .customWizardDesign .step-number {
-	border: 1px solid;
-	width: 35px;
-	height: 35px;
+	width: 30px;
+	height: 30px;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 
-.customWizardDesign .active .step-number {
-	border: 1px solid;
-	width: 35px;
-	height: 35px;
-	display: flex;
-	justify-content: center;
+/* Arrow connector between steps - Progress Bar */
+.customWizardDesign .wizard-steps li:not(:last-child)::after {
+	content: "—";
+    position: absolute;
+    right: -75px;
+    font-size: 76px;
+    color: #d1d5db;
+    z-index: 1;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    border-radius: unset;
 }
 
-.customWizardDesign li.right::after {
-	content: "";
-	border-top: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	width: 38px;
-	height: 38px;
-	position: absolute;
-	right: -10px;
-	top: 4px;
-	background-color: white;
-	z-index: 150;
-	-webkit-transform: translate(10px, 4px) rotate(45deg);
-	-moz-transform: translate(10px, 4px) rotate(45deg);
-	-ms-transform: translate(10px, 4px) rotate(45deg);
-	-o-transform: translate(10px, 4px) rotate(20deg);
-	transform: translate(10px, 4px) rotate(45deg);
+/* Arrow color for active step's connector */
+.customWizardDesign .wizard-steps li.active::after {
+	color: #7c3aed;
+	opacity: 1;
 }
 
-.customWizardDesign li.active::after {
-	background-color: #14213d;
+/* Arrow color for completed step's connector */
+.customWizardDesign .wizard-steps li.completed::after {
+	color: #10b981;
+	opacity: 1;
+	
 }
 
-.customWizardDesign li.left::before {
-	content: '';
-	border-top: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	width: 38px;
-	height: 38px;
-	position: absolute;
-	left: -9px;
-	top: 4px;
-	background-color: white;
-	z-index: 50;
-	-webkit-transform: translate(-10px, 4px) rotate(45deg);
-	-moz-transform: translate(-10px, 4px) rotate(45deg);
-	-ms-transform: translate(-10px, 4px) rotate(45deg);
-	-o-transform: translate(-10px, 4px) rotate(20deg);
-	transform: translate(-10px, 4px) rotate(45deg);
+/* Step Title Styling */
+.step-title {
+	font-size: 14px;
+	font-weight: 500;
+	display: inline-block;
+	letter-spacing: 0.3px;
+}
+
+.wizard-steps li.active .step-title {
+	color: #fff;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+}
+
+.wizard-steps li.completed .step-title {
+	color: #fff;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+}
+
+.wizard-steps li.pending .step-title {
+	color: #9ca3af;
+	font-weight: 500;
 }
 
 .text-right {
@@ -1787,19 +1819,22 @@ div#forgotPasswordModal label {
 .adv-acc-design {
 	.accordion-item {
 		margin-bottom: 10px;
-		border-radius: 27px 27px 0 0;
+		border-radius: 30px;
 
-		&:first-child {
 
-			// border-radius: unset;
 			.accordion-button {
+				&.collapsed{
+					    border-radius: 30px;
+				}
 				// border-radius: unset;
 			}
-		}
+
 
 		.accordion-button {
 			background-color: #ebebeb;
-			border-radius: 26px 26px 0 0;
+			border-radius: 30px 30px 0 0;
+			border-bottom: 1px solid #6F3EEB;
+			background: linear-gradient(90deg, rgba(37, 99, 235, 0.1) 0%, rgba(79, 70, 229, 0.1) 43.27%, rgba(124, 58, 237, 0.1) 100%);
 
 			&:not(.collapsed) {
 				background-color: #5f48b842;
@@ -2370,7 +2405,7 @@ table td.wrap-text {
 .customSidebar .sidebar-toggler {
 	top: 10px;
 	position: absolute;
-	background: #14213d;
+	background: #723eec;
 	border-radius: 50%;
 	width: 30px;
 	height: 30px;
@@ -2476,7 +2511,7 @@ $border-top-color_1: #072d18;
 
 	>div {
 		a.nav-item.nav-link {
-			padding: 10px !important;
+			padding: 20px 10px !important;
 			max-width: 180px;
 			background: #EAEAEA;
 			color: #000000;
@@ -2485,6 +2520,7 @@ $border-top-color_1: #072d18;
 			font-weight: bold;
 			border: unset;
 			border-radius: unset;
+			font-size: 16px;
 
 			&:hover {
 				// background: #072b16;
@@ -2510,6 +2546,7 @@ $border-top-color_1: #072d18;
 			border-radius: 0;
 			position: relative;
 			background: #14213D;
+			background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
 
 			&:after {
 				content: "";
@@ -2522,6 +2559,7 @@ $border-top-color_1: #072d18;
 				z-index: 1;
 				max-width: 10px;
 				transform: translateX(-50%);
+				display: none;
 			}
 		}
 	}
@@ -3225,4 +3263,9 @@ html[dir="rtl"] {
 		background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
 		border-radius: 30px;
 	}
+}
+.acc-heading {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
 }

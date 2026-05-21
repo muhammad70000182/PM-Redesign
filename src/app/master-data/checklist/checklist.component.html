@@ -3,14 +3,15 @@
         <div class="card card-user">
             <div class="card-body pb-4">
                 <!-- <h4 class="sectionHeading">New Role:</h4> -->
-                <div class="sectionHeading">
-                    <h6 class="fw-bold text-primary mt-4">{{'Check List' | translate}}</h6>
-                </div>
+                
 
                 <div class="title-add-new-btn">
-                    <div class="sectionHeading">
+                    <!-- <div class="sectionHeading">
                         <h6 class="fw-bold text-primary">&nbsp;</h6>
-                      </div>
+                      </div> -->
+                      <div class="sectionHeading">
+                    <h6 class="fw-bold text-primary">{{'Check List' | translate}}</h6>
+                </div>
                     <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add New'| translate}}</button>
                 </div>
 
@@ -57,7 +58,7 @@
                                     <form [formGroup]="form" (ngSubmit)="onSubmit()">
                                         <input type="hidden" formControlName="id" />
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label">{{'Code'| translate}} <span class="colorRed">*</span></label>
                                                     <input type="text" class="form-control" formControlName="code" [ngClass]="{ 'is-invalid': submitted && f['code'].errors }">
@@ -66,7 +67,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label">{{'Name'| translate}}<span class="colorRed">*</span></label>
                                                     <input type="text" class="form-control" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
@@ -75,7 +76,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label">{{'Type'| translate}}<span class="colorRed">*</span></label>
                                                     <ng-select aria-label="Default select example" formControlName="type">
@@ -86,7 +87,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 checkBox">
+                                            <div class="col-12 col-md-6 checkBox">
                                                 <div class="form-group">
                                                     <input type="checkbox" formControlName="status">
                                                     <label class="form-label checkboxstyle">{{'Active'| translate}}</label>
