@@ -39,6 +39,7 @@ export class SeriesMasterComponent implements OnInit, AfterViewInit {
   SeriesList: any;
   AgreementTypeListVlaues: any;
   ItemGroupListVlaues: any;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -133,6 +134,8 @@ export class SeriesMasterComponent implements OnInit, AfterViewInit {
             progressBar: true,
             closeButton: true
           });
+          this.GetDocSeries();
+          this.closeModal();
         } else {
           this.toastr.error(result.message, "Error", {
             progressBar: true,
@@ -162,24 +165,35 @@ export class SeriesMasterComponent implements OnInit, AfterViewInit {
     });
   }
   Update(data: any) {
-
+    this.isUpdate = true;
     this.form.patchValue({
-      Id: data.id,
-      SapUserName: data.sapUserName,
-      SapPassword: data.sapPassword,
-      SapServerAddress: data.sapServerAddress,
-      SapDbName: data.sapDbName,
-      SapDbType: data.sapDbType,
-      DbUserName: data.dbUserName,
-      DbPassword: data.dbPassword,
-      DbName: data.dbName,
-      DbServerName: data.dbServerName,
-      ServiceLayerUrl: data.serviceLayerUrl,
-      CreatedBy: data.createdBy,
-      UpdatedBy: data.updatedBy,
-      CreatedDate: data.createdDate,
-      UpdatedDate: data.updatedDate
+      id: data.id,
+      u_SName: data.u_SName,
+      u_SStart: data.u_SStart,
+      u_SEnd: data.u_SEnd,
+      u_SNext: data.u_SNext,
+      u_SPrefix: data.u_SPrefix,
+      u_AGRType: data.u_AGRType,
+      u_DocType: data.u_DocType,
+      u_IsDefault: data.u_IsDefault === 'Y' || data.u_IsDefault === true,
+      u_Lock: data.u_Lock === 'Y' || data.u_Lock === true,
+      u_ItmGrpCode: data.u_ItmGrpCode,
+      CreatedBy: data.createdBy || this.CurrentUserInfo.Id,
+      UpdatedBy: data.updatedBy || this.CurrentUserInfo.Id,
+      CreatedDate: data.createdDate || new Date(),
+      UpdatedDate: data.updatedDate || new Date()
     });
+    this.showModal = true;
+  }
+
+  openAdd() {
+    this.clearForm();
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.submitted = false;
   }
   GetDocSeries() {
     let url = `/MasterData/GetAllSeries`;

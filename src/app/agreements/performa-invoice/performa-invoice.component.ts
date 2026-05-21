@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../_services/shared.service';
@@ -19,11 +19,11 @@ import { EnumService } from '../../_services/enum.service';
 export class PerformaInvoiceComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
+  dtElement!: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  form: FormGroup;
+  form!: FormGroup;
   submitted: boolean = false;
   loading: boolean = false;
   isUpdate: boolean = false;
@@ -51,6 +51,7 @@ export class PerformaInvoiceComponent implements OnInit, AfterViewInit {
   Att_Description: any;
   AttachmentType: any;
   AttachmentsList: any = [];
+  @Output() saved: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -181,6 +182,8 @@ export class PerformaInvoiceComponent implements OnInit, AfterViewInit {
             progressBar: true,
             closeButton: true
           });
+          // notify parent that save succeeded
+          try { this.saved.emit(true); } catch (e) { }
 
         } else {
           this.toastr.error(result.message, "Error", {

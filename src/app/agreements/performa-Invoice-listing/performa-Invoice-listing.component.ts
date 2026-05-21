@@ -19,7 +19,7 @@ import { ExcelExportService } from '../../_services/excel-export.service';
 })
 export class performaInvoicelistingComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
+  dtElement!: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
@@ -39,6 +39,7 @@ export class performaInvoicelistingComponent implements OnInit, AfterViewInit {
   GenericForma: { DateFormate: string; };
   AgreementTypeListVlaues: any;
   ProformaActionsPermissions: any;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -54,6 +55,7 @@ export class performaInvoicelistingComponent implements OnInit, AfterViewInit {
     private expExcel: ExcelExportService
   ) {
     this.AllowedPermissions = this._permService.getPermissions();
+    debugger;
     this.GenericForma = this._sharedHelper.getGenericFormate();
 
   }
@@ -192,6 +194,22 @@ export class performaInvoicelistingComponent implements OnInit, AfterViewInit {
     debugger
     this.GetperformaFilterList(data);
   }
+
+  openAdd() {
+    if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
+      this.showModal = true;
+    } else {
+      this.toastr.error("You don't have permission to create Proforma Invoice", "Permission Denied", {
+        progressBar: true,
+        closeButton: true
+      });
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.GetperformaFilterList();
+  }
   canclperforma(ID: any = 0) {
     const payload = {
       Id: ID
@@ -200,9 +218,7 @@ export class performaInvoicelistingComponent implements OnInit, AfterViewInit {
     this._service.Post(payload, url).subscribe({
       next: result => {
         if (result) {
-          debugger
-
-
+          
           window.location.reload();
         }
       },
@@ -210,8 +226,6 @@ export class performaInvoicelistingComponent implements OnInit, AfterViewInit {
     });
   }
   performaDownPayment(ID: any = 0) {
-
-    debugger
 
     let url = '/PerformaInvoice/postopidp?Id=' + ID;
     this._service.Get(url).subscribe({

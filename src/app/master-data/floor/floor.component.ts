@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../_services/shared.service';
 import { SharedHelper } from '../../_Helper/SharedHelper';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-floor',
@@ -10,10 +12,10 @@ import { SharedHelper } from '../../_Helper/SharedHelper';
   styleUrls: ['./floor.component.css']
 })
 export class FloorComponent implements OnInit {
-  form: FormGroup;
-    submitted: boolean;
-    loading: boolean;
-    isUpdate: boolean;
+  form!: FormGroup;
+    submitted!: boolean;
+    loading!: boolean;
+    isUpdate!: boolean;
     RolesList: any;
     searchData = "";
     RecordCount: any;
@@ -25,6 +27,11 @@ export class FloorComponent implements OnInit {
     typesList: string[] = ['Delivery check List', 'QA Review', 'Testing'];
     CurrentUserInfo: any | { Id: number; UserCode: string; FullName: string; RoleName: string; RoleID: number; UserImage: string; };
     DataList: any;
+    @ViewChild(DataTableDirective)
+    dtElement!: DataTableDirective;
+    dtOptions: DataTables.Settings = {};
+    dtTrigger: Subject<any> = new Subject();
+    showModal: boolean = false; // Added for modal control
     constructor(
       private formBuilder: FormBuilder,
       private toastr: ToastrService,
@@ -48,8 +55,22 @@ export class FloorComponent implements OnInit {
         updatedDate: [new Date()],
         masterDataType: ['Floor', [Validators.maxLength(50)]]
       });
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        processing: false,
+        autoWidth: false,
+        ordering: false
+      };
       this.GetMasterData();
     }
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(null);
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
     get f() { return this.form.controls; }
     onSubmit() {
       debugger;
@@ -91,6 +112,7 @@ export class FloorComponent implements OnInit {
             // });
             this.GetMasterData();
             this.clearForm();
+            this.closeModal();
           } else {
             this.toastr.error(result.message, "Error", {
               progressBar: true,
@@ -110,12 +132,19 @@ export class FloorComponent implements OnInit {
         next: result => {
           if (result.status) {
             this.DataList = result.data;
-            console.log(this.RolesList)
+            this.rerender();
           }
         },
         error: (err: any) => { },
       });
     }
+  rerender(): void {
+    if (!this.dtElement) return;
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next(null);
+    });
+  }
     clearForm() {
       this.submitted = false;
       this.isUpdate = false;
@@ -145,5 +174,15 @@ export class FloorComponent implements OnInit {
         updatedDate: new Date(),
         masterDataType: 'Floor'
       });
+      this.showModal = true;
+    }
+    openAdd() {
+      this.clearForm();
+      this.showModal = true;
+    }
+
+    closeModal() {
+      this.showModal = false;
+      this.submitted = false;
     }
 }
