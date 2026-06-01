@@ -37,6 +37,7 @@ export class UnitDelivery implements OnInit, AfterViewInit {
   UnitactiveTab: string = '';
   GenericForma: { DateFormate: string; };
   AgreementTypeListVlaues: any;
+  showModal: boolean = false;
   SeriesList: any;
   AgreementList: any;
   TaxCodesList: any;
@@ -238,6 +239,21 @@ export class UnitDelivery implements OnInit, AfterViewInit {
     debugger
     this.GetUnitDeliveryList(DId, true);
 
+  }
+  openAdd() {
+    if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
+      this.showModal = true;
+    } else {
+      this.toastr.error("You don't have permission to create Unit Delivery", "Permission Denied", {
+        progressBar: true,
+        closeButton: true
+      });
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.GetUnitDeliveryList();
   }
   exportData() {
     if (!this.AgreementList || this.AgreementList.length == 0) {

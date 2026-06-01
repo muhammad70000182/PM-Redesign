@@ -49,6 +49,7 @@ export class SuspensionListingComponent implements OnInit, AfterViewInit {
   Description: any;
   FileURL: any;
   currentDate: Date;
+  showModal: boolean = false;
   RegularAttachments: any;
   ActivityLogAttachments: any;
   bsInlineValue = new Date();
@@ -103,6 +104,22 @@ export class SuspensionListingComponent implements OnInit, AfterViewInit {
     this.GetLovs();
     this.GetTaxCodes();
 
+  }
+
+  openAdd() {
+    if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
+      this.showModal = true;
+    } else {
+      this.toastr.error("You don't have permission to create Suspension", "Permission Denied", {
+        progressBar: true,
+        closeButton: true
+      });
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.GetSuspensionList();
   }
   GetSuspensionList(Id: any = 0) {
 

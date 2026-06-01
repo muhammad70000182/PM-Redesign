@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../_services/shared.service';
@@ -57,6 +57,7 @@ export class UnitDeliveryNewComponent implements OnInit, AfterViewInit {
   AttachmentsList: any = [];
   AttachmentTypeListValues: any;
   SeriesName: any;
+  @Output() saved: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -223,6 +224,7 @@ export class UnitDeliveryNewComponent implements OnInit, AfterViewInit {
             progressBar: true,
             closeButton: true
           });
+          try { this.saved.emit(true); } catch (e) {}
 
         } else {
           this.toastr.error(result.message, "Error", {

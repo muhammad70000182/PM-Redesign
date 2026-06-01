@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../_services/shared.service';
@@ -62,6 +62,7 @@ export class SuspensionsComponent implements OnInit, AfterViewInit, OnDestroy {
   Description: any;
   FileURL: any;
   AttachmentsList: any = [];
+  @Output() saved: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -204,6 +205,7 @@ export class SuspensionsComponent implements OnInit, AfterViewInit, OnDestroy {
         if (result.status) {
           this.clearForm();
           this.toastr.success(result.message, "Success", { progressBar: true, closeButton: true });
+          try { this.saved.emit(true); } catch (e) {}
         } else {
           this.toastr.error(result.message, "Error", { progressBar: true, closeButton: true });
         }
