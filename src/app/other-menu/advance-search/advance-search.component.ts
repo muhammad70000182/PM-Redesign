@@ -119,7 +119,7 @@ export class AdvanceSearchComponent implements OnInit, AfterViewInit {
       pageLength: 10,
       processing: true,
       ordering: false,
-      // scrollX: true,
+      scrollX: true,
     };
 
 

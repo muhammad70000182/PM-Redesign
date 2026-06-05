@@ -20,18 +20,19 @@
 
       .welcome-content {
         h2 {
-          font-size: 28px;
-          font-weight: 700;
-          margin: 0 0 10px 0;
-          letter-spacing: -0.5px;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            letter-spacing: -0.5px;
+            line-height: 20px;
         }
 
         p {
-          font-size: 14px;
-          font-weight: 400;
-          margin: 0 0 20px 0;
-          opacity: 0.95;
-          line-height: 1.5;
+            font-size: 18px;
+            margin: 0 0 30px 0;
+            opacity: 0.95;
+            line-height: 1.5;
+            font-weight: 200;
         }
 
         .summary-badge {
@@ -39,12 +40,13 @@
           flex-wrap: wrap;
           align-items: center;
           gap: 0;
-          background: rgba(255, 255, 255, 0.15);
+          background: #fff;
           padding: 12px 20px;
           border-radius: 8px;
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 500;
           width: fit-content;
+          color: #4052E8;
 
           span {
             white-space: nowrap;
@@ -101,11 +103,12 @@
           margin-bottom: 16px;
 
           h4 {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin: 0;
-            opacity: 0.9;
+              font-size: 14px;
+              font-weight: 700;
+              letter-spacing: 0.5px;
+              margin: 0;
+              opacity: 0.9;
+              color: #A3AED0;
           }
 
           .tile-icon {
@@ -154,27 +157,28 @@
           flex-wrap: wrap;
 
           .badge {
-            font-size: 14px;
-            padding: 15px 12px;
-            border-radius: 4px;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+              font-size: 14px;
+              padding: 25px 22px;
+              border-radius: 25px;
+              font-weight: 400;
+              /* background: rgba(255, 255, 255, 0.2); */
+              color: white;
+              border: 1px solid rgba(255, 255, 255, 0.3);
+              height: 105px;
 
             &.badge-success {
-              background: #10B981;
-              border-color: #059669;
+                border-color: #D0FAE5;
+                background-color: #F8FFFC !important;
             }
 
             &.badge-warning {
-              background: #F59E0B;
-              border-color: #D97706;
+                border-color: #FEF3C6;
+                background-color: #FFFDF7 !important;
             }
 
             &.badge-danger {
-              background: #EF4444;
-              border-color: #DC2626;
+             background-color: #FFFBFB !important;
+              border-color: #FFE4E6;
             }
             .badge-counter{
               display: block;
