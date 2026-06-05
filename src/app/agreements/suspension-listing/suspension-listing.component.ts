@@ -49,6 +49,7 @@ export class SuspensionListingComponent implements OnInit, AfterViewInit {
   Description: any;
   FileURL: any;
   currentDate: Date;
+  showModal: boolean = false;
   RegularAttachments: any;
   ActivityLogAttachments: any;
   bsInlineValue = new Date();
@@ -104,7 +105,25 @@ export class SuspensionListingComponent implements OnInit, AfterViewInit {
     this.GetTaxCodes();
 
   }
-  GetSuspensionList(Id: any = 0) {
+
+  openAdd() {
+    if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
+      // clear any previously selected agreement
+      this.SelectedAgreement = null;
+      this.showModal = true;
+    } else {
+      this.toastr.error("You don't have permission to create Suspension", "Permission Denied", {
+        progressBar: true,
+        closeButton: true
+      });
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.GetSuspensionList();
+  }
+  GetSuspensionList(Id: any = 0, isUpdate: boolean = false) {
 
     let url = '/Suspension/suspension?id=' + Id
     this._service.Get(url).subscribe({
@@ -135,9 +154,15 @@ export class SuspensionListingComponent implements OnInit, AfterViewInit {
             this.SelectedAgreement.u_ResDate = this.datePipe.transform(this.SelectedAgreement.u_ResDate, this.GenericForma.DateFormate),
 
               this.activeTab = 'UnitDetail';
-            this.FileURL = '';
-            ($('#detailModal') as any).modal('show');
-            return;
+              this.FileURL = '';
+              if (isUpdate) {
+                // open the embedded modal for editing; toggle to ensure fresh input
+                this.showModal = false;
+                setTimeout(() => { this.showModal = true; }, 0);
+                return;
+              }
+              ($('#detailModal') as any).modal('show');
+              return;
           }
 
           this.PerformaList = result.data.sort((a: any, b: any) => {
@@ -229,11 +254,8 @@ export class SuspensionListingComponent implements OnInit, AfterViewInit {
     this.GetFilterSuspensionByAgreementType(data);
   }
   Update(SusPId: any) {
-    // this.GetSuspensionList(SusPId);
-    let forward = {
-      Id: SusPId
-    }
-    this.router.navigate(['/agreements/suspension'], { state: { forward } });
+    // Open the embedded modal for editing
+    this.GetSuspensionList(SusPId, true);
   }
 
   GetAgreementFilterList(Id: any = 0) {

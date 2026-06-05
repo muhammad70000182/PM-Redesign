@@ -39,6 +39,7 @@ export class BulkInstallmentsListComponent implements OnInit, AfterViewInit {
   BulkInstallmentsList: any;
   GenericForma: { DateFormate: string; };
   SelectedAgreement: any = {};
+  showModal: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,6 +78,22 @@ export class BulkInstallmentsListComponent implements OnInit, AfterViewInit {
       ordering: false
     };
 
+    this.GetBulkInstallments();
+  }
+
+  openAdd() {
+    if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
+      this.showModal = true;
+    } else {
+      this.toastr.error("You don't have permission to create Bulk Installments", "Permission Denied", {
+        progressBar: true,
+        closeButton: true
+      });
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
     this.GetBulkInstallments();
   }
 

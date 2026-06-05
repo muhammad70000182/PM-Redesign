@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ChangeDetectorRef, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../_services/shared.service';
@@ -16,7 +16,7 @@ import { EnumService } from '../../_services/enum.service';
   templateUrl: './suspensions.component.html',
   styleUrls: ['./suspensions.component.css']
 })
-export class SuspensionsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SuspensionsComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @ViewChild(DataTableDirective) dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -62,6 +62,8 @@ export class SuspensionsComponent implements OnInit, AfterViewInit, OnDestroy {
   Description: any;
   FileURL: any;
   AttachmentsList: any = [];
+  @Output() saved: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() modelData: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -153,6 +155,19 @@ export class SuspensionsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    const m = changes['modelData'];
+    if (!m) return;
+    const model = m.currentValue;
+    if (!model) { try { this.clearForm(); this.isUpdate = false; } catch (e) {} ; return; }
+    const id = model.id ?? model.Id;
+    if (id) {
+      // When modelData provided from parent, load it into form for editing
+      try { this.GetSuspensionList(id); this.isUpdate = true; } catch (e) {}
+      try { this.cdr.detectChanges(); } catch (e) {}
+    }
+  }
+
   get f() { return this.form.controls; }
 
   async onSubmit() {
@@ -204,6 +219,7 @@ export class SuspensionsComponent implements OnInit, AfterViewInit, OnDestroy {
         if (result.status) {
           this.clearForm();
           this.toastr.success(result.message, "Success", { progressBar: true, closeButton: true });
+          try { this.saved.emit(true); } catch (e) {}
         } else {
           this.toastr.error(result.message, "Error", { progressBar: true, closeButton: true });
         }
