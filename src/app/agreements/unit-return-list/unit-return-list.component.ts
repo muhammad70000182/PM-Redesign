@@ -41,6 +41,7 @@ export class unitreturnlistComponent implements OnInit, AfterViewInit {
   SeriesList: any;
   AgreementList: any;
   TaxCodesList: any;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -91,6 +92,23 @@ export class unitreturnlistComponent implements OnInit, AfterViewInit {
     //this.GetLovs();
 
   }
+  openAdd() {
+    if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
+      // Clear any previously selected data so the form opens fresh
+      this.SelectedAgreement = null;
+      this.showModal = true;
+    } else {
+      this.toastr.error("You don't have permission to create Unit Return", "Permission Denied", {
+        progressBar: true,
+        closeButton: true
+      });
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.GetUnitReturnList();
+  }
   GetUnitReturnList(Id: any = 0, isUpdate = false) {
 
     let url = '/UnitReturn/unitReturn?id=' + Id
@@ -109,11 +127,10 @@ export class unitreturnlistComponent implements OnInit, AfterViewInit {
               }
             }
             if (isUpdate) {
-              let forward = {
-                data: { ...this.SelectedAgreement }
-              }
-
-              this.router.navigate(['/agreements/unit-return'], { state: { forward } });
+              // Open the embedded modal and pass SelectedAgreement to the form component for editing
+              // toggle modal off/on to ensure child receives fresh input and renders correctly
+              this.showModal = false;
+              setTimeout(() => { this.showModal = true; }, 0);
               return;
             }
 

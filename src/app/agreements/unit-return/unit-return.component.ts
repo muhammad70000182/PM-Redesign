@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, Output, EventEmitter, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
@@ -21,7 +21,7 @@ import { json } from 'stream/consumers';
   styleUrls: ['./unit-return.component.css']
 })
 
-export class unitreturnComponent implements OnInit, AfterViewInit {
+export class unitreturnComponent implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
@@ -62,6 +62,8 @@ export class unitreturnComponent implements OnInit, AfterViewInit {
   Description: any;
   FileURL: any;
   AttachmentsList: any = [];
+  @Output() saved: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() modelData: any;
   AttachmentTypeListValues: any;
   SeriesName: any;
   isDamageReadonly: boolean=false;
@@ -77,7 +79,8 @@ export class unitreturnComponent implements OnInit, AfterViewInit {
     private _permService: PermissionsSharingService,
     private configService: ConfigService,
     private datePipe: DatePipe,
-    private enumService: EnumService
+    private enumService: EnumService,
+    private cd: ChangeDetectorRef
   ) {
     this.AllowedPermissions = this._permService.getPermissions();
     this.datePickerConfig = this._sharedHelper.getDateConfiguration();
@@ -148,6 +151,9 @@ export class unitreturnComponent implements OnInit, AfterViewInit {
 
     this.GetMasterData();
 
+    // preload agreements so dropdowns and related fields render immediately
+    try { this.GetAgreementFilterList(); } catch (e) {}
+
     if (history.state && history.state.forward) {
 
       
@@ -167,6 +173,26 @@ export class unitreturnComponent implements OnInit, AfterViewInit {
       this.onDropDownChange(agTypeText, "AgreementType")
       this.GetDocSeries(agTypeText)
 
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const m = changes['modelData'];
+    if (!m) return;
+    const model = m.currentValue;
+    if (!model) {
+      // clear form when modelData is null/undefined (Add New)
+      try { this.clearForm(); this.isUpdate = false; } catch (e) {}
+      return;
+    }
+    // Accept both `id` and `Id` property names
+    const modelId = model.id ?? model.Id;
+    if (modelId) {
+      try {
+        this.GetunitList(model);
+        this.isUpdate = true;
+        try { this.cd.detectChanges(); } catch (e) {}
+      } catch (e) {}
     }
   }
 
@@ -245,6 +271,7 @@ this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
             progressBar: true,
             closeButton: true
           });
+          try { this.saved.emit(true); } catch (e) {}
 
         } else {
           this.toastr.error(result.message, "Error", {
@@ -277,24 +304,36 @@ this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
   }
 
   GetAgreementFilterList(Id: any = 0) {
-
     let url = '/Agreement/agreements?agrType=' + Id;
-    this._service.Get(url).subscribe({
-      next: result => {
-        if (result.status) {
-          if (Id > 0) {
-            this.SelectedAgreement = result.data[0];
-          }
-          this.AgreementList = result.data.filter((item: any) => item.approvalStatus === 'Approved');
-          if (history.state && history.state.forward) {
-
-            this.GetunitList(history.state.forward.data);
-          }
-          // this.rerender();
+    return this._service.Get(url).toPromise().then((result: any) => {
+      if (result && result.status) {
+        if (Id > 0) {
+          this.SelectedAgreement = result.data[0];
         }
-      },
-      error: (err: any) => { },
+        this.AgreementList = result.data.filter((item: any) => item.approvalStatus === 'Approved');
+        try { this.cd.detectChanges(); } catch (e) {}
+        if (history.state && history.state.forward) {
+          this.GetunitList(history.state.forward.data);
+        }
+      }
+      return result;
+    }).catch((err: any) => { return null; });
+  }
+
+  private patchFormFromData(data: any) {
+    this.form.patchValue({
+      Id: data.id,
+      Name: data.name,
+      U_Seri: data.u_Seri,
+      U_DocNum: data.u_DocNum,
+      U_AGID: data.u_AGID,
+      u_AGStatus: data.u_AGStatus,
+      u_TerDate: data.u_TerDate,
+      u_SecAmt: data.u_SecAmt,
+      u_Status: data.u_Status,
+      u_DmgDeductAmt: data.u_DmgDeductAmt
     });
+    try { this.cd.detectChanges(); } catch (e) {}
   }
   GetAgreementdetailstList(Id: any = 0, lineItems: any[] = []) {
 
@@ -568,21 +607,20 @@ this.AttachmentsList = []
       this.SeriesName = data.u_SeriesName;
     //this.onDropDownChange(data.u_AGID, "AgreementType")
     this.AttachmentsList=data.attachments
-    this.onDropdownChange(data.u_AGID, "Agreements", data.lineItems)
-    this.returntype = data.u_Status
-    this.form.patchValue({
-      Id: data.id,
-      Name: data.name,
-      U_Seri: data.u_Seri,
-      U_DocNum: data.u_DocNum,
-      U_AGID: data.u_AGID,
-      u_AGStatus: data.u_AGStatus,
-      u_TerDate:data.u_TerDate,
-      u_SecAmt:data.u_SecAmt,
-      u_Status:data.u_Status,
-      u_DmgDeductAmt:data.u_DmgDeductAmt
+    // ensure AgreementList is loaded so onDropdownChange can populate BP/Agreement fields
+    const proceed = () => {
+      this.onDropdownChange(data.u_AGID, "Agreements", data.lineItems);
+      this.returntype = data.u_Status;
+      this.patchFormFromData(data);
+    };
 
-    });
+    if (!this.AgreementList || this.AgreementList.length === 0) {
+      this.GetAgreementFilterList(data.u_AGID).then(() => {
+        proceed();
+      }).catch(() => { proceed(); });
+    } else {
+      proceed();
+    }
 
 
   }

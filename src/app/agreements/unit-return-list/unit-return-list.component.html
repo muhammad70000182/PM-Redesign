@@ -14,10 +14,9 @@
                         </div>
                     </div>
                     <div class="col-md-8 text-right">
-                        <div class="btn-design" *ngIf="AllowedPermissions['canCreate']">
+                        <div class="btn-design">
                             <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to Excel</button>
-                            <button [routerLink]="['/agreements/unit-return']" class="btn btn-success"><i
-                                    class="fa fa-plus"></i> {{'Add New' | translate}}</button>
+                            <button *ngIf="AllowedPermissions['canCreate']" (click)="openAdd()" class="btn btn-success"><i class="fa fa-plus"></i> {{'Add New' | translate}}</button>
                         </div>
                     </div>
                 </div>
@@ -84,6 +83,22 @@
                         </table>
                     </div>
 
+                </div>
+            </div>
+        </div>
+        <!-- Modal to embed Unit Return component -->
+        <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{'New Unit Return' | translate}}</h5>
+                        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <app-unit-return [modelData]="SelectedAgreement" (saved)="closeModal()"></app-unit-return>
+                    </div>
                 </div>
             </div>
         </div>

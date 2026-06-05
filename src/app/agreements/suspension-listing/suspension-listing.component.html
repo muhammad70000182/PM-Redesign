@@ -510,7 +510,7 @@
                         </button>
                     </div>
                     <div class="modal-body p-0">
-                        <app-suspensions (saved)="closeModal()"></app-suspensions>
+                        <app-suspensions [modelData]="SelectedAgreement" (saved)="closeModal()"></app-suspensions>
                     </div>
                 </div>
             </div>
