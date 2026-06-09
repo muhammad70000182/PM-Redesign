@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../_services/shared.service';
@@ -16,7 +16,9 @@ import { ExcelExportService } from '../../_services/excel-export.service';
   templateUrl: './revenue-posting.component.html',
   styleUrls: ['./revenue-posting.component.css']
 })
-export class RevenuePostingComponent implements OnInit, AfterViewInit {
+export class RevenuePostingComponent implements OnInit, AfterViewInit, OnChanges {
+  @Input() modelData: any;
+  @Output() saved: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
@@ -110,6 +112,26 @@ export class RevenuePostingComponent implements OnInit, AfterViewInit {
 
 
     this.GetDocSeries();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const m = changes['modelData'];
+    if (!m) return;
+    const model = m.currentValue;
+    if (!model) { try { this.clearForm(); } catch (e) {} ; return; }
+    const id = model.id ?? model.Id;
+    if (id) {
+      // if parent passed an object, patch form for editing
+      try { this.Searchform.patchValue({
+        FromCustomer: model.u_FBPCode || model.u_FBPCode,
+        ToCustomer: model.u_TBPCode || model.u_TBPCode,
+        DueDate: model.u_DDate ? new Date(model.u_DDate) : null,
+        PostingDate: model.u_PDate ? new Date(model.u_PDate) : null,
+        DeliveryDate: model.u_DDate ? new Date(model.u_DDate) : null,
+        Series: model.u_Seri || '',
+        DocNum: model.u_DocNum || ''
+      }); } catch (e) {}
+    }
   }
   get f() { return this.Searchform.controls; }
   GetSearchquery() {
@@ -235,6 +257,7 @@ export class RevenuePostingComponent implements OnInit, AfterViewInit {
             closeButton: true
           });
           this.GetDocSeries();
+          try { this.saved.emit(true); } catch (e) {}
 
         } else {
           this.toastr.error(result.message, "Error", {

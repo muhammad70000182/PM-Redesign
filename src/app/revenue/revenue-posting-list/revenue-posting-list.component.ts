@@ -52,6 +52,7 @@ export class RevenuePostingListComponent implements OnInit, AfterViewInit {
   totalSteps = 2;
   FileURL: any;
   TotalAmountOfSelectedAgreement: any = 0;
+  showModal: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -97,6 +98,23 @@ export class RevenuePostingListComponent implements OnInit, AfterViewInit {
       ordering: false
     };
 
+    this.GetRevenueList();
+  }
+
+  openAdd() {
+    if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
+      this.SelectedAgreement = {};
+      this.showModal = true;
+    } else {
+      this.toastr.error("You don't have permission to create Posting", "Permission Denied", {
+        progressBar: true,
+        closeButton: true
+      });
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
     this.GetRevenueList();
   }
 
