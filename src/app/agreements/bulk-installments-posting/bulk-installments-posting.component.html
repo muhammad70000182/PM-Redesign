@@ -160,8 +160,7 @@
                 <div *ngIf="AllowedPermissions['canView'] ">
                     <div class="table-responsive dataTableDesign mt-4">
                         <div class="btn-design btn-absolute">
-                            <button (click)="exportDataDetail()" class="btn btn-outline-info export-btns">Export to
-                                Excel</button>
+                            <button (click)="exportDataDetail()" class="btn btn-outline-info export-btns"> <i class="fa-solid fa-file-excel"></i></button>
                         </div>
                         <table class="table table-striped t-footer-sticky" datatable [dtOptions]="dtOptions"
                             [dtTrigger]="dtTrigger">

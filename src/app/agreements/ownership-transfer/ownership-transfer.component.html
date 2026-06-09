@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12 pl-md-0 pr-md-0">
-        <div class="card card-user">
-            <div class="card-body pb-4">
+        <div class="">
+            <div class="">
                 <div *ngIf="AllowedPermissions['canCreate']">
                     <!-- <h4 class="sectionHeading">New Role:</h4> -->
                     <div class="sectionHeading">
@@ -384,7 +384,7 @@
                         </div> -->
                         <div class="row">
                             <!-- Form Actions -->
-                            <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                            <div class="d-flex justify-content-end mt-4 gap-2">
                                 <div class="btn-group btn-design">
                                     <button class="btn btn-success" type="submit"  *ngIf="form.get('Id')?.value==0" >
                                         <i class="fa fa-save"></i><span> {{'Save' | translate}}</span>
