@@ -228,7 +228,8 @@
 
                                                         <tbody>
                                                             <tr
-                                                                *ngFor="let u of SelectedAgreement.agreementItems; let i = index">
+                                                                
+                                                                 *ngFor="let u of (SelectedAgreement?.agreementItems || []); let i = index">
                                                                  <td>{{i+1}}</td>
                                                                 <td>
                                                                     <!-- <input type="checkbox" [(ngModel)]="u.isSelected"> -->
