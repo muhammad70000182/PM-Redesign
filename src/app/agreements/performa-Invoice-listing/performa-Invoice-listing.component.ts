@@ -79,7 +79,9 @@ export class performaInvoicelistingComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering: false
+      ordering: false,
+      scrollX: true,
+      autoWidth: false
     };
     this.GetperformaFilterList()
 
