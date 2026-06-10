@@ -101,39 +101,39 @@
                         <div class="row py-2 border-bottom border-dashed">
                             <div class="col-md-4 mb-2">
                                 <div class="fw-semibold text-dark">{{'Doc Num' | translate}}</div>
-                                <div class="text-secondary small">{{ SelectedAgreement.u_DocNum }}</div>
+                                <div class="text-secondary small">{{ SelectedAgreement?.u_DocNum }}</div>
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <div class="fw-semibold text-dark">{{'BP Code' | translate}}</div>
-                                <div class="text-secondary small">{{ SelectedAgreement.u_BPCode }}</div>
+                                <div class="text-secondary small">{{ SelectedAgreement?.u_BPCode }}</div>
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <div class="fw-semibold text-dark">{{'BP Name' | translate}}</div>
-                                <div class="text-secondary small">{{ SelectedAgreement.name }}</div>
+                                <div class="text-secondary small">{{ SelectedAgreement?.name }}</div>
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <div class="fw-semibold text-dark">{{'Contact Person' | translate}}</div>
-                                <div class="text-secondary small">{{ SelectedAgreement.u_CPName }}</div>
+                                <div class="text-secondary small">{{ SelectedAgreement?.u_CPName }}</div>
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <div class="fw-semibold text-dark">{{'Agreement No' | translate}}</div>
-                                <div class="text-secondary small">{{ SelectedAgreement.u_AGID }}</div>
+                                <div class="text-secondary small">{{ SelectedAgreement?.u_AGID }}</div>
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <div class="fw-semibold text-dark">{{'Agreement Type' | translate}}</div>
-                                <div class="text-secondary small">{{ SelectedAgreement.u_AGType }}</div>
+                                <div class="text-secondary small">{{ SelectedAgreement?.u_AGType }}</div>
                             </div>
                             <div class="col-md-4 mb-2">
                                 <div class="fw-semibold text-dark">
                                     {{ 'Flat Charge' | translate }}
                                 </div>
                                 <div class="text-secondary small">
-                                    {{SelectedAgreement.u_FltChrgName}}
+                                    {{SelectedAgreement?.u_FltChrgName}}
                                 </div>
                             </div>
 
@@ -142,7 +142,7 @@
                                     {{ 'Flat Charge Amount' | translate }}
                                 </div>
                                 <div class="text-secondary small">
-                                    {{ SelectedAgreement.u_FltChgAmt | number}}
+                                    {{ SelectedAgreement?.u_FltChgAmt | number}}
                                 </div>
                             </div>
 
@@ -151,7 +151,7 @@
                                     {{ 'Tax Code' | translate }}
                                 </div>
                                 <div class="text-secondary small">
-                                    {{ SelectedAgreement.u_taxCodeName }}
+                                    {{ SelectedAgreement?.u_taxCodeName }}
                                 </div>
                             </div>
 
@@ -160,13 +160,13 @@
                                     {{ 'Description' | translate }}
                                 </div>
                                 <div class="text-secondary small">
-                                    {{ SelectedAgreement.u_Desc }}
+                                    {{ SelectedAgreement?.u_Desc }}
                                 </div>
                             </div>
                             <div class="col-md-4 mb-2">
                                 <div class="fw-semibold text-dark">{{'Posting Date' | translate}}</div>
                                 <div class="text-secondary small">
-                                    {{ SelectedAgreement.u_PDate | date:GenericForma.DateFormate }}
+                                    {{ SelectedAgreement?.u_PDate | date:GenericForma.DateFormate }}
                                 </div>
                             </div>
                         </div>
@@ -180,7 +180,7 @@
                             <div class="col-md-4 mb-2">
                                 <div class="fw-semibold text-dark">{{'Suspended Days' | translate}}</div>
                                 <div class="text-secondary small">
-                                    {{ SelectedAgreement.suspendedDays | number}}
+                                    {{ SelectedAgreement?.suspendedDays | number}}
                                 </div>
                             </div>
                         </div>
@@ -364,7 +364,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let p of SelectedAgreement.attachments">
+                                                    <tr *ngFor="let p of SelectedAgreement?.attachments">
                                                         <td>{{p.attachmentType }}</td>
                                                         <td>{{p.description }}</td>
                                                         <td class="action-btn">
@@ -398,7 +398,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let p of SelectedAgreement.approvalLog">
+                                                    <tr *ngFor="let p of SelectedAgreement?.approvalLog">
                                                         <td>{{p.userName}}</td>
                                                         <td>{{p.levelName}}</td>
                                                         <td>{{p.remarks}}</td>

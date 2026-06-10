@@ -109,7 +109,7 @@ export class SuspensionListingComponent implements OnInit, AfterViewInit {
   openAdd() {
     if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
       // clear any previously selected agreement
-      this.SelectedAgreement = null;
+      this.SelectedAgreement = {};
       this.showModal = true;
     } else {
       this.toastr.error("You don't have permission to create Suspension", "Permission Denied", {

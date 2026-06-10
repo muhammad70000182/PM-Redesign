@@ -95,7 +95,7 @@ export class unitreturnlistComponent implements OnInit, AfterViewInit {
   openAdd() {
     if (this.AllowedPermissions && this.AllowedPermissions['canCreate']) {
       // Clear any previously selected data so the form opens fresh
-      this.SelectedAgreement = null;
+      this.SelectedAgreement = {};
       this.showModal = true;
     } else {
       this.toastr.error("You don't have permission to create Unit Return", "Permission Denied", {
