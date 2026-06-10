@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12 pl-md-0 pr-md-0">
-        <div class="card card-user">
-            <div class="card-body pb-4">
+        <div class="">
+            <div class="">
                 <div *ngIf="AllowedPermissions['canCreate']">
                     <!-- <h4 class="sectionHeading">New Role:</h4> -->
                     <div class="sectionHeading">
@@ -154,7 +154,7 @@
                                     <div class="tab-pane fade show active" [hidden]="activeTab !== 'UnitDetail'">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="table-responsive dataTableDesign">
+                                                <div class="table-responsive fixed-height-wrapper dataTableDesign">
                                                     <table class="table table-striped mt-3">
                                                         <thead>
                                                             <tr>
@@ -259,15 +259,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div class="row justify-content-end">
-                                            <div class="col-md-3 mt-4 text-right btn-design">
+                                            <div class="col-md-3">
+                                                <div class="mt-4 text-right btn-design">
                                                 <button type="button" class="btn btn-success"
                                                     (click)="AddRemoveAttachments('add','')"><i class=""></i>{{'Add' |
                                                     translate}}</button>
                                             </div>
+                                            </div>
                                         </div>
+                                        <!-- <div class="row justify-content-end">
+                                            
+                                        </div> -->
 
                                         <!-- Attachment table start -->
                                         <div class="table-responsive dataTableDesign fixed-height-wrapper mt-4">

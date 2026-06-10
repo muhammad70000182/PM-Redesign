@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-md-8 text-right">
                         <div class="btn-design">
-                            <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to Excel</button>
+                            <button (click)="exportData()" class="btn btn-outline-info export-btns"><i class="fa-solid fa-file-excel"></i> Export to Excel</button>
                             <button *ngIf="AllowedPermissions['canCreate']" (click)="openAdd()" class="btn btn-success"><i class="fa fa-plus"></i> {{'Add New' | translate}}</button>
                         </div>
                     </div>

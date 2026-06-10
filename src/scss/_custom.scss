@@ -184,7 +184,7 @@ html, body {
 /* Cards and Containers */
 .card {
   border: 1px solid #e5e7eb !important;
-  border-radius: 12px !important;
+  border-radius: 20px !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
   transition: all 0.3s ease !important;
 }
@@ -306,9 +306,9 @@ html, body {
 
 /* Tables */
 .table {
-  border-collapse: separate;
+//   border-collapse: separate;
   font-size: 0.875rem;
-   border-spacing: 0 6px !important;
+//    border-spacing: 0 6px !important;
 
   thead th {
     background-color: #f3f4f6;
@@ -316,14 +316,14 @@ html, body {
     font-weight: 500 !important; 
     color: #1a1a1a;
     // padding: 0.75rem;
-	padding: 1rem 0.6rem !important;
+	padding: 1rem 1.6rem !important;
     text-align: left;
 	text-transform: uppercase;
   }
 
   tbody td {
     border-bottom: 1px solid #e5e7eb;
-    padding: 0.75rem;
+    padding: 0.5rem 1.6rem !important;
   }
 
   tbody tr {
@@ -629,7 +629,7 @@ ng-select.is-invalid .ng-select-container {
 
 div.dataTables_wrapper div.dataTables_scrollBody {
 	min-height: 250px;
-	border: 1px solid #ccc;
+	// border: 1px solid #ccc;
 }
 
 .speific-column-width td:nth-of-type(1) input {
@@ -2167,13 +2167,44 @@ table.table.dataTable.table-striped>tbody>tr:nth-of-type(2n+1)>* {
 // .customSidebar .sidebar-nav{
 //   padding: 6px;
 // }
-.customSidebar .sidebar-nav .nav-link.active {
-	background: rgb(117 120 137 / 71%);
-	color: #fff;
-    border-radius: 30px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+.customSidebar .sidebar-nav:firvst-child .nav-link.active {
+    // background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+    // color: #fff;
+    // border-radius: 30px;
+    // padding-top: 10px;
+    // padding-bottom: 10px;
+}
+.customSidebar .sidebar-nav > .nav-item:first-child .nav-link.active {
     background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+    color: #ffff;
+    border-radius: 30px;
+}
+.customSidebar .sidebar-nav > .nav-item:first-child .nav-link.active .nav-icon{
+	color:#fff;
+}
+.customSidebar .ng-scrollbar-track{
+	z-index: -1 !important;
+}
+.customSidebar .sidebar-nav .nav-link.active {
+	// background: rgb(117 120 137 / 71%);
+	color: #000000;
+    // border-radius: 30px;
+    // padding-top: 10px;
+    // padding-bottom: 10px;
+    // background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+}
+.customSidebar .sidebar-nav .nav-group.show .nav-group-toggle {
+    background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+    color: #fff;
+    border-radius: 30px;
+    // padding-top: 10px;
+    // padding-bottom: 10px;
+}
+.customSidebar .sidebar-nav .nav-group.show .nav-group-toggle .nav-icon {
+    color: #ffff;
+}
+.customSidebar .sidebar-nav .nav-group.show .nav-group-toggle::after{
+	filter: brightness(0) invert(1);
 }
 .sidebar-nav .nav-group-toggle::after{
 	    filter: brightness(0%);
@@ -2192,7 +2223,7 @@ table.table.dataTable.table-striped>tbody>tr:nth-of-type(2n+1)>* {
 }
 
 .customSidebar .sidebar-nav .nav-group.show .nav-group-toggle {
-	color: rgb(0, 0, 0);
+	// color: rgb(0, 0, 0);
 }
 .sidebar-nav .nav-group.show{
 	    background: rgb(0 0 0 / 0%)
