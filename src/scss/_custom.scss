@@ -323,7 +323,7 @@ html, body {
 
   tbody td {
     border-bottom: 1px solid #e5e7eb;
-    padding: 0.5rem 1.6rem !important;
+    padding: 1rem 1.6rem !important;
   }
 
   tbody tr {
@@ -353,7 +353,7 @@ html, body {
 	border-radius: 30px;
     font-size: 0.75rem;
     font-weight: 600;
-    padding: 10px 18px;
+    padding: 8px 18px;
 	&.bg-success{
 		background-color: #F8FFFC !important;
 		border: 1px solid #2eb85c;
@@ -983,9 +983,9 @@ m
 	align-items: center;
 	margin: 30px 0;
 	padding: 30px 20px;
-	background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+	// background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
 	border-radius: 12px;
-	border: 1px solid #e5e7eb;
+	// border: 1px solid #e5e7eb;
 }
 
 .wizard-steps {
@@ -2218,10 +2218,17 @@ table.table.dataTable.table-striped>tbody>tr:nth-of-type(2n+1)>* {
 .customSidebar .nav-link {
 	color: #686868;
 	font-weight: 500;
+	margin: 0 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 	// padding: 16px 22px;
 	// padding-right: 12px !important;
 }
-
+.customSidebar .sidebar-nav .nav-icon{
+	flex: 0 0 3rem !important;
+	font-size: 1.2rem;
+}
 .customSidebar .sidebar-nav .nav-group.show .nav-group-toggle {
 	// color: rgb(0, 0, 0);
 }
@@ -2646,7 +2653,9 @@ $border-top-color_1: #072d18;
 	//    padding: 0 0 0px 0px;
 	//     color: #fff !important;
 }
-
+.dataTableDesign .dataTables_wrapper .dataTables_length{
+	color: #000 !important;
+}
 .dataTableDesign .table thead tr th input[type="checkbox"] {
 	position: relative;
 	top: 3px;

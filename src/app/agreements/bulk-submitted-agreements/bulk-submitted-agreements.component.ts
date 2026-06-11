@@ -95,7 +95,7 @@ export class BulkSubmittedAgreementsComponent implements OnInit, AfterViewInit {
       pageLength: 10,
       processing: true,
       ordering: false,
-      // scrollX: true,
+      scrollX: true
       // autoWidth: false,
       //   columnDefs: [
       //     { targets: '_all', width: 'auto' }
