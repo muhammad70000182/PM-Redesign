@@ -32,6 +32,7 @@ export class NewReportComponent implements OnInit, AfterViewInit {
   showForm: boolean = false;
   addBreadcrumb: boolean = false;
   showHidetable: boolean = true;
+  showModal: boolean = false;
   baseUrl: any = '/RoleManagement/';
   p: any;
   CurrentUserInfo: any | { Id: number; UserCode: string; FullName: string; RoleName: string; RoleID: number; UserImage: string; };
@@ -112,6 +113,7 @@ export class NewReportComponent implements OnInit, AfterViewInit {
       next: (result: any) => {
         if (result.status) {
           this.clearForm();
+          this.closeModal();
           this.toastr.success(result.message, "Success", {
             progressBar: true,
             closeButton: true
@@ -167,15 +169,16 @@ export class NewReportComponent implements OnInit, AfterViewInit {
     this.form.reset();
 
     this.form.patchValue({
-      Id: 0,
-      CreatedBy: parseInt(this.CurrentUserInfo.Id),
-      UpdatedBy: parseInt(this.CurrentUserInfo.Id),
-      CreatedDate: new Date(),
-      UpdatedDate: new Date()
+      id: 0,
+      createdBy: parseInt(this.CurrentUserInfo.Id),
+      updatedBy: parseInt(this.CurrentUserInfo.Id),
+      createdDate: new Date(),
+      updatedDate: new Date()
     });
+    this.showModal = false;
   }
   Update(data: any) {
-
+    this.isUpdate = true;
     this.form.patchValue({
       id: data.id,
       code: data.code,
@@ -186,7 +189,18 @@ export class NewReportComponent implements OnInit, AfterViewInit {
       createdDate: data.createdDate,
       updatedDate: data.updatedDate
     });
+    this.showModal = true;
 
+  }
+
+  openAdd() {
+    this.clearForm();
+    this.isUpdate = false;
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 
   async onFileChange(event: any, fileInputRef: HTMLInputElement) {
