@@ -10,20 +10,24 @@
                 <p class="text-medium-emphasis">Sign In to your account</p>
                 <c-input-group class="mb-3">
                   <span cInputGroupText>
-                    <svg cIcon name="cilUser"></svg>
+                    <img src="assets/images/icons/mail.svg" width="20" />
                   </span>
                   <input autoComplete="username" cFormControl placeholder="Username" />
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText>
-                    <svg cIcon name="cilLockLocked"></svg>
+                    <img src="assets/images/icons/password.svg" width="20" />
                   </span>
                   <input
+                    #passwordInput
                     autoComplete="current-password"
                     cFormControl
                     placeholder="Password"
                     type="password"
                   />
+                  <span cInputGroupText style="cursor: pointer;" (click)="passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'">
+                    <img src="assets/images/icons/pass-eye.svg" width="20" />
+                  </span>
                 </c-input-group>
                 <c-row>
                   <c-col xs="6">

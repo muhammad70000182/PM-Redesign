@@ -224,7 +224,7 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-12 text-right">
+                                    <div class="col-md-12 text-right btn-design">
                                         <button class="btn btn-success" type="button"
                                             (click)="AddRemoveBuildings('add')">{{'Add Building' | translate}}</button>
                                     </div>
@@ -506,12 +506,12 @@
                         </div>
                     </div>
                     <!-- Buttons -->
-
-                    <div class="text-right mt-3 wizardBtns">
-                        <button class="btn btn-secondary me-2" (click)="prevStep()" [disabled]="currentStep === 1">
+<!-- wizardBtns -->
+                    <div class="text-right mt-3 wizardBtns  btn-design">
+                        <button class="btn btn-secondary " (click)="prevStep()" [disabled]="currentStep === 1">
                             {{'Previous' | translate}}
                         </button>
-                        <button class="btn btn-primary me-2" (click)="nextStep()" [disabled]="currentStep === 4">
+                        <button class="btn btn-primary " (click)="nextStep()" [disabled]="currentStep === 4">
                             {{'Next' | translate}}
                         </button>
                         <button class="btn btn-success" [disabled]="currentStep < 4"

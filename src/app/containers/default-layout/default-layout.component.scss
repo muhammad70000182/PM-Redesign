@@ -5,12 +5,14 @@
     --scrollbar-hover-size: calc(var(--scrollbar-size) * 1.5);
   }
 }
-.customSidebar{
-    // background: #5F48B8;
-    // background: linear-gradient(0deg, rgba(95, 72, 184, 1) 66%, rgba(52, 102, 201, 1) 100%);
 
-    background: #ffffff;
-        border-right: 1px solid #d8dbe0 !important;
+.customSidebar {
+  // background: #5F48B8;
+  // background: linear-gradient(0deg, rgba(95, 72, 184, 1) 66%, rgba(52, 102, 201, 1) 100%);
+
+  background: #ffffff;
+  border-right: 1px solid #d8dbe0 !important;
+
   // &::after{
   //   content: "";
   //   position: absolute;
@@ -25,30 +27,34 @@
   //   left: 0;
   //   z-index: -1;
   // }
-  &.hide{
-    &::after{
+  &.hide {
+    &::after {
       display: none;
     }
   }
 }
 
-   
+
 .menuHeader {
   // border-bottom: 1px solid rgba(255,255,255,.1);
   // padding: 0 40px;
   text-align: center;
-    background-image: url(../../../assets/images/abacus-logo.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    height: 60px;
-    width: 120px;
-    margin: 18px auto;
-  h1{
-    font-size:18px;color: #fff;margin: 0;
+  background-image: url(../../../assets/images/abacus-logo.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 60px;
+  width: 120px;
+  margin: 18px auto;
+
+  h1 {
+    font-size: 18px;
+    color: #fff;
+    margin: 0;
   }
 }
-.customSidebar.sidebar-narrow-unfoldable .menuHeader{
+
+.customSidebar.sidebar-narrow-unfoldable .menuHeader {
   background-image: url(../../../assets/images/favicon.png);
   background-size: contain;
   background-position: center;
@@ -56,29 +62,75 @@
   margin: 0 0px 0 8px;
   width: 30px;
 }
-.customSidebar.sidebar-narrow-unfoldable:hover .menuHeader{
-    background-image: url(../../../assets/images/abacus-logo.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    height: 60px;
-    width: 120px;
-    margin: 18px auto;
+
+.customSidebar.sidebar-narrow-unfoldable:hover .menuHeader {
+  background-image: url(../../../assets/images/abacus-logo.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 60px;
+  width: 120px;
+  margin: 18px auto;
 }
+
 .sidebarArrow.sidebar-nav {
-	.nav-group-toggle {
-		&::after {
-			flex: 0 21px !important;
-			background-color: #000 !important;
-			text-align: center !important;
-			border-radius: 30px !important;
-			color: #fff !important;
-			height: 20px !important;
-			background-size: 50% !important;
-		}
-	}
+  .nav-group-toggle {
+    &::after {
+      flex: 0 21px !important;
+      background-color: #000 !important;
+      text-align: center !important;
+      border-radius: 30px !important;
+      color: #fff !important;
+      height: 20px !important;
+      background-size: 50% !important;
+    }
+  }
 }
 
+::ng-deep .nav-icon.custom-icon {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  vertical-align: middle;
+  filter: grayscale(100%) opacity(100%);
+}
 
+::ng-deep .customSidebar .nav-link.active .nav-icon.custom-icon,
+::ng-deep .customSidebar .nav-link:hover .nav-icon.custom-icon {
+  filter: grayscale(0%) opacity(100%);
+}
 
+::ng-deep .icon-administration {
+  background-image: url(../../../assets/images/icons/administration.svg);
+}
 
+::ng-deep .icon-approval {
+  background-image: url(../../../assets/images/icons/approvals.svg);
+}
+
+::ng-deep .icon-dashboard {
+  background-image: url(../../../assets/images/icons/dashboard.svg);
+}
+
+::ng-deep .icon-master-data {
+  background-image: url(../../../assets/images/icons/master-data.svg);
+}
+
+::ng-deep .icon-permission {
+  background-image: url(../../../assets/images/icons/permission.svg);
+}
+
+::ng-deep .icon-property {
+  background-image: url(../../../assets/images/icons/property.svg);
+}
+
+::ng-deep .icon-reports {
+  background-image: url(../../../assets/images/icons/reports.svg);
+}
+
+::ng-deep .icon-user-management {
+  background-image: url(../../../assets/images/icons/user-management.svg);
+}

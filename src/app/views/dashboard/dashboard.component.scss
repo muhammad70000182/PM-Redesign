@@ -5,6 +5,7 @@
     }
   }
 }
+
 .dashboard-wrapper {
   padding: 20px 0;
 
@@ -12,7 +13,7 @@
   .welcome-section {
     .welcome-card {
       background: linear-gradient(135deg, #5F48B8 0%, #3466C9 100%);
-      border-radius: 16px;
+      border-radius: 25px;
       padding: 40px;
       color: white;
       box-shadow: 0 10px 30px rgba(95, 72, 184, 0.2);
@@ -20,19 +21,19 @@
 
       .welcome-content {
         h2 {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 0 0 15px 0;
-            letter-spacing: -0.5px;
-            line-height: 20px;
+          font-size: 24px;
+          font-weight: 700;
+          margin: 0 0 15px 0;
+          letter-spacing: -0.5px;
+          line-height: 20px;
         }
 
         p {
-            font-size: 18px;
-            margin: 0 0 30px 0;
-            opacity: 0.95;
-            line-height: 1.5;
-            font-weight: 200;
+          font-size: 18px;
+          margin: 0 0 30px 0;
+          opacity: 0.95;
+          line-height: 1.5;
+          font-weight: 200;
         }
 
         .summary-badge {
@@ -42,7 +43,7 @@
           gap: 0;
           background: #fff;
           padding: 12px 20px;
-          border-radius: 8px;
+          border-radius: 12px;
           font-size: 14px;
           font-weight: 500;
           width: fit-content;
@@ -89,7 +90,7 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         border: 1px solid #F3F4F6;
         box-shadow: 0px 0.74px 2.23px 0px rgba(0, 0, 0, 0.1);
-        background:#fff;
+        background: #fff;
 
         &:hover {
           transform: translateY(-5px);
@@ -100,15 +101,15 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 16px;
+          // margin-bottom: 16px;
 
           h4 {
-              font-size: 14px;
-              font-weight: 700;
-              letter-spacing: 0.5px;
-              margin: 0;
-              opacity: 0.9;
-              color: #A3AED0;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+            opacity: 0.9;
+            color: #A3AED0;
           }
 
           .tile-icon {
@@ -130,25 +131,27 @@
         }
 
         .tile-progress {
-          height: 4px;
-          background:#F3F4F6;
-          border-radius: 2px;
+          height: 5.9px;
+          background: #F3F4F6;
+          border-radius: 30px;
           overflow: hidden;
-          margin-bottom: 8px;
+          margin-bottom: 18px;
 
           .progress-bar {
             height: 100%;
-            background:linear-gradient(135deg, #5F48B8 0%, #3466C9 100%);
-            border-radius: 2px;
+            background: linear-gradient(135deg, #5F48B8 0%, #3466C9 100%);
+            border-radius: 30px;
             transition: width 0.3s ease;
           }
         }
 
         .tile-status {
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 500;
           opacity: 0.85;
           margin-bottom: 12px;
+          display: flex;
+          justify-content: space-between;
         }
 
         .tile-badges {
@@ -157,30 +160,31 @@
           flex-wrap: wrap;
 
           .badge {
-              font-size: 14px;
-              padding: 25px 22px;
-              border-radius: 25px;
-              font-weight: 400;
-              /* background: rgba(255, 255, 255, 0.2); */
-              color: white;
-              border: 1px solid rgba(255, 255, 255, 0.3);
-              height: 105px;
+            font-size: 14px;
+            padding: 25px 22px;
+            border-radius: 25px;
+            font-weight: 400;
+            /* background: rgba(255, 255, 255, 0.2); */
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            height: 105px;
 
             &.badge-success {
-                border-color: #D0FAE5;
-                background-color: #F8FFFC !important;
+              border-color: #D0FAE5;
+              background-color: #F8FFFC !important;
             }
 
             &.badge-warning {
-                border-color: #FEF3C6;
-                background-color: #FFFDF7 !important;
+              border-color: #FEF3C6;
+              background-color: #FFFDF7 !important;
             }
 
             &.badge-danger {
-             background-color: #FFFBFB !important;
+              background-color: #FFFBFB !important;
               border-color: #FFE4E6;
             }
-            .badge-counter{
+
+            .badge-counter {
               display: block;
               padding-top: 15px;
             }
@@ -296,7 +300,7 @@
         overflow: hidden;
 
         .chart-header {
-          padding: 20px 24px;
+          padding: 0;
           border-bottom: 1px solid #E5E7EB;
           display: flex;
           justify-content: space-between;
@@ -351,6 +355,7 @@
     }
 
     .agreements-section {
+
       .tiles-grid,
       .info-cards-grid {
         grid-template-columns: 1fr;

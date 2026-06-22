@@ -16,10 +16,8 @@
                     <div class="col-md-8 text-right">
 
                         <div class="btn-design" *ngIf="AllowedPermissions['canCreate']">
-                            <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to
-                                Excel</button>
-                            <button (click)="openAdd()" class="btn btn-success"><i class="fa fa-plus"></i> {{'Add New' |
-                                translate}}</button>
+                            <button (click)="exportData()" class="btn btn-outline-info export-btns" title="Export to Excel"></button>
+                            <button (click)="openAdd()" class="btn btn-success add-new-icon-only" title="Add New"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
@@ -118,8 +116,7 @@
                     <div class="sectionHeading mt-4  heading-with-btn">
                         <h6 class="fw-bold text-primary mb-0">{{ 'Invoice Details' | translate }}</h6>
                         <div class="btn-design">
-                            <button (click)="exportDataDetail()" class="btn btn-outline-info export-btns">Export to
-                                Excel</button>
+                            <button (click)="exportDataDetail()" class="btn btn-outline-info export-btns" title="Export to Excel"></button>
                         </div>
                     </div>
                     <div class="row mt-3">
