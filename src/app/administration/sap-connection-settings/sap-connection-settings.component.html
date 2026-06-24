@@ -12,10 +12,10 @@
                 </div>
 
                 <div *ngIf="AllowedPermissions['canView'] ">
-                    <div class="table-responsive dataTableDesign">
+                    <div class="dataTableDesign">
                         <!-- <input type="text" placeholder="Search..." (input)="onDtSearch($event)" /> -->
 
-                        <table class="table table-striped" id="datatable-id" datatable [dtOptions]="dtOptions"
+                        <table class="table table-striped" style="width: 100%;" id="datatable-id" datatable [dtOptions]="dtOptions"
                             [dtTrigger]="dtTrigger">
                             <thead>
                                 <tr>

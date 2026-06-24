@@ -66,9 +66,9 @@ export class ChecklistComponent implements OnInit {
       pageLength: 10,
       processing: false,
       autoWidth: false,
-      ordering: false
+      ordering: false,
       // scrollCollapse: true,
-      // scrollX: true
+      scrollX: true
 
     };
     this.form = this.formBuilder.group({

@@ -1,4 +1,4 @@
-﻿// Here you can add other styles
+// Here you can add other styles
 
 /* Global Styling */
 * {
@@ -701,6 +701,24 @@ ng-select.is-invalid .ng-select-container {
 div.dataTables_wrapper div.dataTables_scrollBody {
 	min-height: 250px;
 	// border: 1px solid #ccc;
+}
+
+/* Fix DataTables scrollX header alignment for specific components only */
+app-approval-hierarchy, app-pending-agreement-listing {
+    .dataTableDesign {
+        width: 100% !important;
+        
+        .dataTables_wrapper,
+        .dataTables_scroll,
+        .dataTables_scrollHead,
+        .dataTables_scrollHeadInner,
+        .dataTables_scrollHeadInner table.table,
+        .dataTables_scrollBody,
+        .dataTables_scrollBody table.table {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+    }
 }
 
 .speific-column-width td:nth-of-type(1) input {

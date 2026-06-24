@@ -31,8 +31,8 @@
                 <div *ngIf="AllowedPermissions['canCreate']">
                 </div>
                 <div *ngIf="AllowedPermissions['canView']" class="">
-                    <div class="dataTableDesign table-responsive">
-                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <div class="dataTableDesign">
+                        <table class="table table-striped" style="width: 100%" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                             <thead>
                                 <tr>
                                     <th>#</th>

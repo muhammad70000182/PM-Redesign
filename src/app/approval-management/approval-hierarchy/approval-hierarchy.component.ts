@@ -98,7 +98,8 @@ export class ApprovalHierarchyComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering: false
+      ordering: false,
+      scrollX: true
     };
     this.LevelsList = [];
     for (let i = 1; i <= 20; i++) {
