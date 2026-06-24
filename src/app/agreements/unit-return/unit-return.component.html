@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-12 pl-md-0 pr-md-0">
-        <div class="card card-user">
-            <div class="card-body pb-4">
+        <div class="card-user">
+            <div class="">
                 <div *ngIf="AllowedPermissions['canCreate']">
                     <!-- <h4 class="sectionHeading">New Role:</h4> -->
                     <div class="sectionHeading">
-                        <h6 class="fw-bold text-primary mt-2">{{'Unit Return' | translate}}</h6>
+                        <h6 class="fw-bold text-primary">{{'Unit Return' | translate}}</h6>
                     </div>
                     <form [formGroup]="form" (ngSubmit)="onSubmit()">
                         <input type="hidden" formControlName="Id" />
@@ -197,8 +197,8 @@
                                     <div class="tab-pane fade show active" [hidden]="activeTab !== 'UnitDetail'">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="table-responsive dataTableDesign">
-                                                    <table class="table table-striped mt-3">
+                                                <div class="table-responsive dataTableDesign fixed-height-wrapper">
+                                                    <table class="table table-striped mt-4">
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
@@ -305,15 +305,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div class="row justify-content-end">
-                                            <div class="col-md-3 mt-4 text-right btn-design">
-                                                <button type="button" class="btn btn-success"
-                                                    (click)="AddRemoveAttachments('add','')"><i
-                                                        class=""></i>{{'Add' | translate}}</button>
+                                            <div class="col-md-3 mt-4">
+                                                <div class="justify-content-end">
+                                                    <div class="text-right btn-design">
+                                                        <button type="button" class="btn btn-success"
+                                                            (click)="AddRemoveAttachments('add','')"><i
+                                                                class=""></i>{{'Add' | translate}}</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        
 
                                         <!-- Attachment table start -->
                                         <div class="table-responsive dataTableDesign fixed-height-wrapper mt-4">
@@ -360,7 +362,7 @@
                         </div>
                         <div class="row">
                             <!-- Form Actions -->
-                            <div class="d-flex justify-content-end mt-4 mb-4 gap-2">
+                            <div class="d-flex justify-content-end mt-4 gap-2">
                                 <div class="btn-group btn-design">
                                     <button class="btn btn-success" type="submit" *ngIf="form.get('Id')?.value==0">
                                         <i class="fa fa-save"></i><span> {{'Save' | translate}}</span>
@@ -390,7 +392,7 @@
 
         <div class="modal fade" id="CheckListMasterModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                      <div class="modal-header">
                         <h5 class="modal-title">Unit Return CheckList</h5>
@@ -437,7 +439,7 @@
                         </div>
 
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer btn-design">
                         <button data-dismiss="modal" data-bs-dismiss="modal" class="btn btn-success" type="submit">
                             <i class="fa fa-save"></i><span> {{'Add' | translate}}</span>
                         </button>

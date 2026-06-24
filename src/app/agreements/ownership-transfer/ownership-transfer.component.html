@@ -9,7 +9,7 @@
                     </div>
                     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="container-fluid">
                         <input type="hidden" formControlName="Id" />
-                        <div class="row g-3">
+                        <div class="row">
                             <!-- Agreement -->
                             <div class="col-12 col-md-3 col-lg-3" *ngIf="form.get('Id')?.value==0">
                                 <div class="form-group">
@@ -116,11 +116,11 @@
                                 </div>
                             </nav>
 
-                            <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-content custom-height" id="nav-tabContent">
 
                                 <!-- General Data Tab -->
                                 <div class="tab-pane fade show active" [hidden]="activeTab !== 'UnitDetail'">
-                                    <div class="row mt-3">
+                                    <div class="row mt-4">
                                         <div class="col-md-12">
                                             <div class="table-responsive dataTableDesign fixed-height-wrapper">
                                                 <table class="table table-striped">
@@ -181,8 +181,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade show active" [hidden]="activeTab !== 'Transfer'">
-                                    <div class="row g-3">
+                                <div class="tab-pane mt-4 fade show active" [hidden]="activeTab !== 'Transfer'">
+                                    <div class="row">
                                         <div class="col-12 col-md-3 col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-label">{{'BP Code' | translate}}</label>
@@ -225,7 +225,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-3">
                                             <label class="form-label">{{'New BP Code' | translate}}</label>
 
@@ -266,7 +266,7 @@
                                                 [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
-                                    <div class="row g-3 mt-3">
+                                    <div class="row">
                                         <div class="col-md-3">
                                             <label class="form-label">{{'Date of Transfer' | translate}}</label>
                                             <input type="text" class="form-control" formControlName="U_TDate"

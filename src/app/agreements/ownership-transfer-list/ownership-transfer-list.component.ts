@@ -81,7 +81,8 @@ export class ownershiptransferlistComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering: false
+      ordering: false,
+      scrollX: true,
     };
     this.GettransferList();
 

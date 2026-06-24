@@ -117,7 +117,7 @@
                         </div>
                         <div [hidden]="currentStep !== 2">
                             <div class="row mt-4">
-                                <div class="dataTableDesign">
+                                <div class="table-responsive dataTableDesign">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -187,14 +187,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-right mt-3 wizardBtns">
-                        <button class="btn btn-secondary me-2" (click)="prevStep()" [disabled]="currentStep === 1">
+                    <div class="text-right mt-3 wizardBtns btn-design">
+                        <button class="btn btn-secondary" (click)="prevStep()" [disabled]="currentStep === 1">
                             {{'Previous'|translate}}
                         </button>
-                        <button class="btn btn-primary me-2" (click)="nextStep()" [disabled]="currentStep === 2">
+                        <button class="btn btn-primary" (click)="nextStep()" [disabled]="currentStep === 2">
                             {{'Next'|translate}}
                         </button>
-                        <button class="btn btn-success me-2" [disabled]="currentStep !== 2"
+                        <button class="btn btn-success" [disabled]="currentStep !== 2"
                             (click)="PostUpdatedAgreements()">
                             {{'Send For Quotation'|translate}}
                         </button>

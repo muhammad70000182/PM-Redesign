@@ -161,13 +161,13 @@
 
           .badge {
             font-size: 14px;
-            padding: 25px 22px;
-            border-radius: 25px;
+            padding: 24px 22px;
+            border-radius: 18px;
             font-weight: 400;
             /* background: rgba(255, 255, 255, 0.2); */
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            height: 105px;
+            // height: 105px;
 
             &.badge-success {
               border-color: #D0FAE5;

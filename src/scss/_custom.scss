@@ -1,4 +1,4 @@
-// Here you can add other styles
+﻿// Here you can add other styles
 
 /* Global Styling */
 * {
@@ -328,16 +328,16 @@ body {
 }
 
 .form-label {
-	font-weight: 600 !important;
-    font-size: 0.875rem !important;
-    color: #454646 !important;
-    margin-bottom: 0.1rem !important;
+	font-weight: 500 !important;
+	font-size: 0.875rem !important;
+	color: #454646 !important;
+	margin-bottom: 0.1rem !important;
 }
 
 /* Ensure checkbox labels are readable (override any dark-bg contexts) */
 .form-check-label {
 	color: #969696 !important;
-    font-weight: 400 !important;
+	font-weight: 400 !important;
 }
 
 /* Tables */
@@ -387,6 +387,12 @@ body {
 	border-bottom: 1px solid #6F3EEB;
 }
 
+.custom-height {
+	height: 100%;
+	min-height: 300px;
+	max-height: 300px;
+}
+
 /* Badge */
 .badge {
 	border-radius: 30px;
@@ -404,6 +410,24 @@ body {
 		background-color: #f9b11512 !important;
 		border: 1px solid #f9b115;
 		color: #cf8e00 !important;
+	}
+
+	&.bg-info {
+		background-color: #0000ff05 !important;
+		color: #3399ff;
+		border: 1px solid #3399ff;
+	}
+
+	&.bg-secondary {
+		background-color: #f3f3f32e !important;
+		color: #9da5b1;
+		border: 1px solid #9da5b1;
+	}
+
+	&.bg-danger {
+		background-color: #ff000008 !important;
+		color: #e55353;
+		border: 1px solid #e55353;
 	}
 }
 
@@ -481,12 +505,16 @@ body {
 	}
 }
 
+.customSidebar.sidebar-narrow-unfoldable .sidebar-toggler {
+	transform: rotate(180deg);
+}
+
 /* Modals */
 .modal-content {
 	//   border: 1px solid #e5e7eb !important;
 	border-radius: 30px !important;
 	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
-	color: #fff;
+	// color: #fff;
 }
 
 .modal-header {
@@ -494,6 +522,7 @@ body {
 	padding: 1.5rem !important;
 	background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
 	padding: 15px 30px !important;
+	color: #fff;
 }
 
 .modal-body {
@@ -1260,6 +1289,7 @@ div#forgotPasswordModal label {
 			display: inline-flex !important;
 			align-items: center !important;
 			justify-content: center !important;
+
 			i {
 				display: flex !important;
 				font-size: 14px;
@@ -1415,7 +1445,7 @@ div#forgotPasswordModal label {
 			tr:nth-of-type(1) {
 				th {
 					background: #F2F2F2;
-    				color: #747474;
+					color: #747474;
 					// border-right: 1px solid #2e323b;
 					white-space: nowrap;
 					font-size: 13.5px;
@@ -1946,7 +1976,7 @@ div#forgotPasswordModal label {
 
 				.acc-icon {
 					// background: #564ebb;
-					    background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+					background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
 				}
 			}
 		}
@@ -2097,7 +2127,7 @@ table.table.dataTable.table-striped>tbody>tr:nth-of-type(2n+1)>* {
 
 .btn-design.btn-absolute button {
 	padding: 5px 10px;
-	border-radius: 3px !important;
+	// border-radius: 3px !important;
 }
 
 .card.cardShadow {
@@ -2436,17 +2466,27 @@ table td.wrap-text {
 
 .customSidebar .nav-group-items {
 	position: relative;
+	.nav-item{
+		&::before {
+			// content: "";
+			// position: absolute;
+			// height: 100%;
+			// width: 3px;
+			// background: #E7E7E7;
+			// top: 8px;
+			// max-height: 80px;
+			// left: 40px;
 
-	&::before {
-		content: "";
-		position: absolute;
-		height: 100%;
-		width: 3px;
-		background: #E7E7E7;
-		top: 8px;
-		// max-height: 80px;
-		left: 40px;
+			content: "";
+			position: absolute;
+			height: calc(100% - 30px);
+			width: 3px;
+			background: #E7E7E7;
+			left: 40px;
+			top: 12px;
+		}
 	}
+	
 }
 
 .customSidebar .sidebar-nav .nav-group-items .nav-link:hover:before {
@@ -2489,6 +2529,23 @@ table td.wrap-text {
 .header .header-toggler {
 	display: none;
 }
+
+
+// collapsable menu deisgn settings
+
+// .customSidebar.sidebar-narrow-unfoldable .nav-group {
+//     width: 70px;
+// }
+// .customSidebar.sidebar-narrow-unfoldable .nav-group.show .nav-group-toggle {
+//     border-radius: 10px;
+// }
+// .customSidebar.sidebar-narrow-unfoldable .nav-link .nav-icon {
+//     flex: 0 0 3.8rem !important;
+// }
+// .customSidebar.sidebar-narrow-unfoldable .nav-link {
+//     margin-left: 3px;
+// }
+
 
 @media screen and (max-width: 767px) {
 	.header .header-toggler {
@@ -2583,18 +2640,22 @@ table td.wrap-text {
 	// }
 }
 
-.customTab > div a.nav-item.nav-link.active:first-child {
-    border-top-left-radius: 8px;
+.customTab>div a.nav-item.nav-link.active:first-child {
+	border-top-left-radius: 8px;
 }
-.customTab > div a.nav-item.nav-link.active:last-child {
-    border-top-right-radius: 8px;
+
+.customTab>div a.nav-item.nav-link.active:last-child {
+	border-top-right-radius: 8px;
 }
-.customTab > div a.nav-item.nav-link:first-child {
-    border-top-left-radius: 8px;
+
+.customTab>div a.nav-item.nav-link:first-child {
+	border-top-left-radius: 8px;
 }
-.customTab > div a.nav-item.nav-link:last-child {
-    border-top-right-radius: 8px;
+
+.customTab>div a.nav-item.nav-link:last-child {
+	border-top-right-radius: 8px;
 }
+
 .customSidebar .sidebar-toggler {
 	top: 10px;
 	position: absolute;
@@ -2753,12 +2814,15 @@ $border-top-color_1: #072d18;
 		}
 	}
 }
+
 .wizardBtns.btn-design .btn-success {
-    background: #83D297;
+	background: #83D297;
 }
+
 .wizardBtns.btn-design .btn-primary {
-    background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
+	background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%);
 }
+
 // .header-sticky .container-fluid:nth-of-type(1){
 //   background: #14213D;
 //   .nav-item{
@@ -2775,9 +2839,11 @@ $border-top-color_1: #072d18;
 	//    padding: 0 0 0px 0px;
 	//     color: #fff !important;
 }
-.tab-content textarea{
+
+.tab-content textarea {
 	border-radius: 20px !important;
 }
+
 .dataTableDesign .dataTables_wrapper .dataTables_length {
 	color: #000 !important;
 }
@@ -2882,7 +2948,7 @@ $border-top-color_1: #072d18;
 			pointer-events: none;
 			/* stops mouse/touch events */
 			opacity: 0.8;
-			/* optional: give a “disabled” look */
+			/* optional: give a ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œdisabledÃƒÂ¢Ã¢â€šÂ¬Ã‚Â look */
 			cursor: not-allowed;
 		}
 
@@ -3416,43 +3482,26 @@ html[dir="rtl"] {
 		}
 	}
 
-	.wizard-steps li span:nth-of-type(2) {
-		padding-right: 8px;
-	}
-
-	.action-btn span i.fa-edit:after {
-		content: "تعديل";
-	}
-
-	.action-btn span i.fa-trash:after {
-		content: "حذف";
-	}
-
-	.action-btn span i.fa-eye:after {
-		content: "عرض";
-	}
-
-	.action-btn span i.fa-file-lines:after {
-		content: "عرض";
-	}
-
-	.action-btn.longText span i.fa-plus:after {
-		right: unset;
-		left: 0;
-		clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 15% 75%, 20% 95%, 24% 75%, 0% 75%);
-		content: "فاتورة استهلاك";
-	}
-
-	.checkBox .form-group label {
-		padding-right: 10px;
-	}
-
 	table.dataTable thead th,
 	table.dataTable thead td,
 	table.dataTable tfoot th,
 	table.dataTable tfoot td {
 		text-align: right;
 	}
+
+// .customSidebar.sidebar-narrow-unfoldable .nav-group {
+//     width: 70px;
+// }
+// .customSidebar.sidebar-narrow-unfoldable .nav-group.show .nav-group-toggle {
+//     border-radius: 10px;
+// }
+// .customSidebar.sidebar-narrow-unfoldable .nav-link .nav-icon {
+//     flex: 0 0 3.8rem !important;
+// }
+// .customSidebar.sidebar-narrow-unfoldable .nav-link {
+//     margin-right: 3px;
+// 	margin-left: 10px;
+// }
 
 }
 
@@ -3505,10 +3554,116 @@ input[bsDatepicker] {
 
 /* RTL support for calendar icon */
 html[dir="rtl"] {
+
 	input[bsdatepicker],
 	input[bsDatepicker] {
 		background-position: left 12px center !important;
 		padding-left: 36px !important;
 		padding-right: 12px !important;
+	}
+}
+
+/* =========================================================================
+   SIDEBAR FLOATING MENU CONFIGURATION
+   ========================================================================= */
+
+@media (min-width: 768px) {
+
+	/* 1. Prevent sidebar from physically expanding its width on hover */
+	.sidebar-narrow-unfoldable.customSidebar:not(.sidebar-over):hover {
+		width: var(--cui-sidebar-narrow-width, 4rem) !important;
+	}
+
+	/* 2. Break out of the overflow and clipping limits */
+	.sidebar-narrow-unfoldable.customSidebar {
+		transform: none !important;
+		/* CRITICAL: removes containing block so position: fixed works */
+		overflow: visible !important;
+		contain: none !important;
+		z-index: 1050;
+
+		/* Make inner wrappers visible to ensure nothing is clipped */
+		.sidebar-nav,
+		c-sidebar-nav,
+		ng-scrollbar,
+		.ng-scrollbar-wrapper,
+		.ng-scroll-viewport {
+			overflow: visible !important;
+			contain: none !important;
+		}
+
+		.nav-group,
+		c-sidebar-nav-group {
+			position: relative;
+			overflow: visible !important;
+
+			/* 3. Floating Menu Styling */
+			>.nav-group-items,
+			>c-sidebar-nav-group-items {
+				display: block !important;
+				position: fixed !important;
+				/* Break out of all wrappers */
+				top: auto !important;
+				/* Auto-align vertically with hovered item */
+				left: var(--cui-sidebar-narrow-width, 4rem) !important;
+				margin-top: -40px;
+				/* Align precisely with the parent icon */
+				width: 260px;
+				background-color: #fff;
+				box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15);
+				border-radius: 0 8px 8px 0;
+				z-index: 999999 !important;
+				height: auto !important;
+				max-height: unset !important;
+				overflow: visible !important;
+				padding: 10px 0;
+
+				/* Animation states */
+				visibility: hidden;
+				opacity: 0;
+				transform: translateX(-10px);
+				transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+				pointer-events: none;
+			}
+
+			/* 4. Show on hover */
+			&:hover {
+				>.nav-link .nav-icon {
+					color: #000;
+				}
+
+				>.nav-group-items,
+				>c-sidebar-nav-group-items {
+					visibility: visible !important;
+					opacity: 1 !important;
+					transform: translateX(0);
+					pointer-events: auto;
+				}
+			}
+		}
+
+		/* Hide the native accordion toggle arrow when narrow */
+		.nav-group-toggle::after {
+			display: none !important;
+		}
+	}
+}
+
+/* RTL Support for floating menu */
+html[dir="rtl"] {
+	@media (min-width: 768px) {
+
+		.sidebar-narrow-unfoldable.customSidebar .sidebar-nav .nav-group>.nav-group-items,
+		.sidebar-narrow-unfoldable.customSidebar .sidebar-nav c-sidebar-nav-group>c-sidebar-nav-group-items {
+			left: auto !important;
+			right: var(--cui-sidebar-narrow-width, 4rem) !important;
+			border-radius: 8px 0 0 8px !important;
+			transform: translateX(10px);
+		}
+
+		.sidebar-narrow-unfoldable.customSidebar .sidebar-nav .nav-group:hover>.nav-group-items,
+		.sidebar-narrow-unfoldable.customSidebar .sidebar-nav c-sidebar-nav-group:hover>c-sidebar-nav-group-items {
+			transform: translateX(0);
+		}
 	}
 }
