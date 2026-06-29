@@ -4,7 +4,7 @@ import { PermissionsGuard } from '../_Helper/permissions.guard';
 import { AdvanceSearchComponent } from './advance-search/advance-search.component';
 const routes: Routes = [
   {path: '', component: AdvanceSearchComponent,canActivate:[PermissionsGuard], data: { title: 'SAP Connection Setting' }},
-  {path: 'advance-search', component: AdvanceSearchComponent,canActivate:[PermissionsGuard], data: { title: 'Advance Search' }},
+ // {path: 'advance-search', component: AdvanceSearchComponent,canActivate:[PermissionsGuard], data: { title: 'Advance Search' }},
  
 ];
 

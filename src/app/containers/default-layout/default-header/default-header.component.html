@@ -14,10 +14,10 @@
         </a>
         <div class="header-inline-data">
           <c-breadcrumb-router class="ms-2"></c-breadcrumb-router>
-           <p>{{CUrrentDate}}</p>
-         
+          <p>{{CUrrentDate}}</p>
+
         </div>
-       
+
       </c-nav-item>
     </c-header-nav>
     <c-header-nav class="d-lg-flex align-items-center">
@@ -70,7 +70,7 @@
         </a>
       </c-nav-item>
 
-      <ng-container *ngTemplateOutlet="userDropdown" ></ng-container>
+      <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
       <!-- <c-nav-item>
         <a routerLink="./" cNavLink>
           <svg cIcon name="cilList" size="lg"></svg>
@@ -114,11 +114,23 @@
       <c-avatar cTextColor="primary" shape="rounded-1" size="md" src="./assets/img/avatars/dummy3.png" status="success">
       </c-avatar>
     </button> -->
-    <button cButton color="" [caret]="false" cDropdownToggle class="py-0">
+    <!-- <button cButton color="" [caret]="false" cDropdownToggle class="py-0">
       <c-avatar cTextColor="primary" shape="rounded-1" size="md" [src]="UserImage || './assets/img/avatars/1.jpg'"
         status="success">
       </c-avatar>
+    </button> -->
+
+    <button cButton color="" [caret]="false" cDropdownToggle class="py-0 avatar-button-custom">
+
+      <c-avatar *ngIf="UserImage" shape="rounded-1" size="md" [src]="UserImage" status="success">
+      </c-avatar>
+
+      <div *ngIf="!UserImage" class="avatar-initials">
+        {{ getUserInitials(UserFullName) }}
+      </div>
+
     </button>
+
     <ul cDropdownMenu class="pt-0 pr-5 w-auto">
       <li (click)="LogOut()" class="clickable">
         <a cDropdownItem>

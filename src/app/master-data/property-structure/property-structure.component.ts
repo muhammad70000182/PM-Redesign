@@ -538,7 +538,7 @@ export class PropertyStructureComponent implements OnInit, AfterViewInit {
       this.NewZone.ZoneFloors = this.ZoneFloors;
 
       // Add dimension names
-      this.DimensionsList.forEach((dim: any) => {
+      this.DimensionsList?.forEach((dim: any) => {
         const dimCode = this.NewZone['U_Dimen' + dim.level];
         const dimValue = dim.values.find((v: any) => v.ocrCode === dimCode);
         this.NewZone['U_Dimen' + dim.level + '_Name'] = dimValue ? dimValue.ocrName : null;
@@ -687,7 +687,7 @@ export class PropertyStructureComponent implements OnInit, AfterViewInit {
       this.NewSubZone.SubZoneSecFloors = this.SubZoneSecFloors;
 
       // Map dimension names
-      this.DimensionsList.forEach((dim: any) => {
+      this.DimensionsList?.forEach((dim: any) => {
         const dimCode = this.NewSubZone['U_Dimen' + dim.level];
         const dimValue = dim.values.find((v: any) => v.ocrCode === dimCode);
         this.NewSubZone['U_Dimen' + dim.level + '_Name'] = dimValue ? dimValue.ocrName : null;

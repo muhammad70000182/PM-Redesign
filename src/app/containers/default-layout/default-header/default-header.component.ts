@@ -11,6 +11,7 @@ import { SharedService } from '../../../_services/shared.service';
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
+   styleUrls: ['./default-header.component.scss']
 })
 
 export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
@@ -110,5 +111,22 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
       },
       error: (err: any) => { },
     });
+  }
+
+  getUserInitials(fullName: string): string {
+    if (!fullName) {
+      return '';
+    }
+
+    const names = fullName.trim().split(/\s+/);
+
+    if (names.length === 1) {
+      return names[0].charAt(0).toUpperCase();
+    }
+
+    return (
+      names[0].charAt(0) +
+      names[names.length - 1].charAt(0)
+    ).toUpperCase();
   }
 }

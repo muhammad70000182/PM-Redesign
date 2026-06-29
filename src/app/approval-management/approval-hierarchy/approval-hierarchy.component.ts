@@ -213,6 +213,21 @@ export class ApprovalHierarchyComponent implements OnInit, AfterViewInit {
 
   addTemplate() {
 
+    if (
+      !this.md_DocumentType ||
+      !this.md_DocumentSubType ||
+      !this.md_stageId ||
+      !this.md_level
+    ) {
+
+      this.toastr.warning(
+        'Document Type, Document Sub Type, Stage and Level are required.',
+        'Validation'
+      );
+
+      return;
+    }
+
     debugger;
     const newStage = {
       id: this.md_id || 0,
