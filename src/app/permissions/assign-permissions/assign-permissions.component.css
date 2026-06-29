@@ -1,36 +1,130 @@
-.table-info {
-  background-color: #e9f5ff;
-  font-weight: bold;
-  font-size: 15px;
-  transition: background-color 0.3s ease;
+/* Component specific styles to match Figma without affecting globals */
+
+/* Container and Table */
+.permissions-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: none;
+    border: none;
 }
 
-.table-light {
-  background-color: #f9f9f9;
-  font-style: italic;
-  font-size: 13px;
+.custom-permissions-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
 }
 
-.table-info:hover {
-  background-color: #d2ecff;
-}
-.card-header {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.table-info,
-.table-warning {
-  font-weight: bold;
-  font-size: 15px;
-  transition: background-color 0.3s ease;
+.custom-permissions-table thead th {
+    background-color: #F2F2F2;
+    font-weight: 600;
+    font-size: 12px;
+    border: none !important;
+    text-transform: uppercase;
+    padding-bottom: 15px;
 }
 
-.table-info:hover,
-.table-warning:hover {
-  background-color: #e0e0e0;
+/* Accordion Header */
+.accordion-header-row {
+    cursor: pointer;
+    background-color: #f4efff; /* Light purple */
+    transition: all 0.2s ease;
 }
 
-.card.card-user .table {
-    margin-bottom: 0;
+.accordion-header-row td {
+    padding: 15px 20px !important;
+    border-bottom: 1.5px solid #7a3aec !important;
+    font-weight: 500 !important;
+    color: #793bec;
+    font-size: 14px;
+    font-family: 'Inter';
+    letter-spacing: -0.42px;
+}
+
+.accordion-header-row td:first-child {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.accordion-header-row td:last-child {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.toggle-icon {
+    float: right;
+    color: #5f48b8;
+    font-size: 16px;
+    margin-top: 2px;
+}
+
+/* Spacer Row */
+.spacer-row td {
+    height: 12px;
+    padding: 0 !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+/* Child Items */
+.child-item-row td {
+    background-color: #f9f9f9;
+    padding: 12px 20px !important;
+    border: none !important;
+    border-bottom: 1px solid #eaeaea !important;
+    font-size: 14px;
+}
+
+.child-item-row:last-child td {
+    border-bottom: 1px solid #eaeaea !important;
+}
+
+.child-item-row td:first-child {
+    border-left: 1px solid #eaeaea !important;
+}
+
+.child-item-row td:last-child {
+    border-right: 1px solid #eaeaea !important;
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 4px;
+    background-color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+    margin: 0;
+}
+
+.custom-checkbox:hover {
+    border-color: #10b981;
+}
+
+.custom-checkbox:checked {
+    background-color: #10b981;
+    border-color: #10b981;
+}
+
+.custom-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.custom-checkbox:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }

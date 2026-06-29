@@ -173,10 +173,6 @@ export class DashboardChartsData {
     };
   }
 
-  /**
-   * Build a stacked bar chart using live dashboard summary data instead of random values.
-   * It visualizes Approved/Pending/Rejected along with Pending Ejar and Expiring in 3 Months.
-   */
   updateFromSummary(summaryData: any[]) {
     if (!Array.isArray(summaryData) || !summaryData.length) {
       this.initMainChart();
@@ -195,26 +191,31 @@ export class DashboardChartsData {
       {
         label: 'Approved',
         backgroundColor: brandSuccess,
+        borderRadius: 10,
         data: summaryData.map(item => item.approved ?? 0)
       },
       {
         label: 'Pending',
         backgroundColor: brandWarning,
+        borderRadius: 10,
         data: summaryData.map(item => item.pending ?? 0)
       },
       {
         label: 'Rejected',
         backgroundColor: brandDanger,
+        borderRadius: 10,
         data: summaryData.map(item => item.rejected ?? 0)
       },
       {
         label: 'Pending Ejar',
         backgroundColor: brandInfo,
+        borderRadius: 10,
         data: summaryData.map(item => item.pendingEjar ?? 0)
       },
       {
         label: 'Expiring in 3 Months',
         backgroundColor: brandPurple,
+        borderRadius: 10,
         data: summaryData.map(item => item.expiringIn3Months ?? 0)
       }
     ];
@@ -236,7 +237,8 @@ export class DashboardChartsData {
         x: {
           stacked: false,
           grid: {
-            drawOnChartArea: false
+            drawOnChartArea: false,
+            display: false
           }
         },
         y: {

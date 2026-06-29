@@ -9,9 +9,8 @@
                         </div>
                         <div class="col-md-8 text-right">
                                 <div class="btn-design">
-                                    <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to
-                                        Excel</button>
-                                    <button *ngIf="AllowedPermissions['canCreate']" (click)="openAdd()" class="btn btn-success"><i class="fa fa-plus"></i> {{'Add New' | translate}}</button>
+                                    <button (click)="exportData()" class="btn btn-outline-info export-btns" title="Export to Excel"></button>
+                                    <button *ngIf="AllowedPermissions['canCreate']" (click)="openAdd()" class="btn btn-success add-new-icon-only" title="{{'Add New' | translate}}"><i class="fa fa-plus"></i></button>
                                 </div>
                         </div>
                     </div>
@@ -34,8 +33,8 @@
                 </div>
 
                 <div *ngIf="AllowedPermissions['canView'] ">
-                    <div class="table-responsive dataTableDesign">
-                        <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <div class="dataTableDesign">
+                        <table class="table table-striped" style="width: 100%;" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -162,7 +161,7 @@
                                     <h6 class="fw-bold text-primary mb-0">{{ 'Invoice Details' | translate }}</h6>
                                     <div class="btn-design">
                                         <button (click)="exportDataDetail()"
-                                            class="btn btn-outline-info export-btns">Export to Excel</button>
+                                            class="btn btn-outline-info export-btns" title="Export to Excel"></button>
                                     </div>
                                 </div>
                                 <div class="table-responsive fixed-height-wrapper dataTableDesign t-footer-sticky mt-3">

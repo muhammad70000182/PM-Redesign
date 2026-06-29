@@ -21,10 +21,9 @@
                     <div class="col-md-8 text-right">
 
                         <div class="btn-design">
-                            <button (click)="exportData()" class="btn btn-outline-info export-btns">Export to
-                                Excel</button>
-                            <button [routerLink]="['/agreements/sale-agreement']" class="btn btn-success"><i
-                                    class="fa fa-plus"></i> {{'Add New' | translate}}</button>
+                            <button (click)="exportData()" class="btn btn-outline-info export-btns" title="Export to Excel"></button>
+                            <button [routerLink]="['/agreements/sale-agreement']" class="btn btn-success add-new-icon-only" title="{{'Add New' | translate}}"><i
+                                    class="fa fa-plus"></i></button>
                         </div>
                     </div>
                 </div>

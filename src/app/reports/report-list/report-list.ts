@@ -83,7 +83,8 @@ export class reportlistComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering:false
+      ordering:false,
+      scrollX: true
     };
   
       this.GetReports();

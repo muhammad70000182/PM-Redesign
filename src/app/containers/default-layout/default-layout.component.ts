@@ -34,8 +34,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     {
       name: 'Dashboard',
       url: '/dashboard',
-      //iconComponent: { name: 'cil-speedometer' },
-      icon: 'fa-solid fa-house',
+      icon: 'nav-icon custom-icon icon-dashboard',
       originalName: 'Dashboard'
     },
     // {
@@ -122,7 +121,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
               url: pr.parentUrl,
               //iconComponent: { name: 'fa fa-file-image' },
               children: childerenArray,
-              icon: 'fa-solid fa-eye'
+              icon: 'fa-regular fa-eye'
             };
             //this.navItems.push(punchingNavItem);
             this.navItems = [...this.navItems, punchingNavItem];
@@ -197,6 +196,17 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
             // };
 
+            const iconMap: any = {
+              'Administration': 'nav-icon custom-icon icon-administration',
+              'User Management': 'nav-icon custom-icon icon-user-management',
+              'Approvals': 'nav-icon custom-icon icon-approval',
+              'Permissions': 'nav-icon custom-icon icon-permission',
+              'Master Data': 'nav-icon custom-icon icon-master-data',
+              'Property Module': 'nav-icon custom-icon icon-property',
+              'Reports': 'nav-icon custom-icon icon-reports'
+            };
+            const exactIconName = iconMap[parent];
+
             const navItem: NavItem = {
               name: parent, // this will be translated later
               originalName: parent, // ✅ keep original translation key
@@ -205,7 +215,8 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
                 ...child,
                 originalName: child.name // ✅ store original key
               })),
-              icon: parentIcon
+              iconComponent: undefined,
+              icon: exactIconName ? exactIconName : (parentIcon ? parentIcon.replace(/\b(fa-solid|fas)\b/g, 'fa-regular') : undefined)
             };
             this.navItems = [...this.navItems, navItem];
           }

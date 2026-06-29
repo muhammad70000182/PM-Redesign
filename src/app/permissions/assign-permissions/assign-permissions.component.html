@@ -17,9 +17,9 @@
                         <h6 class="fw-bold text-primary mt-4" *ngIf="groupedAssignedPermissions.length > 0">{{'Assigned Permissions' | translate}}</h6>
                     </div>
 
-                    <div class="card mb-4" *ngIf="groupedAssignedPermissions.length > 0">
-                        <div class="card-body p-0 dataTableDesign table-responsive">
-                            <table class="table table-striped ">
+                    <div class=" mb-4 permissions-container mt-4" *ngIf="groupedAssignedPermissions.length > 0">
+                        <div class="p-0 dataTableDesign table-responsive">
+                            <table class="table custom-permissions-table">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>{{'Assign'|translate}}</th>
@@ -34,28 +34,30 @@
                                 </thead>
                                 <tbody>
                                     <ng-container *ngFor="let group of groupedAssignedPermissions; let i = index">
+                                        <!-- Spacer Row -->
+                                        <tr class="spacer-row"><td colspan="8"></td></tr>
+
                                         <!-- Accordion Header -->
-                                        <tr class="table-info" (click)="toggleAssignedParent(i)"
-                                            style="cursor: pointer;">
+                                        <tr class="accordion-header-row" (click)="toggleAssignedParent(i)">
                                             <td colspan="8">
                                                 <strong>{{ group.parrent }}</strong>
-                                                <span style="float: right;">{{ expandedAssignedParent === i ? '▼' : '▶'
-                                                    }}</span>
+                                                <span class="toggle-icon">
+                                                    <i class="fa" [ngClass]="expandedAssignedParent === i ? 'fa-caret-up' : 'fa-caret-down'"></i>
+                                                </span>
                                             </td>
                                         </tr>
 
                                         <!-- Group Items -->
                                         <ng-container *ngIf="expandedAssignedParent === i">
-                                            <tr *ngFor="let p of group.items">
-                                                <td><input type="checkbox" [(ngModel)]="p.isAssign"
-                                                        (change)="onSelectChange(p)"></td>
+                                            <tr class="child-item-row" *ngFor="let p of group.items">
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.isAssign" (change)="onSelectChange(p)"></td>
                                                 <td>{{p.parrent}}</td>
                                                 <td>{{p.title}}</td>
                                                 <td>{{p.formUrl}}</td>
-                                                <td><input type="checkbox" [(ngModel)]="p.canCreate"></td>
-                                                <td><input type="checkbox" [(ngModel)]="p.canUpdate"></td>
-                                                <td><input type="checkbox" [(ngModel)]="p.canDelete"></td>
-                                                <td><input type="checkbox" [(ngModel)]="p.canView"></td>
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.canCreate"></td>
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.canUpdate"></td>
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.canDelete"></td>
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.canView"></td>
                                             </tr>
                                         </ng-container>
                                     </ng-container>
@@ -70,12 +72,9 @@
                           {{'Not Assigned Permissions' | translate}}  </h6>
                     </div>
 
-                    <div class="card" *ngIf="groupedNotAssignedPermissions.length > 0">
-
-
-
-                        <div class="card-body p-0 dataTableDesign table-responsive">
-                            <table class="table table-striped">
+                    <div class=" permissions-container mt-4" *ngIf="groupedNotAssignedPermissions.length > 0">
+                        <div class=" p-0 dataTableDesign table-responsive">
+                            <table class="table custom-permissions-table">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>{{'Assign'|translate}}</th>
@@ -90,28 +89,30 @@
                                 </thead>
                                 <tbody>
                                     <ng-container *ngFor="let group of groupedNotAssignedPermissions; let i = index">
+                                        <!-- Spacer Row -->
+                                        <tr class="spacer-row"><td colspan="8"></td></tr>
+
                                         <!-- Accordion Header -->
-                                        <tr class="table-info" (click)="toggleNotAssignedParent(i)"
-                                            style="cursor: pointer;">
+                                        <tr class="accordion-header-row" (click)="toggleNotAssignedParent(i)">
                                             <td colspan="8">
                                                 <strong>{{ group.parrent }}</strong>
-                                                <span style="float: right;">{{ expandedNotAssignedParent === i ? '▼' :
-                                                    '▶' }}</span>
+                                                <span class="toggle-icon">
+                                                    <i class="fa" [ngClass]="expandedNotAssignedParent === i ? 'fa-caret-up' : 'fa-caret-down'"></i>
+                                                </span>
                                             </td>
                                         </tr>
 
                                         <!-- Group Items -->
                                         <ng-container *ngIf="expandedNotAssignedParent === i">
-                                            <tr *ngFor="let p of group.items">
-                                                <td><input type="checkbox" [(ngModel)]="p.isAssign"
-                                                        (change)="onSelectChange(p)"></td>
+                                            <tr class="child-item-row" *ngFor="let p of group.items">
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.isAssign" (change)="onSelectChange(p)"></td>
                                                 <td>{{p.parrent}}</td>
                                                 <td>{{p.title}}</td>
                                                 <td>{{p.formUrl}}</td>
-                                                <td><input type="checkbox" [(ngModel)]="p.canCreate"></td>
-                                                <td><input type="checkbox" [(ngModel)]="p.canUpdate"></td>
-                                                <td><input type="checkbox" [(ngModel)]="p.canDelete"></td>
-                                                <td><input type="checkbox" [(ngModel)]="p.canView"></td>
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.canCreate"></td>
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.canUpdate"></td>
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.canDelete"></td>
+                                                <td><input type="checkbox" class="custom-checkbox" [(ngModel)]="p.canView"></td>
                                             </tr>
                                         </ng-container>
                                     </ng-container>
@@ -123,62 +124,47 @@
                         <h6 class="fw-bold text-primary mt-4" *ngIf="groupedAssignedPermissions.length > 0">
                        {{'Agreement Permissions' | translate}}     </h6>
                     </div>
-                    <div class="row" *ngIf="groupedAssignedPermissions.length > 0">
-                        <div class="col-md-6">
-                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                        [(ngModel)]="PermissionsList.agreementPermissions.saleAgreement">
-                                    <label for="Description" class="form-label checkboxstyle">{{'Sale Agreement' | translate}}</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                        [(ngModel)]="PermissionsList.agreementPermissions.rentAgreement">
-                                    <label for="Description" class="form-label checkboxstyle">{{'Rent Agreement' | translate}}</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                        [(ngModel)]="PermissionsList.agreementPermissions.offPlanAgreement">
-                                    <label for="Description" class="form-label checkboxstyle">{{'Off Plan Agreement' | translate}}</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                        [(ngModel)]="PermissionsList.agreementPermissions.maintenanceAgreement">
-                                    <label for="Description" class="form-label checkboxstyle"> {{'Maintenance Agreement' | translate}}
-                                        </label>
-                                </div>
+                    <div class="row mt-4" *ngIf="groupedAssignedPermissions.length > 0">
+                        <div class="col-12 col-md-3 col-sm-6 col-lg-3 col-xl-3 checkBox mb-2">
+                            <div class="form-group">
+                                <input type="checkbox" class="custom-checkbox" [(ngModel)]="PermissionsList.agreementPermissions.saleAgreement">
+                                <label for="Description" class="form-label checkboxstyle ml-2">{{'Sale Agreement' | translate}}</label>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                        [(ngModel)]="PermissionsList.agreementPermissions.agreementQuotation">
-                                    <label for="Description" class="form-label checkboxstyle">{{'Agreement Quotation' | translate}}
-                                        </label>
-                                </div>
+                        <div class="col-12 col-md-3 col-sm-6 col-lg-3 col-xl-3 checkBox mb-2">
+                            <div class="form-group">
+                                <input type="checkbox" class="custom-checkbox" [(ngModel)]="PermissionsList.agreementPermissions.rentAgreement">
+                                <label for="Description" class="form-label checkboxstyle ml-2">{{'Rent Agreement' | translate}}</label>
                             </div>
-                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                        [(ngModel)]="PermissionsList.agreementPermissions.agreementAcceptence">
-                                    <label for="Description" class="form-label checkboxstyle"> {{'Agreement Acceptance' | translate}}
-                                        </label>
-                                </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-sm-6 col-lg-3 col-xl-3 checkBox mb-2">
+                            <div class="form-group">
+                                <input type="checkbox" class="custom-checkbox" [(ngModel)]="PermissionsList.agreementPermissions.offPlanAgreement">
+                                <label for="Description" class="form-label checkboxstyle ml-2">{{'Off Plan Agreement' | translate}}</label>
                             </div>
-                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                        [(ngModel)]="PermissionsList.agreementPermissions.agreementCancelation">
-                                    <label for="Description" class="form-label checkboxstyle">{{'Agreement Cancelation' | translate}}
-                                        </label>
-                                </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-sm-6 col-lg-3 col-xl-3 checkBox mb-2">
+                            <div class="form-group">
+                                <input type="checkbox" class="custom-checkbox" [(ngModel)]="PermissionsList.agreementPermissions.maintenanceAgreement">
+                                <label for="Description" class="form-label checkboxstyle ml-2">{{'Maintenance Agreement' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-sm-6 col-lg-3 col-xl-3 checkBox mb-2">
+                            <div class="form-group">
+                                <input type="checkbox" class="custom-checkbox" [(ngModel)]="PermissionsList.agreementPermissions.agreementQuotation">
+                                <label for="Description" class="form-label checkboxstyle ml-2">{{'Agreement Quotation' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-sm-6 col-lg-3 col-xl-3 checkBox mb-2">
+                            <div class="form-group">
+                                <input type="checkbox" class="custom-checkbox" [(ngModel)]="PermissionsList.agreementPermissions.agreementAcceptence">
+                                <label for="Description" class="form-label checkboxstyle ml-2">{{'Agreement Acceptance' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-sm-6 col-lg-3 col-xl-3 checkBox mb-2">
+                            <div class="form-group">
+                                <input type="checkbox" class="custom-checkbox" [(ngModel)]="PermissionsList.agreementPermissions.agreementCancelation">
+                                <label for="Description" class="form-label checkboxstyle ml-2">{{'Agreement Cancelation' | translate}}</label>
                             </div>
                         </div>
                     </div>
@@ -187,26 +173,19 @@
                         <h6 class="fw-bold text-primary mt-4" *ngIf="groupedAssignedPermissions.length > 0"> {{'Proforma Invoice Permissions' | translate}}
                            </h6>
                     </div>
-                    <div class="row" *ngIf="groupedAssignedPermissions.length > 0">
-                        <div class="col-md-6">
-                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                        [(ngModel)]="PermissionsList.agreementPermissions.proforma_Cancelation">
-                                    <label for="Description" class="form-label checkboxstyle"> {{'Invoice Cancelation' | translate}}
-                                        </label>
-                                </div>
+                    <div class="row mt-4" *ngIf="groupedAssignedPermissions.length > 0">
+                        <div class="col-12 col-md-3 col-sm-6 col-lg-3 col-xl-3 checkBox mb-2">
+                            <div class="form-group">
+                                <input type="checkbox" class="custom-checkbox" [(ngModel)]="PermissionsList.agreementPermissions.proforma_Cancelation">
+                                <label for="Description" class="form-label checkboxstyle ml-2">{{'Invoice Cancelation' | translate}}</label>
                             </div>
-                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-4 checkBox">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                        [(ngModel)]="PermissionsList.agreementPermissions.proforma_DP_Permission">
-                                    <label for="Description" class="form-label checkboxstyle">{{'Create Downpayment' | translate}}</label>
-                                </div>
-                            </div>
-
                         </div>
-
+                        <div class="col-12 col-md-3 col-sm-6 col-lg-3 col-xl-3 checkBox mb-2">
+                            <div class="form-group">
+                                <input type="checkbox" class="custom-checkbox" [(ngModel)]="PermissionsList.agreementPermissions.proforma_DP_Permission">
+                                <label for="Description" class="form-label checkboxstyle ml-2">{{'Create Downpayment' | translate}}</label>
+                            </div>
+                        </div>
                     </div>
 
 

@@ -16,7 +16,7 @@
           <!-- Email Field -->
           <div class="form-group">
             <div class="input-icon-wrapper">
-              <i class="fas fa-envelope input-icon"></i>
+              <img src="../../assets/images/icons/mail.svg" class="input-icon" style="width: 16px;">
               <input 
                 type="text" 
                 class="login-input" 
@@ -35,7 +35,7 @@
           <!-- Password Field -->
           <div class="form-group">
             <div class="input-icon-wrapper password-wrapper">
-              <i class="fas fa-lock input-icon"></i>
+              <img src="../../assets/images/icons/password.svg" class="input-icon" style="width: 16px;">
               <input 
                 [type]="showPassword ? 'text' : 'password'" 
                 class="login-input" 
@@ -43,9 +43,10 @@
                 autocomplete="Password"
                 placeholder="Password"
                 [ngClass]="{ 'is-invalid': submitted && f['Password'].errors }">
-              <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa fa-eye'" 
+              <img src="../../assets/images/icons/pass-eye.svg" 
                 (click)="showPassword = !showPassword" 
-                class="password-toggle-icon"></i>
+                class="password-toggle-icon" style="width: 18px; cursor: pointer;"
+                [ngStyle]="{'opacity': showPassword ? '0.5' : '1'}">
             </div>
             <div *ngIf="submitted && f['Password'].errors" class="invalid-feedback">
               <div *ngIf="f['Password'].errors['required']">
