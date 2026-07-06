@@ -129,4 +129,23 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
       names[names.length - 1].charAt(0)
     ).toUpperCase();
   }
+  getAvatarColor(name: string): string {
+  const colors = [
+    '#1A73E8',
+    '#5B5FC7',
+    '#0F766E',
+    '#9333EA',
+    '#EA580C',
+    '#DC2626',
+    '#0891B2'
+  ];
+
+  let hash = 0;
+
+  for (let i = 0; i < name.length; i++) {
+    hash += name.charCodeAt(i);
+  }
+
+  return colors[hash % colors.length];
+}
 }

@@ -121,26 +121,26 @@
     </button> -->
 
     <button cButton color="" [caret]="false" cDropdownToggle class="py-0 avatar-button-custom">
-
       <c-avatar *ngIf="UserImage" shape="rounded-1" size="md" [src]="UserImage" status="success">
       </c-avatar>
-
-      <div *ngIf="!UserImage" class="avatar-initials">
+      <div *ngIf="!UserImage" class="avatar-initials" [style.background]="getAvatarColor(UserFullName)">
         {{ getUserInitials(UserFullName) }}
       </div>
-
     </button>
-
-    <ul cDropdownMenu class="pt-0 pr-5 w-auto">
+    <ul cDropdownMenu class="pt-0 w-auto">
+      <li>
+        <h6 cDropdownHeader class="fw-semibold py-2 rounded-top" style="background-color: #F2F2F2;">
+          Account
+        </h6>
+      </li>
       <li (click)="LogOut()" class="clickable">
         <a cDropdownItem>
-          <svg cIcon class="me-2" name="cilLockLocked"></svg>
+          <svg cIcon class="me-2" name="cilAccountLogout"></svg>
           Logout
         </a>
       </li>
       <li></li>
     </ul>
   </c-dropdown>
-
 
 </ng-template>

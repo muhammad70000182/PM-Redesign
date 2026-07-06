@@ -13,7 +13,7 @@ import { DatePipe } from '@angular/common';
 import { placements } from '@popperjs/core';
 import { EnumService } from '../../_services/enum.service';
 import { json } from 'stream/consumers';
-  
+
 
 @Component({
   selector: 'app-unit-return',
@@ -66,7 +66,7 @@ export class unitreturnComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() modelData: any;
   AttachmentTypeListValues: any;
   SeriesName: any;
-  isDamageReadonly: boolean=false;
+  isDamageReadonly: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -108,7 +108,7 @@ export class unitreturnComponent implements OnInit, AfterViewInit, OnChanges {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering:false
+      ordering: false
     };
 
     this.form = this.formBuilder.group({
@@ -134,9 +134,9 @@ export class unitreturnComponent implements OnInit, AfterViewInit, OnChanges {
       U_CPName: [''],
       U_CustRefNo: [''],
       U_DocDate: [new Date()],
- });
-  
-  
+    });
+
+
 
     // this.GetPermormaInvoiceLIst();
     this.enumService.getAgreementTypes().subscribe(types => {
@@ -152,11 +152,11 @@ export class unitreturnComponent implements OnInit, AfterViewInit, OnChanges {
     this.GetMasterData();
 
     // preload agreements so dropdowns and related fields render immediately
-    try { this.GetAgreementFilterList(); } catch (e) {}
+    try { this.GetAgreementFilterList(); } catch (e) { }
 
     if (history.state && history.state.forward) {
 
-      
+
       let agTypeText = 2;
       debugger
       switch (history.state.forward.data.u_AGType) {
@@ -182,7 +182,7 @@ export class unitreturnComponent implements OnInit, AfterViewInit, OnChanges {
     const model = m.currentValue;
     if (!model) {
       // clear form when modelData is null/undefined (Add New)
-      try { this.clearForm(); this.isUpdate = false; } catch (e) {}
+      try { this.clearForm(); this.isUpdate = false; } catch (e) { }
       return;
     }
     // Accept both `id` and `Id` property names
@@ -191,8 +191,8 @@ export class unitreturnComponent implements OnInit, AfterViewInit, OnChanges {
       try {
         this.GetunitList(model);
         this.isUpdate = true;
-        try { this.cd.detectChanges(); } catch (e) {}
-      } catch (e) {}
+        try { this.cd.detectChanges(); } catch (e) { }
+      } catch (e) { }
     }
   }
 
@@ -213,10 +213,10 @@ export class unitreturnComponent implements OnInit, AfterViewInit, OnChanges {
     payload.u_InstDays = " "
     payload.u_InstAmtCalc = 0
     payload.u_InstAmtAdj = 0.
-    payload.u_DmgDeductAmt=parseInt(payload.u_DmgDeductAmt)
+    payload.u_DmgDeductAmt = parseInt(payload.u_DmgDeductAmt)
     debugger;
-    if(payload.u_DmgDeductAmt>payload.u_SecAmt){
-this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
+    if (payload.u_DmgDeductAmt > payload.u_SecAmt) {
+      this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
         progressBar: true,
         closeButton: true
       });
@@ -238,7 +238,7 @@ this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
 
         Name: unit.u_UnitName,
         u_AgrItmId: unit.agrItemId,
-        u_DmgDeductAmt:parseFloat(unit.DamageDeduction),
+        u_DmgDeductAmt: parseFloat(unit.DamageDeduction),
         CreatedBy: unit.createdBy,
         CreatedDate: unit.createdDate,
         UpdatedBy: unit.updatedBy,
@@ -271,7 +271,7 @@ this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
             progressBar: true,
             closeButton: true
           });
-          try { this.saved.emit(true); } catch (e) {}
+          try { this.saved.emit(true); } catch (e) { }
 
         } else {
           this.toastr.error(result.message, "Error", {
@@ -311,7 +311,7 @@ this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
           this.SelectedAgreement = result.data[0];
         }
         this.AgreementList = result.data.filter((item: any) => item.approvalStatus === 'Approved');
-        try { this.cd.detectChanges(); } catch (e) {}
+        try { this.cd.detectChanges(); } catch (e) { }
         if (history.state && history.state.forward) {
           this.GetunitList(history.state.forward.data);
         }
@@ -333,7 +333,7 @@ this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
       u_Status: data.u_Status,
       u_DmgDeductAmt: data.u_DmgDeductAmt
     });
-    try { this.cd.detectChanges(); } catch (e) {}
+    try { this.cd.detectChanges(); } catch (e) { }
   }
   GetAgreementdetailstList(Id: any = 0, lineItems: any[] = []) {
 
@@ -417,20 +417,20 @@ this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
           U_CustRefNo: exist.u_CustRefNo,
           // U_Seri: null,
           U_Stauts: exist.status,
-          u_SecAmt: exist.u_SecAmt?? 0
-         
+          u_SecAmt: exist.u_SecAmt ?? 0
+
         });
         debugger
         const secValue = parseInt(String(exist.u_SecAmt || '0').replace(/,/g, '')) || 0;
-   
 
-    if (secValue === 0) {
-     
-     
-      this.isDamageReadonly = true;
-    } else {
-       this.isDamageReadonly = false;
-    }
+
+        if (secValue === 0) {
+
+
+          this.isDamageReadonly = true;
+        } else {
+          this.isDamageReadonly = false;
+        }
 
         //  this.GetDocSeries(exist.u_AGType);
 
@@ -499,25 +499,25 @@ this.toastr.warning("Damage Deduction Less than  Security!", "Required", {
   onDropDownChange(data: any, form: any) {
     debugger
     if (form === 'AgreementType') {
-this.AttachmentsList = []
-    this.SelectedAgreement = {}
-     this.form.patchValue({
-          U_AGID:'',
-          U_BPCode: '',
-          U_BPName: '',
-          U_CPName: '',
-          U_CustRefNo: '',
-          U_Seri: null,
-            U_DocNum:'',
-             u_AGStatus: '',
-    
-      u_SecAmt:null,
-      u_Status:'',
-      u_DmgDeductAmt:null,
-         
-       
-        });
-        this.submitted=false
+      this.AttachmentsList = []
+      this.SelectedAgreement = {}
+      this.form.patchValue({
+        U_AGID: '',
+        U_BPCode: '',
+        U_BPName: '',
+        U_CPName: '',
+        U_CustRefNo: '',
+        U_Seri: null,
+        U_DocNum: '',
+        u_AGStatus: '',
+
+        u_SecAmt: null,
+        u_Status: '',
+        u_DmgDeductAmt: null,
+
+
+      });
+      this.submitted = false
       this.GetAgreementFilterList(data);
       let exist = this.AgreementTypeListVlaues.find((m: any) => m.fieldValue == data);
       if (exist) {
@@ -604,9 +604,9 @@ this.AttachmentsList = []
     }
   }
   GetunitList(data: any) {
-      this.SeriesName = data.u_SeriesName;
+    this.SeriesName = data.u_SeriesName;
     //this.onDropDownChange(data.u_AGID, "AgreementType")
-    this.AttachmentsList=data.attachments
+    this.AttachmentsList = data.attachments
     // ensure AgreementList is loaded so onDropdownChange can populate BP/Agreement fields
     const proceed = () => {
       this.onDropdownChange(data.u_AGID, "Agreements", data.lineItems);
@@ -625,19 +625,19 @@ this.AttachmentsList = []
 
   }
   calculateDamageDeductionSum() {
-  if (!this.SelectedAgreement?.agreementItems) return;
+    if (!this.SelectedAgreement?.agreementItems) return;
 
-  let total = 0;
+    let total = 0;
 
-  this.SelectedAgreement.agreementItems.forEach((item: any) => {
-    if (item.isSelected) { // ✅ Only include selected rows
-      const value = parseFloat((item.DamageDeduction || '').toString().replace(/,/g, ''));
-      if (!isNaN(value)) total += value;
-    }
-  });
+    this.SelectedAgreement.agreementItems.forEach((item: any) => {
+      if (item.isSelected) { // ✅ Only include selected rows
+        const value = parseFloat((item.DamageDeduction || '').toString().replace(/,/g, ''));
+        if (!isNaN(value)) total += value;
+      }
+    });
 
-  // Update form control value
-  this.form.get('u_DmgDeductAmt')?.setValue(total);
-}
+    // Update form control value
+    this.form.get('u_DmgDeductAmt')?.setValue(total);
+  }
 
 }
