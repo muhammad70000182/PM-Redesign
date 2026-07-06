@@ -86,8 +86,11 @@ export class SAPConnectionSettingsComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering: false,
-      scrollX: true
+      ordering: true,
+      scrollX: true,
+      language: {
+        searchPlaceholder: "Search records...",
+      }
     };
 
 
