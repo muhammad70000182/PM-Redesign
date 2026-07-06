@@ -17,6 +17,9 @@ import { unitreturnComponent } from './unit-return/unit-return.component';
 import { BulkInstallmentsComponent } from './bulk-installments-posting/bulk-installments-posting.component';
 import { BulkSubmittedAgreementsComponent } from './bulk-submitted-agreements/bulk-submitted-agreements.component';
 import { BulkInstallmentsListComponent } from './bulk-installments-list/bulk-installments-list.component';
+import { QuotationGenerationComponent } from '../renewal/quotation-generation/quotation-generation.component';
+import { RevenuePopulationComponent } from '../revenue/revenue-population/revenue-population.component';
+import { RevenuePostingListComponent } from '../revenue/revenue-posting-list/revenue-posting-list.component';
 const routes: Routes = [
   { path: 'sale-agreement', component: SaleAgreementComponent, canActivate: [PermissionsGuard], data: { title: 'Agreement' } },
   { path: 'agreement-listing', component: AgreementListingComponent, canActivate: [PermissionsGuard], data: { title: 'Agreement List' } },
@@ -33,6 +36,10 @@ const routes: Routes = [
   { path: 'bulk-installments-posting', component: BulkInstallmentsComponent, canActivate: [PermissionsGuard], data: { title: 'Bulk Installments Posting' } },
   { path: 'bulk-installments-list', component: BulkInstallmentsListComponent, canActivate: [PermissionsGuard], data: { title: 'Bulk Installments List' } },
   { path: 'bulk-submitted-agreements', component: BulkSubmittedAgreementsComponent, canActivate: [PermissionsGuard], data: { title: 'Bulk Submitted Agreements' } },
+  { path: 'quotation-generation', component: QuotationGenerationComponent, canActivate: [PermissionsGuard], data: { title: 'Quotation Generation' } },
+  { path: 'revenue-population', component: RevenuePopulationComponent, canActivate: [PermissionsGuard], data: { title: 'Revenue Population Off Plan' } },
+  { path: 'revenue-posting-list', component: RevenuePostingListComponent, canActivate: [PermissionsGuard], data: { title: 'Revenue Posting List' } },
+
 ];
 
 @NgModule({

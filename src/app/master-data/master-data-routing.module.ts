@@ -9,6 +9,7 @@ import { PropertyStructureComponent } from './property-structure/property-struct
 import { PropertyStructureListComponent } from './property-structur-list/property-structur-list.component';
 import { unitdetailsComponent } from './unit-details/unit-details.component';
 import { SeriesMasterComponent } from './series-master/series-master.component';
+import { AdvanceSearchComponent } from '../other-menu/advance-search/advance-search.component';
 const routes: Routes = [
   { path: '', component: ChecklistComponent, canActivate: [PermissionsGuard], data: { title: 'CheckList' } },
   { path: 'checklist', component: ChecklistComponent, canActivate: [PermissionsGuard], data: { title: 'CheckList Master' } },
@@ -19,7 +20,7 @@ const routes: Routes = [
   { path: 'property-structure-list', component: PropertyStructureListComponent, canActivate: [PermissionsGuard], data: { title: 'Property Structure Listing' } },
   { path: 'unit-details', component: unitdetailsComponent, canActivate: [PermissionsGuard], data: { title: 'Unit Details' } },
   { path: 'series-master', component: SeriesMasterComponent, canActivate: [PermissionsGuard], data: { title: 'Series Master' } },
-
+  { path: 'advance-search', component: AdvanceSearchComponent, canActivate: [PermissionsGuard], data: { title: 'Advance Search' } },
 ];
 
 @NgModule({

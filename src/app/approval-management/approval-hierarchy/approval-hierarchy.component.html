@@ -11,19 +11,21 @@
           <div class="sectionHeading">
       <h6 class="mb-4">{{'Template Listing'|translate}}</h6>
     </div>
-          <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add Template'|translate}}</button>
+          <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add New Template'|translate}}</button>
         </div>
       </div>
     </div>
 
     <!-- Modal: Add/Edit Template -->
     <div *ngIf="AllowedPermissions['canCreate']">
-      <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
+      <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal"
+        [style.display]="showModal ? 'block' : 'none'">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">{{ isUpdate ? ('Edit Template'|translate) : ('New Template'|translate) }}</h5>
-              <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+              <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span
+                  aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
               <div class="dataTableDesign tbl-input-select fixed-height-wrapper">
@@ -62,7 +64,8 @@
                         </ng-select>
                       </td>
                       <td>
-                        <input class="form-check-input" type="checkbox" [(ngModel)]="md_activeCheckBox" id="modalActiveCheckbox" />
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="md_activeCheckBox"
+                          id="modalActiveCheckbox" />
                       </td>
                       <td class="action-btn">
                         <span class="" (click)="addTemplate()"><i class="fa fa-plus"></i></span>
@@ -74,7 +77,8 @@
                       <td>{{ getStageName(stage.stageId) }}</td>
                       <td>{{ stage.level }}</td>
                       <td>
-                        <span [ngClass]="stage.flgActive ? 'badge bg-success' : 'badge bg-danger'">{{ stage.flgActive ? 'Active' : 'Inactive' }}</span>
+                        <span [ngClass]="stage.flgActive ? 'badge bg-success' : 'badge bg-danger'">{{ stage.flgActive ?
+                          'Active' : 'Inactive' }}</span>
                       </td>
                       <td class="action-btn">
                         <span (click)="editTemplate(stage, i)"><i class="fa fa-edit"></i></span>
@@ -86,7 +90,11 @@
               </div>
             </div>
             <div class="modal-footer btn-design">
-              <button class="btn btn-success" type="button" (click)="onSubmit()">{{'Save'|translate}}</button>
+              <button class="btn btn-success" type="button" (click)="onSubmit()">
+                 <i class="fa" [ngClass]="isUpdate ? 'fa-edit' : 'fa-save'"></i>
+                                            <span>{{ isUpdate ? ('Update' | translate) : ('Add' | translate) }}</span>
+              </button>
+              
               <button class="btn btn-secondary" type="button" (click)="clearForm()">{{'Clear'|translate}}</button>
             </div>
           </div>
@@ -95,7 +103,7 @@
       <div class="modal-backdrop fade" [class.show]="showModal" *ngIf="showModal"></div>
     </div>
 
-    
+
     <div class="row">
       <div class="col-md-12">
         <div class="dataTableDesign">
@@ -107,14 +115,14 @@
               <th>{{'Document Sub Type'|translate}}</th>
               <th>{{'Stage'|translate}}</th>
               <th>{{'Level'|translate}}</th>
-              <th>{{'Status'|translate}}</th>
+              <th>{{'Active'|translate}}</th>
               <th>{{'Action'|translate}}</th>
               </tr>
             </thead>
             <tbody>
-              
+
               <tr *ngFor="let stage of TemplateListing; let i = index">
-                 <td>{{i+1}}</td>
+                <td>{{i+1}}</td>
                 <td>{{ stage.docType }}</td>
                 <td>{{ stage.subType }}</td>
                 <td>{{ getStageName(stage.stageId) }}</td>
@@ -134,7 +142,7 @@
           </table>
         </div>
       </div>
-  
+
     </div>
   </div>
 </div>

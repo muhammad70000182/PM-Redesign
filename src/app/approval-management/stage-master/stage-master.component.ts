@@ -261,7 +261,7 @@ export class StageMasterComponent implements OnInit, AfterViewInit {
       Description: stage.stageDescription,
       NumApprovals: stage.numberOfApprovals,
       NumRejections: stage.numberOfRejectins,
-      IsActive: stage.isActive,
+      IsActive: (stage.isActive ?? stage.IsActive) ?? true,
       CreatedBy: stage.createdBy,
       UpdatedBy: this.CurrentUserInfo.Id,
       CreatedDate: stage.createdDate,
@@ -270,8 +270,20 @@ export class StageMasterComponent implements OnInit, AfterViewInit {
     debugger;
     // Rebuild StageDetail FormArray
     if (stage.stageDetail && stage.stageDetail.length > 0) {
-      this.StageDetail = stage.stageDetail
+      // Normalize incoming detail items to expected shape { userId, userName }
+      this.StageDetail = stage.stageDetail.map((d: any) => {
+        const userId = d.userId ?? d.UserId ?? d.UserID ?? d.id ?? d.Id;
+        const userName = d.userName ?? d.UserName ?? d.userNameText ?? d.name ?? (d.user ? (d.user.firstName && d.user.lastName ? d.user.firstName + ' ' + d.user.lastName : d.user.fullName) : undefined);
+        return {
+          userId: userId,
+          userName: userName || ''
+        };
+      });
+    } else {
+      this.StageDetail = [];
     }
+    // reset any selection in modal
+    this.md_currentEmployeeId = null;
     // Open modal so user can edit inside modal
     this.showModal = true;
   }

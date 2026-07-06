@@ -11,6 +11,7 @@ import { SharedService } from '../../../_services/shared.service';
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
+   styleUrls: ['./default-header.component.scss']
 })
 
 export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
@@ -111,4 +112,40 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
       error: (err: any) => { },
     });
   }
+
+  getUserInitials(fullName: string): string {
+    if (!fullName) {
+      return '';
+    }
+
+    const names = fullName.trim().split(/\s+/);
+
+    if (names.length === 1) {
+      return names[0].charAt(0).toUpperCase();
+    }
+
+    return (
+      names[0].charAt(0) +
+      names[names.length - 1].charAt(0)
+    ).toUpperCase();
+  }
+  getAvatarColor(name: string): string {
+  const colors = [
+    '#1A73E8',
+    '#5B5FC7',
+    '#0F766E',
+    '#9333EA',
+    '#EA580C',
+    '#DC2626',
+    '#0891B2'
+  ];
+
+  let hash = 0;
+
+  for (let i = 0; i < name.length; i++) {
+    hash += name.charCodeAt(i);
+  }
+
+  return colors[hash % colors.length];
+}
 }

@@ -26,9 +26,8 @@
                             <div class="col-12 col-md-3 col-lg-3" *ngIf="form.get('Id')?.value > 0">
                                 <div class="form-group">
                                     <label class="form-label">{{'Agreement' | translate}}</label>
-                                    <input type="text" class="form-control" [value]="agrinfo" readonly
-                                        />
-                                    
+                                    <input type="text" class="form-control" [value]="agrinfo" readonly />
+
                                 </div>
                             </div>
 
@@ -47,20 +46,18 @@
                                         [submitted]="submitted"></app-validation-message>
                                 </div>
                             </div>
-                              <div class="col-12 col-md-3 col-lg-3" *ngIf="form.get('Id')?.value > 0">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="form.get('Id')?.value > 0">
                                 <div class="form-group">
                                     <label class="form-label">{{'Series' | translate}}</label>
-                                    <input type="text" class="form-control" [value]="SeriesName" readonly
-                                        />
-                                    
+                                    <input type="text" class="form-control" [value]="SeriesName" readonly />
+
                                 </div>
                             </div>
                             <!-- U_Seri -->
                             <div class="col-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label class="form-label">{{'Doc Num' | translate}}</label>
-                                    <input type="text" class="form-control" formControlName="U_DocNum" 
-                                        readonly
+                                    <input type="text" class="form-control" formControlName="U_DocNum" readonly
                                         [ngClass]="{ 'is-invalid': (submitted || f['U_DocNum'].touched) && f['U_DocNum'].invalid }" />
                                     <app-validation-message [control]="f['U_DocNum']" label="Series"
                                         [submitted]="submitted"></app-validation-message>
@@ -71,8 +68,7 @@
                             <div class="col-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label class="form-label">{{'Agreement Type' | translate}}</label>
-                                    <input type="text" class="form-control" formControlName="AgreementType"
-                                        readonly
+                                    <input type="text" class="form-control" formControlName="AgreementType" readonly
                                         [ngClass]="{ 'is-invalid': (submitted || f['AgreementType'].touched) && f['AgreementType'].invalid }" />
                                     <app-validation-message [control]="f['AgreementType']" label="Agreement Type"
                                         [submitted]="submitted"></app-validation-message>
@@ -152,7 +148,7 @@
                                                     <tbody>
                                                         <tr
                                                             *ngFor="let u of SelectedAgreement.agreementItems; let i = index">
-                                                             <td>{{i+1}}</td>
+                                                            <td>{{i+1}}</td>
                                                             <td> <input type="checkbox" [(ngModel)]="u.selected"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     (change)="isAllSelected()" /></td>
@@ -187,7 +183,7 @@
                                             <div class="form-group">
                                                 <label class="form-label">{{'BP Code' | translate}}</label>
                                                 <input type="text" class="form-control" formControlName="U_BPCode"
-                                                     readonly
+                                                    readonly
                                                     [ngClass]="{ 'is-invalid': (submitted || f['U_BPCode'].touched) && f['U_BPCode'].invalid }" />
                                                 <app-validation-message [control]="f['U_BPCode']" label="BP Code"
                                                     [submitted]="submitted"></app-validation-message>
@@ -207,7 +203,7 @@
                                             <div class="form-group">
                                                 <label class="form-label">{{'Contact Person' | translate}}</label>
                                                 <input type="text" class="form-control" formControlName="U_CPName"
-                                                     readonly
+                                                    readonly
                                                     [ngClass]="{ 'is-invalid': (submitted || f['U_CPName'].touched) && f['U_CPName'].invalid }" />
                                                 <app-validation-message [control]="f['U_CPName']" label="Contact Person"
                                                     [submitted]="submitted"></app-validation-message>
@@ -218,7 +214,7 @@
                                                 <label class="form-label">
                                                     {{'Ejar ID' | translate}}</label>
                                                 <input type="text" class="form-control" formControlName="U_CustRefNo"
-                                                     readonly
+                                                    readonly
                                                     [ngClass]="{ 'is-invalid': (submitted || f['U_CustRefNo'].touched) && f['U_CustRefNo'].invalid }" />
                                                 <app-validation-message [control]="f['U_CustRefNo']" label="Unit Code"
                                                     [submitted]="submitted"></app-validation-message>
@@ -287,91 +283,90 @@
                                     </div>
 
                                 </div>
-                                 <div class="tab-pane fade show active" [hidden]="activeTab !== 'Attachments'">
-                                        <div class="row mt-4">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="Address" class="form-label">{{'Attachments Type' | translate}}<span
-                                                            class="colorRed">*</span></label>
-                                                    <ng-select aria-label="Default select example"
-                                                        [(ngModel)]="AttachmentType"
-                                                        [ngModelOptions]="{standalone: true}">
-                                                        <ng-option *ngFor="let car of AttachmentTypeListValues"
-                                                            [value]="car.fieldValue">{{car.fieldName}}</ng-option>
-                                                    </ng-select>
+                                <div class="tab-pane fade show active" [hidden]="activeTab !== 'Attachments'">
+                                    <div class="row mt-4">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="Address" class="form-label">{{'Attachments Type' |
+                                                    translate}}<span class="colorRed">*</span></label>
+                                                <ng-select aria-label="Default select example"
+                                                    [(ngModel)]="AttachmentType" [ngModelOptions]="{standalone: true}">
+                                                    <ng-option *ngFor="let car of AttachmentTypeListValues"
+                                                        [value]="car.fieldValue">{{car.fieldName}}</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="Description" class="form-label">{{'Description' |
+                                                    translate}} <span class="colorRed">*</span></label>
+                                                <input type="text" class="form-control" id="Description"
+                                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="Att_Description"
+                                                    required="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <span style="display: block;" class="form-label">{{'File' |
+                                                    translate}}<span class="colorRed">*</span></span>
+                                                <div class="mb-3 chosaeFilebtn">
+                                                    <label class="form-label">
+                                                        <a><i class="fa fa-file-image"></i> Choose File</a>
+                                                        <input class="" type="file" [(ngModel)]="FileURL"
+                                                            [ngModelOptions]="{standalone: true}" #fileInput
+                                                            (change)="onFileChange($event,fileInput)">
+                                                    </label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="Description" class="form-label">{{'Description' | translate}} <span
-                                                            class="colorRed">*</span></label>
-                                                    <input type="text" class="form-control" id="Description"
-                                                        [ngModelOptions]="{standalone: true}"
-                                                        [(ngModel)]="Att_Description" required="">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <span style="display: block;" class="form-label">{{'File' | translate}}<span
-                                                            class="colorRed">*</span></span>
-                                                    <div class="mb-3 chosaeFilebtn">
-                                                        <label class="form-label">
-                                                            <a><i class="fa fa-file-image"></i> Choose File</a>
-                                                            <input class="" type="file" [(ngModel)]="FileURL"
-                                                                [ngModelOptions]="{standalone: true}" #fileInput
-                                                                (change)="onFileChange($event,fileInput)">
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="mt-4 text-right btn-design">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mt-4 text-right btn-design">
                                                 <button type="button" class="btn btn-success"
-                                                    (click)="AddRemoveAttachments('add','')"><i
-                                                        class=""></i>{{'Add' | translate}}</button>
-                                                </div>
+                                                    (click)="AddRemoveAttachments('add','')"><i class=""></i>{{'Add' |
+                                                    translate}}</button>
                                             </div>
-
                                         </div>
-                                  
 
-                                        <!-- Attachment table start -->
-                                        <div class="table-responsive dataTableDesign fixed-height-wrapper mt-4">
-                                            <table class="table table-striped ">
-                                                <thead>
-                                                    <tr>
-                                                        <th>{{'Attachment Type' | translate}}</th>
-                                                        <th>{{'Description' | translate}}</th>
-                                                        <th>{{'File' | translate}}</th>
-                                                        <th>{{'Action' | translate}}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let p of AttachmentsList">
-                                                        <td>{{p.u_UniqueName}}</td>
-                                                        <td>{{p.name}}</td>
-                                                        <td>
-                                                            <span>
-                                                                <a *ngIf="p.FileURL2.length <= 500" [href]="p.FileURL2"
-                                                                    target="_blank"><i class="fa fa-eye"></i></a>
-                                                                <img *ngIf="p.FileURL2.length > 500" [src]="p.FileURL2"
-                                                                    style="height: 30px;">
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="action-btn">
-                                                                <span><i class="fa fa-trash"
-                                                                        (click)="AddRemoveAttachments('remove',p)"></i></span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-
-                                        </div>
-                                        <!-- Attachment table end -->
                                     </div>
+
+
+                                    <!-- Attachment table start -->
+                                    <div class="table-responsive dataTableDesign fixed-height-wrapper mt-4">
+                                        <table class="table table-striped ">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{'Attachment Type' | translate}}</th>
+                                                    <th>{{'Description' | translate}}</th>
+                                                    <th>{{'File' | translate}}</th>
+                                                    <th>{{'Action' | translate}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let p of AttachmentsList">
+                                                    <td>{{p.u_UniqueName}}</td>
+                                                    <td>{{p.name}}</td>
+                                                    <td>
+                                                        <span>
+                                                            <a *ngIf="p.FileURL2.length <= 500" [href]="p.FileURL2"
+                                                                target="_blank"><i class="fa fa-eye"></i></a>
+                                                            <img *ngIf="p.FileURL2.length > 500" [src]="p.FileURL2"
+                                                                style="height: 30px;">
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="action-btn">
+                                                            <span><i class="fa fa-trash"
+                                                                    (click)="AddRemoveAttachments('remove',p)"></i></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <!-- Attachment table end -->
+                                </div>
                             </div>
                         </div>
 
@@ -387,12 +382,14 @@
                             <!-- Form Actions -->
                             <div class="d-flex justify-content-end mt-4 gap-2">
                                 <div class="btn-group btn-design">
-                                    <button class="btn btn-success" type="submit"  *ngIf="form.get('Id')?.value==0" >
-                                        <i class="fa fa-save"></i><span> {{'Save' | translate}}</span>
+                                    <button class="btn btn-success" type="submit" *ngIf="form.get('Id')?.value==0">
+                                        <!-- <i class="fa fa-save"></i><span> {{'Save' | translate}}</span> -->
+                                          <i class="fa" [ngClass]="isUpdate ? 'fa-edit' : 'fa-save'"></i>
+                                            <span>{{ isUpdate ? ('Update' | translate) : ('Add' | translate) }}</span>
                                     </button>
-                                    <button class="btn btn-success" type="submit"  *ngIf="form.get('Id')?.value>0" >
-                                        <i class="fa fa-save"></i><span> {{'Update' | translate}}</span>
-                                    </button>
+                                        <button class="btn btn-success" type="submit" *ngIf="form.get('Id')?.value>0">
+                                            <i class="fa fa-save"></i><span> {{'Update' | translate}}</span>
+                                        </button>
                                     <button class="btn btn-danger" type="button" (click)="clearForm()">
                                         <i class="fa fa-times"></i><span> {{'Cancel' | translate}}</span>
                                     </button>

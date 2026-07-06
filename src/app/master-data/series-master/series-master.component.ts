@@ -210,7 +210,7 @@ export class SeriesMasterComponent implements OnInit, AfterViewInit {
   }
   GetLovs() {
 
-    let url = '/MasterData/GetLovs?Form=Return';
+    let url = '/MasterData/GetLovs?Form=All';
     this._service.Get(url).subscribe({
       next: result => {
         if (result.status) {

@@ -5,7 +5,7 @@
                 <div *ngIf="AllowedPermissions['canCreate']" class="mb-3 title-add-new-btn">
                     <div class="sectionHeading">
                         <h6 class="fw-bold text-primary">{{'SAP Connection Settings'|translate}}</h6>
-                      </div>
+                    </div>
                     <button class="btn btn-primary" type="button" (click)="openAdd()">
                         <i class="fa fa-plus"></i><span> {{'Add New'|translate}}</span>
                     </button>
@@ -15,8 +15,8 @@
                     <div class="dataTableDesign">
                         <!-- <input type="text" placeholder="Search..." (input)="onDtSearch($event)" /> -->
 
-                        <table class="table table-striped" style="width: 100%;" id="datatable-id" datatable [dtOptions]="dtOptions"
-                            [dtTrigger]="dtTrigger">
+                        <table class="table table-striped" style="width: 100%;" id="datatable-id" datatable
+                            [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                             <thead>
                                 <tr>
                                     <th>{{'SAP User'|translate}}</th>
@@ -51,11 +51,13 @@
                 </div>
             </div>
             <!-- Modal for Add / Edit -->
-            <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
+            <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal"
+                [style.display]="showModal ? 'block' : 'none'">
                 <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">{{ isUpdate ? ('Edit SAP Setting'|translate) : ('New SAP Setting'|translate) }}</h5>
+                            <h5 class="modal-title">{{ isUpdate ? ('Edit SAP Setting'|translate) : ('New SAP
+                                Setting'|translate) }}</h5>
                             <button type="button" class="close" aria-label="Close" (click)="closeModal()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -69,7 +71,8 @@
                                             <label class="form-label">{{'SAP User Name'|translate}}</label>
                                             <input type="text" class="form-control" formControlName="SapUserName"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['SapUserName'].touched) && f['SapUserName'].invalid }" />
-                                            <app-validation-message [control]="f['SapUserName']" label="SAP User Name" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['SapUserName']" label="SAP User Name"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
@@ -77,7 +80,8 @@
                                             <label class="form-label">{{'SAP Password'|translate}}</label>
                                             <input type="password" class="form-control" formControlName="SapPassword"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['SapPassword'].touched) && f['SapPassword'].invalid }" />
-                                            <app-validation-message [control]="f['SapPassword']" label="SAP Password" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['SapPassword']" label="SAP Password"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
@@ -85,7 +89,9 @@
                                             <label class="form-label">{{'SAP Server Address'|translate}}</label>
                                             <input type="text" class="form-control" formControlName="SapServerAddress"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['SapServerAddress'].touched) && f['SapServerAddress'].invalid }" />
-                                            <app-validation-message [control]="f['SapServerAddress']" label="SAP Server Address" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['SapServerAddress']"
+                                                label="SAP Server Address"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
@@ -93,7 +99,8 @@
                                             <label class="form-label">{{'SAP DB Name'|translate}}</label>
                                             <input type="text" class="form-control" formControlName="SapDbName"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['SapDbName'].touched) && f['SapDbName'].invalid }" />
-                                            <app-validation-message [control]="f['SapDbName']" label="SAP DB Name" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['SapDbName']" label="SAP DB Name"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
@@ -105,7 +112,9 @@
                                                 <option value="MSSQL">MSSQL</option>
                                                 <option value="HANA">HANA</option>
                                             </select>
-                                            <app-validation-message [control]="f['SapDbType']" label="SAP Data Base Type" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['SapDbType']"
+                                                label="SAP Data Base Type"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
@@ -113,7 +122,9 @@
                                             <label class="form-label">{{'Database User Name'|translate}}</label>
                                             <input type="text" class="form-control" formControlName="DbUserName"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['DbUserName'].touched) && f['DbUserName'].invalid }" />
-                                            <app-validation-message [control]="f['DbUserName']" label="Database User Name" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['DbUserName']"
+                                                label="Database User Name"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
@@ -121,7 +132,9 @@
                                             <label class="form-label">{{'Database Password'|translate}}</label>
                                             <input type="password" class="form-control" formControlName="DbPassword"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['DbPassword'].touched) && f['DbPassword'].invalid }" />
-                                            <app-validation-message [control]="f['DbPassword']" label="Database Password" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['DbPassword']"
+                                                label="Database Password"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
@@ -129,7 +142,9 @@
                                             <label class="form-label">{{'Service Layer URL'|translate}}</label>
                                             <input type="text" class="form-control" formControlName="ServiceLayerUrl"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['ServiceLayerUrl'].touched) && f['ServiceLayerUrl'].invalid }" />
-                                            <app-validation-message [control]="f['ServiceLayerUrl']" label="Service Layer URL" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['ServiceLayerUrl']"
+                                                label="Service Layer URL"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
 
@@ -139,46 +154,57 @@
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label class="form-label">{{'From Email'|translate}} </label>
-                                            <input type="email" class="form-control" formControlName="FromEmail" placeholder="e.g. notifications@company.com"
+                                            <input type="email" class="form-control" formControlName="FromEmail"
+                                                placeholder="e.g. notifications@company.com"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['FromEmail'].touched) && f['FromEmail'].invalid }" />
-                                            <app-validation-message [control]="f['FromEmail']" label="From Email" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['FromEmail']" label="From Email"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label class="form-label">{{'Email Password'|translate}}</label>
-                                            <input type="password" class="form-control" formControlName="EmailPassword" placeholder="Email account password"
+                                            <input type="password" class="form-control" formControlName="EmailPassword"
+                                                placeholder="Email account password"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['EmailPassword'].touched) && f['EmailPassword'].invalid }" />
-                                            <app-validation-message [control]="f['EmailPassword']" label="Email Password" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['EmailPassword']"
+                                                label="Email Password" [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label class="form-label">{{'Email Host'|translate}}</label>
-                                            <input type="text" class="form-control" formControlName="EmailHost" placeholder="e.g. smtp.gmail.com"
+                                            <input type="text" class="form-control" formControlName="EmailHost"
+                                                placeholder="e.g. smtp.gmail.com"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['EmailHost'].touched) && f['EmailHost'].invalid }" />
-                                            <app-validation-message [control]="f['EmailHost']" label="Email Host" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['EmailHost']" label="Email Host"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label class="form-label">{{'Email Port'|translate}}</label>
-                                            <input type="text" class="form-control" formControlName="EmailPort" placeholder="e.g. 587"
+                                            <input type="text" class="form-control" formControlName="EmailPort"
+                                                placeholder="e.g. 587"
                                                 [ngClass]="{ 'is-invalid': (submitted || f['EmailPort'].touched) && f['EmailPort'].invalid }" />
-                                            <app-validation-message [control]="f['EmailPort']" label="Email Port" [submitted]="submitted"></app-validation-message>
+                                            <app-validation-message [control]="f['EmailPort']" label="Email Port"
+                                                [submitted]="submitted"></app-validation-message>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4 checkBox">
                                         <div class="form-group">
                                             <input type="checkbox" formControlName="OffPlanMultiUnit">
-                                            <label for="Description" class="form-label checkboxstyle">{{'Off Plan Multi Unit'|translate}}</label>
+                                            <label for="Description" class="form-label checkboxstyle">{{'Off Plan Multi
+                                                Unit'|translate}}</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end mt-4 gap-2">
                                     <div class="btn-group btn-design">
                                         <button class="btn btn-success" type="submit">
-                                            <i class="fa fa-save"></i><span> {{'Save'|translate}}</span>
+                                            <!-- <i class="fa fa-save"></i><span> {{'Add'|translate}}</span> -->
+                                            <i class="fa" [ngClass]="isUpdate ? 'fa-edit' : 'fa-save'"></i>
+                                            <span>{{ isUpdate ? ('Update' | translate) : ('Add' | translate) }}</span>
                                         </button>
                                         <button class="btn btn-danger" type="button" (click)="closeModal()">
                                             <i class="fa fa-times"></i><span>{{'Cancel'|translate}} </span>

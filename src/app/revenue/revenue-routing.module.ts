@@ -5,10 +5,10 @@ import { RevenuePopulationComponent } from './revenue-population/revenue-populat
 import { RevenuePostingComponent } from './revenue-posting/revenue-posting.component';
 import { RevenuePostingListComponent } from './revenue-posting-list/revenue-posting-list.component';
 const routes: Routes = [
-  { path: '', component: RevenuePopulationComponent, canActivate: [PermissionsGuard], data: { title: 'Revenue Population Off Plan' } },
-  { path: 'revenue-population', component: RevenuePopulationComponent, canActivate: [PermissionsGuard], data: { title: 'Revenue Population Off Plan' } },
+  //{ path: '', component: RevenuePopulationComponent, canActivate: [PermissionsGuard], data: { title: 'Revenue Population Off Plan' } },
+  //{ path: 'revenue-population', component: RevenuePopulationComponent, canActivate: [PermissionsGuard], data: { title: 'Revenue Population Off Plan' } },
   { path: 'revenue-posting', component: RevenuePostingComponent, canActivate: [PermissionsGuard], data: { title: 'Revenue Posting' } },
-  { path: 'revenue-posting-list', component: RevenuePostingListComponent, canActivate: [PermissionsGuard], data: { title: 'Revenue Posting List' } },
+  //{ path: 'revenue-posting-list', component: RevenuePostingListComponent, canActivate: [PermissionsGuard], data: { title: 'Revenue Posting List' } },
 
 ];
 

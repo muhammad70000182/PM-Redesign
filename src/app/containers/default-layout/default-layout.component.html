@@ -1,26 +1,41 @@
 <!--sidebar-->
-<c-sidebar
-  #sidebar="cSidebar"
-  class="d-print-none sidebar sidebar-fixed customSidebar"
-  id="sidebar"
-  visible
->
-<div class="menuHeader">
- <!-- <img src="../../../assets/images/abc-logo.png"> -->
-</div>
+<c-sidebar #sidebar="cSidebar" class="d-print-none sidebar sidebar-fixed customSidebar" id="sidebar" visible>
+  <div class="menuHeader" [routerLink]="['/#']" style="cursor: pointer;">
+  </div>
 
-  <ng-scrollbar pointerEventsMethod="scrollbar">
-    <c-sidebar-nav 
-      class="sidebarArrow"
-      [navItems]="navItems"
-      dropdownMode="close"
-    />
+  <!-- <div class="sidebar-search">
+    <input type="text" class="form-control" placeholder="Search permissions..." [(ngModel)]="searchText"
+      (input)="searchPermissions()">
+  </div> -->
+
+  <div class="sidebar-search">
+    <div class="search-box">
+      <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchText"
+        (input)="searchPermissions()" />
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span *ngIf="searchText" class="search-clear" (click)="searchText=''; searchPermissions()">
+        ✕
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" *ngIf="searchText && filteredPermissions.length">
+    <div class="search-item" *ngFor="let item of filteredPermissions" (click)="navigate(item.url)">
+      <div class="permission-name">
+        {{ item.name }}
+      </div>
+      <div class="parent-name">
+        <i class="fa-solid fa-folder-open"></i>
+        {{ item.parent }}
+      </div>
+    </div>
+  </div>
+
+  <ng-scrollbar *ngIf="!searchText || filteredPermissions.length === 0" pointerEventsMethod="scrollbar">
+    <c-sidebar-nav class="sidebarArrow" [navItems]="navItems" dropdownMode="close" />
   </ng-scrollbar>
-  <c-sidebar-toggler
-    *ngIf="!sidebar.narrow"
-    toggle="unfoldable"
-    cSidebarToggle="sidebar"
-  />
+
+  <c-sidebar-toggler *ngIf="!sidebar.narrow" toggle="unfoldable" cSidebarToggle="sidebar" />
 </c-sidebar>
 
 <!--main-->
@@ -30,12 +45,12 @@
   <!--app-body-->
   <div class="body flex-grow-1 px-4 custom-padding">
     <!-- <c-container breakpoint="lg" class="h-auto"> -->
-      <router-outlet />
-      
-      <div *ngIf="processing" class="loader-box">
-        <div class="loader"></div>
-        <div class="textt">LOADING...</div>
-      </div>
+    <router-outlet />
+
+    <div *ngIf="processing" class="loader-box">
+      <div class="loader"></div>
+      <div class="textt">LOADING...</div>
+    </div>
     <!-- </c-container> -->
   </div>
   <!--app footer-->

@@ -3,76 +3,112 @@
         <div class="card card-user">
             <div class="card-body pb-4">
                 <!-- <h4 class="sectionHeading">New Permission:</h4> -->
-                 <!-- <div class="sectionHeading">
+                <!-- <div class="sectionHeading">
                         <h6 class="fw-bold text-primary mt-2">{{'New Permissions' | translate}}</h6>
                     </div> -->
-                                <div class="mb-3 title-add-new-btn">
-                                     <div class="sectionHeading">
+                <div class="mb-3 title-add-new-btn">
+                    <div class="sectionHeading">
                         <h6 class="fw-bold text-primary mt-2">{{'Permissions Listing' | translate}}</h6>
                     </div>
-                                        <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add New' | translate}}</button>
-                                </div>
+                    <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add
+                        New' | translate}}</button>
+                </div>
 
-                                <!-- Modal for Add/Edit Permission -->
-                                <div *ngIf="true">
-                                    <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
-                                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">{{ isUpdate ? ('Edit Permission' | translate) : ('New Permission' | translate) }}</h5>
-                                                    <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+                <!-- Modal for Add/Edit Permission -->
+                <div *ngIf="true">
+                    <div class="modal fade" tabindex="-1" role="dialog" [class.show]="showModal"
+                        [style.display]="showModal ? 'block' : 'none'">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ isUpdate ? ('Edit Permission' | translate) : ('New
+                                        Permission' | translate) }}</h5>
+                                    <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span
+                                            aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                                        <input type="hidden" formControlName="Id" />
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
+                                                <div class="form-group">
+                                                    <label for="Title" class="form-label">{{'Title' | translate}}<span
+                                                            class="colorRed">*</span></label>
+                                                    <input type="text" class="form-control" formControlName="Title"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['Title'].errors }">
+                                                    <div *ngIf="submitted && f['Title'].errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f['Title'].errors['required']">{{'Title is
+                                                            required'}}</div>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                                                        <input type="hidden" formControlName="Id" />
-                                                        <div class="row">
-                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
-                                                                <div class="form-group">
-                                                                    <label for="Title" class="form-label">{{'Title' | translate}}<span class="colorRed">*</span></label>
-                                                                    <input type="text" class="form-control" formControlName="Title" [ngClass]="{ 'is-invalid': submitted && f['Title'].errors }">
-                                                                    <div *ngIf="submitted && f['Title'].errors" class="invalid-feedback"><div *ngIf="f['Title'].errors['required']">{{'Title is required'}}</div></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
-                                                                <div class="form-group">
-                                                                    <label for="Sorting" class="form-label">{{'Sorting' | translate}}<span class="colorRed">*</span></label>
-                                                                    <input type="text" class="form-control" (paste)="(false)" formControlName="Sorting" [ngClass]="{ 'is-invalid': submitted && f['Sorting'].errors }" (keypress)="onlyNumber($event)">
-                                                                    <div *ngIf="submitted && f['Sorting'].errors" class="invalid-feedback"><div *ngIf="f['Sorting'].errors['required']">{{'Sorting is required'}}</div></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
-                                                                <div class="form-group">
-                                                                    <label for="Icon" class="form-label">{{'Icon' | translate}}<span class="colorRed">*</span></label>
-                                                                    <input type="text" class="form-control" formControlName="Icon" [ngClass]="{ 'is-invalid': submitted && f['Icon'].errors }">
-                                                                    <div *ngIf="submitted && f['Icon'].errors" class="invalid-feedback"><div *ngIf="f['Icon'].errors['required']">{{'Icon is required'}}</div></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
-                                                                <div class="form-group">
-                                                                    <label for="Url" class="form-label">{{'Url' | translate}}<span class="colorRed">*</span></label>
-                                                                    <input type="text" class="form-control" formControlName="Url" [ngClass]="{ 'is-invalid': submitted && f['Url'].errors }">
-                                                                    <div *ngIf="submitted && f['Url'].errors" class="invalid-feedback"><div *ngIf="f['Url'].errors['required']">{{'Url is required'}}</div></div>
-                                                                </div>
-                                                            </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
+                                                <div class="form-group">
+                                                    <label for="Sorting" class="form-label">{{'Sorting' |
+                                                        translate}}<span class="colorRed">*</span></label>
+                                                    <input type="text" class="form-control" (paste)="(false)"
+                                                        formControlName="Sorting"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['Sorting'].errors }"
+                                                        (keypress)="onlyNumber($event)">
+                                                    <div *ngIf="submitted && f['Sorting'].errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f['Sorting'].errors['required']">{{'Sorting is
+                                                            required'}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
+                                                <div class="form-group">
+                                                    <label for="Icon" class="form-label">{{'Icon' | translate}}<span
+                                                            class="colorRed">*</span></label>
+                                                    <input type="text" class="form-control" formControlName="Icon"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['Icon'].errors }">
+                                                    <div *ngIf="submitted && f['Icon'].errors" class="invalid-feedback">
+                                                        <div *ngIf="f['Icon'].errors['required']">{{'Icon is required'}}
                                                         </div>
-                                                    </form>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <div class="btn-group btn-design">
-                                                        <button class="btn btn-success" type="button" (click)="onSubmit()"><i class="fa fa-save"></i><span>{{'Save' | translate}}</span></button>
-                                                        <button class="btn btn-secondary" type="button" (click)="clearForm()"><i class="fa fa-eraser"></i><span>{{'Clear' | translate}}</span></button>
-                                                        <button class="btn btn-danger" type="button" (click)="closeModal()"><i class="fa fa-times"></i><span>{{'Cancel' | translate}}</span></button>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
+                                                <div class="form-group">
+                                                    <label for="Url" class="form-label">{{'Url' | translate}}<span
+                                                            class="colorRed">*</span></label>
+                                                    <input type="text" class="form-control" formControlName="Url"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['Url'].errors }">
+                                                    <div *ngIf="submitted && f['Url'].errors" class="invalid-feedback">
+                                                        <div *ngIf="f['Url'].errors['required']">{{'Url is required'}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-backdrop fade" [class.show]="showModal" *ngIf="showModal"></div>
+                                    </form>
                                 </div>
+                                <div class="modal-footer">
+                                    <div class="btn-group btn-design">
+                                        <button class="btn btn-success" type="button" (click)="onSubmit()">
 
-             
+                                            <!-- <i class="fa fa-save"></i><span>{{'Save' | translate}}</span> -->
+                                              <i class="fa" [ngClass]="isUpdate ? 'fa-edit' : 'fa-save'"></i>
+                                            <span>{{ isUpdate ? ('Update' | translate) : ('Add' | translate) }}</span>
+                                        </button>
+                                        <button class="btn btn-secondary" type="button" (click)="clearForm()"><i
+                                                class="fa fa-eraser"></i><span>{{'Clear' | translate}}</span></button>
+                                        <button class="btn btn-danger" type="button" (click)="closeModal()"><i
+                                                class="fa fa-times"></i><span>{{'Cancel' | translate}}</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-backdrop fade" [class.show]="showModal" *ngIf="showModal"></div>
+                </div>
+
+
                 <div class="dataTableDesign">
-                    <table class="table table-striped" style="width: 100%;" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <table class="table table-striped" style="width: 100%;" datatable [dtOptions]="dtOptions"
+                        [dtTrigger]="dtTrigger">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -85,9 +121,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                *ngFor="let p of ParentPermissionsList; let i = index">
-                                 <td>{{i+1}}</td>
+                            <tr *ngFor="let p of ParentPermissionsList; let i = index">
+                                <td>{{i+1}}</td>
                                 <td>{{p.title}}</td>
                                 <td>{{p.sorting}}</td>
                                 <td>{{p.icon}}</td>

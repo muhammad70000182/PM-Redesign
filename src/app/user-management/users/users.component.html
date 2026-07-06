@@ -4,16 +4,17 @@
       <div class="card-body pb-4">
         <div class="row">
           <div class="col-md-12">
-             <div class="title-add-new-btn">
-                      <div class="sectionHeading">
-                        <h6 class="fw-bold text-primary">{{'Users Listing'|translate}}</h6>
-                      </div>
-                    <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add
+            <div class="title-add-new-btn">
+              <div class="sectionHeading">
+                <h6 class="fw-bold text-primary">{{'Users Listing'|translate}}</h6>
+              </div>
+              <button class="btn btn-primary" type="button" (click)="openAdd()"><i class="fa fa-plus"></i> {{'Add
                 New'|translate}}</button>
-                    </div>
+            </div>
             <div class="col-md-12">
               <div class=" dataTableDesign">
-                <table class="table table-striped" style="width: 100%;" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                <table class="table table-striped" style="width: 100%;" datatable [dtOptions]="dtOptions"
+                  [dtTrigger]="dtTrigger">
                   <thead>
                     <tr>
                       <th>{{'#'|translate}}</th>
@@ -123,10 +124,14 @@
                 </div> -->
                         <div class="col-12 col-md-6 col-sm-6 col-lg-6 ">
                           <div class="form-group">
-                            <label for="UserCode" class="form-label">{{'Password'|translate}}<span class="colorRed">*</span></label>
+                            <label for="UserCode" class="form-label">{{'Password'|translate}}<span
+                                class="colorRed">*</span></label>
                             <div class="input-group">
-                              <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="Password" [ngClass]="{ 'is-invalid': submitted && f['Password'].errors }">
-                              <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()" aria-label="Toggle password visibility">
+                              <input [type]="showPassword ? 'text' : 'password'" class="form-control"
+                                formControlName="Password"
+                                [ngClass]="{ 'is-invalid': submitted && f['Password'].errors }">
+                              <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()"
+                                aria-label="Toggle password visibility">
                                 <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'" style="color: #000;"></i>
                               </button>
                             </div>
@@ -221,8 +226,12 @@
 
                         <div class="d-flex justify-content-end mt-4 gap-2">
                           <div class="btn-group btn-design">
-                            <button class="btn btn-success" type="submit"><i
-                                class="fa fa-save"></i><span>{{'Add'|translate}}</span></button>
+                            <button class="btn btn-success" type="submit">
+
+                              <!-- <i class="fa fa-save"></i><span>{{'Add'|translate}}</span> -->
+                             <i class="fa" [ngClass]="isUpdate ? 'fa-edit' : 'fa-save'"></i>
+                                            <span>{{ isUpdate ? ('Update' | translate) : ('Add' | translate) }}</span>
+                            </button>
                             <button class="btn btn-danger" type="button" (click)="clearForm()"><i
                                 class="fa fa-times"></i><span>{{'Cancel'|translate}}</span></button>
                           </div>
@@ -232,7 +241,7 @@
                       </div>
                     </form>
                     <!-- <h4 class="sectionHeading">Users Listing:</h4> -->
-                   
+
                   </div>
 
                 </div>
