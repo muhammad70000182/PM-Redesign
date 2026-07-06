@@ -91,7 +91,11 @@
               </div>
             </div>
             <div class="modal-footer btn-design">
-              <button class="btn btn-success" type="button" (click)="onSubmit()">{{'Save'|translate}}</button>
+              <button class="btn btn-success" type="button" (click)="onSubmit()">
+                 <i class="fa" [ngClass]="isUpdate ? 'fa-edit' : 'fa-save'"></i>
+                                            <span>{{ isUpdate ? ('Update' | translate) : ('Add' | translate) }}</span>
+              </button>
+              
               <button class="btn btn-secondary" type="button" (click)="clearForm()">{{'Clear'|translate}}</button>
             </div>
           </div>

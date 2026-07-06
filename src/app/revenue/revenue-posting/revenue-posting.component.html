@@ -190,6 +190,7 @@
 
                                         <button class="btn btn-success" type="submit">
                                             <i class="fa fa-save"></i><span>{{'Search'|translate}}</span>
+                                            
                                         </button>
                                         <button class="btn btn-danger" type="button" (click)="clearForm()">
                                             <i class="fa fa-times"></i><span> {{'Clear'|translate}}</span>
@@ -316,7 +317,9 @@
                     <div class="btn-group btn-design">
 
                         <button class="btn btn-success" (click)="onSubmit()" type="submit">
-                            <i class="fa fa-save"></i><span> {{'Save'|translate}}</span>
+                            <!-- <i class="fa fa-save"></i><span> {{'Save'|translate}}</span> -->
+                              <i class="fa" [ngClass]="isUpdate ? 'fa-edit' : 'fa-save'"></i>
+                                            <span>{{ isUpdate ? ('Update' | translate) : ('Add' | translate) }}</span>
                         </button>
                         <button class="btn btn-danger" type="button" (click)="clearForm()">
                             <i class="fa fa-times"></i><span> {{'Clear'|translate}}</span>
