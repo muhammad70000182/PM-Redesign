@@ -246,13 +246,11 @@
   // border-bottom: 1px solid rgba(255,255,255,.1);
   // padding: 0 40px;
   text-align: center;
-  background-image: url(../../../assets/images/abacus-logo.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  height: 60px;
-  width: 120px;
-  margin: 18px auto;
+  background-image: url(../../../assets/images/abacus-old-logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 120px;
 
   h1 {
     font-size: 18px;
@@ -266,8 +264,8 @@
   background-size: contain;
   background-position: center;
   background-origin: border-box;
-  margin: 0 0px 0 8px;
-  width: 30px;
+  margin: 10px 10px 10px 0px;
+  height: 40px;
 }
 
 

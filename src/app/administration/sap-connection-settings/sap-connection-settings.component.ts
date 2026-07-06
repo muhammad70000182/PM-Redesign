@@ -88,9 +88,9 @@ export class SAPConnectionSettingsComponent implements OnInit, AfterViewInit {
       processing: true,
       ordering: true,
       scrollX: true,
-      language: {
-        searchPlaceholder: "Search records...",
-      }
+      // language: {
+      //   searchPlaceholder: "Search records...",
+      // }
     };
 
 

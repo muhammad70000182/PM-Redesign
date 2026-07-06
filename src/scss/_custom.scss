@@ -785,6 +785,11 @@ app-approval-hierarchy, app-pending-agreement-listing {
 			border: 1px solid #d9d9d9 !important;
 			border-radius: 30px;
 			background-color: #F6F7FB !important;
+			.ng-value-container{
+				.ng-input{
+					padding-left: 18px !important;
+				}
+			} 
 		}
 	}
 
@@ -2685,7 +2690,7 @@ table td.wrap-text {
 	border-radius: 50%;
 	width: 22px;
 	height: 22px;
-	right: -13px;
+	right: -18px;
 	z-index: 9999;
 	outline: none !important;
 	border: 1px solid #ECEEF4;
