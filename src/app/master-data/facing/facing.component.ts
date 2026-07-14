@@ -62,7 +62,7 @@ export class FacingComponent implements OnInit, AfterViewInit, OnDestroy {
         pageLength: 10,
         processing: false,
         autoWidth: false,
-        ordering: false
+        ordering: true
       };
   }
   ngAfterViewInit(): void {

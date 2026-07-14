@@ -113,7 +113,7 @@ export class SuspensionsComponent implements OnInit, AfterViewInit, OnDestroy, O
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering: false
+      ordering: true
     };
 
     this.form = this.formBuilder.group({

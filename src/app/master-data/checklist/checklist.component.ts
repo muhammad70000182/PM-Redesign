@@ -66,7 +66,7 @@ export class ChecklistComponent implements OnInit {
       pageLength: 10,
       processing: false,
       autoWidth: false,
-      ordering: false,
+      ordering: true,
       // scrollCollapse: true,
       scrollX: true
 

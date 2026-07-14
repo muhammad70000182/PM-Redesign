@@ -58,7 +58,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering: false,
+      ordering: true,
       // scrollCollapse: true,
       // autoWidth:false,
       scrollX: true

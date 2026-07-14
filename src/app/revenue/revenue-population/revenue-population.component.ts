@@ -98,7 +98,7 @@ export class RevenuePopulationComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering: false
+      ordering: true
     };
 
 

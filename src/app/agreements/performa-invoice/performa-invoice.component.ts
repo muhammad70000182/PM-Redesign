@@ -91,7 +91,7 @@ export class PerformaInvoiceComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering: false
+      ordering: true
     };
 
     this.enumService.getAgreementTypes().subscribe(types => {

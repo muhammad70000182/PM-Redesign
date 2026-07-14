@@ -32,10 +32,15 @@
   </div>
 
   <ng-scrollbar *ngIf="!searchText || filteredPermissions.length === 0" pointerEventsMethod="scrollbar">
-    <c-sidebar-nav class="sidebarArrow" [navItems]="navItems" dropdownMode="close" />
+    <c-sidebar-nav class="sidebarArrow" [navItems]="navItems" dropdownMode="close" sidebarNavGroupManager />
+
   </ng-scrollbar>
 
   <c-sidebar-toggler *ngIf="!sidebar.narrow" toggle="unfoldable" cSidebarToggle="sidebar" />
+
+  <div class="portal-version">
+    <p>Version 1.0</p>
+  </div>
 </c-sidebar>
 
 <!--main-->

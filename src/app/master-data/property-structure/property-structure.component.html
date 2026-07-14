@@ -267,11 +267,11 @@
                                                 <td>{{p.U_Dimen4}}</td>
                                                 <td>{{p.U_Dimen5}}</td> -->
 
-                                                <td>{{ getDimensionName(1, p.U_Dimen1) }}</td>
+                                                <!-- <td>{{ getDimensionName(1, p.U_Dimen1) }}</td>
                                                 <td>{{ getDimensionName(2, p.U_Dimen2) }}</td>
                                                 <td>{{ getDimensionName(3, p.U_Dimen3) }}</td>
                                                 <td>{{ getDimensionName(4, p.U_Dimen4) }}</td>
-                                                <td>{{ getDimensionName(5, p.U_Dimen5) }}</td>
+                                                <td>{{ getDimensionName(5, p.U_Dimen5) }}</td> -->
                                                 <td class="action-btn">
                                                     <button class="" type="button"
                                                         (click)="AddRemoveBuildings('remove', i)">
@@ -372,11 +372,11 @@
                                                 <!-- <td *ngFor="let dim of DimensionsList">
                                                     {{ z['U_Dimen' + dim.level + 'Name'] || '-' }}
                                                 </td> -->
-                                                <td>{{ getDimensionName(1, z.U_Dimen1) }}</td>
+                                                <!-- <td>{{ getDimensionName(1, z.U_Dimen1) }}</td>
                                                 <td>{{ getDimensionName(2, z.U_Dimen2) }}</td>
                                                 <td>{{ getDimensionName(3, z.U_Dimen3) }}</td>
                                                 <td>{{ getDimensionName(4, z.U_Dimen4) }}</td>
-                                                <td>{{ getDimensionName(5, z.U_Dimen5) }}</td>
+                                                <td>{{ getDimensionName(5, z.U_Dimen5) }}</td> -->
                                                 <td class="action-btn">
                                                     <button type="button" (click)="editZone(i)">
                                                         <i class="fa fa-edit"></i>
@@ -482,11 +482,11 @@
                                                 <td>{{ sz.U_Dimen3 }}</td>
                                                 <td>{{ sz.U_Dimen4 }}</td>
                                                 <td>{{ sz.U_Dimen5 }}</td> -->
-                                                <td>{{ getDimensionName(1, sz.U_Dimen1) }}</td>
+                                                <!-- <td>{{ getDimensionName(1, sz.U_Dimen1) }}</td>
                                                 <td>{{ getDimensionName(2, sz.U_Dimen2) }}</td>
                                                 <td>{{ getDimensionName(3, sz.U_Dimen3) }}</td>
                                                 <td>{{ getDimensionName(4, sz.U_Dimen4) }}</td>
-                                                <td>{{ getDimensionName(5, sz.U_Dimen5) }}</td>
+                                                <td>{{ getDimensionName(5, sz.U_Dimen5) }}</td> -->
                                                 <td class="action-btn">
                                                     <button type="button" (click)="AddRemoveSubZone('remove', i)">
                                                         <i class="fa fa-trash"></i>
@@ -579,7 +579,7 @@
                                 <div class="tab-pane fade show active"
                                     [ngClass]="{ active: activeTab === 'PlotsDetail' }">
                                     <div class="row">
-                                        <div class="col-md-12 dataTableDesign">
+                                        <div class="col-md-12 dataTableDesign fixed-height-wrapper">
                                             <table class="table align-middle table-striped mt-4">
                                                 <thead class="text-white">
                                                     <tr>

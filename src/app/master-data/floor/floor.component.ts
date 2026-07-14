@@ -60,7 +60,7 @@ export class FloorComponent implements OnInit {
         pageLength: 10,
         processing: false,
         autoWidth: false,
-        ordering: false
+        ordering: true
       };
       this.GetMasterData();
     }

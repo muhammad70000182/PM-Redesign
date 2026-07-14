@@ -96,7 +96,7 @@ export class RevenuePostingComponent implements OnInit, AfterViewInit, OnChanges
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      ordering: false
+      ordering: true
     };
 
     this.Searchform = this.formBuilder.group({

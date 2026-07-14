@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { ConfigService } from './_services/LoadConfigFile';
 // Import containers
 import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
+import { SidebarNavGroupManagerDirective } from './containers/default-layout/sidebar-nav-group-manager.directive';
 
 import {
   AvatarModule,
@@ -60,7 +61,8 @@ const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
   DefaultLayoutComponent,
-  LoginComponent
+  LoginComponent,
+  SidebarNavGroupManagerDirective,
 ];
 
 @NgModule({

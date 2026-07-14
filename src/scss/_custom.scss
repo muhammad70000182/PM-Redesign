@@ -2477,6 +2477,48 @@ table td.wrap-text {
 	min-width: 250px !important;
 }
 
+/* Custom Checkbox */
+.custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 4px;
+    background-color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+    margin: 0;
+}
+
+.custom-checkbox:hover {
+    border-color: #10b981;
+}
+
+.custom-checkbox:checked {
+    background-color: #10b981;
+    border-color: #10b981;
+}
+
+.custom-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.custom-checkbox:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
 .customSidebar .sidebar-nav .nav-group-items .nav-link:before {
 	// content: "";
 	// position: absolute;
@@ -2510,6 +2552,16 @@ table td.wrap-text {
 		}
 	}
 	
+}
+.portal-version {
+	border-top: 1px solid #E5E7EB;
+    padding: 10px;
+}
+.portal-version p {
+    margin: 0;
+    text-align: center;
+    color: #4F46E5;
+	font-size: 13px;
 }
 
 .customSidebar .sidebar-nav .nav-group-items .nav-link:hover:before {
@@ -2568,6 +2620,25 @@ table td.wrap-text {
 // .customSidebar.sidebar-narrow-unfoldable .nav-link {
 //     margin-left: 3px;
 // }
+
+.customSidebar .sidebar-nav .nav-group.nav-group-active {
+  background: transparent !important; 
+}
+.customSidebar .sidebar-nav .nav-group.nav-group-active .nav-group-toggle::after {
+    filter: brightness(0) invert(1) !important;
+	    color: #fff;
+}
+.customSidebar .sidebar-nav .nav-group.nav-group-active .nav-group-toggle .nav-icon {
+    color: white;
+    filter: brightness(0) invert(1);
+}
+.customSidebar .sidebar-nav .nav-group.nav-group-active .nav-group-toggle {
+    background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%) !important;
+    border-radius: 30px;
+    color: #fff;
+}
+
+
 
 
 @media screen and (max-width: 767px) {
@@ -2987,26 +3058,27 @@ $border-top-color_1: #072d18;
 				background: unset !important;
 				margin: 0 !important;
 				border-radius: 30px;
+				border: 1px solid transparent !important; // Prevents the jerk by holding space for the border
 
 				&:hover {
 					// border: unset !important;
 					// background: #14213d !important;
 					margin: 0 !important;
-					border-radius: 0 !important;
+					border-radius: 30px !important;
 					outline: unset !important;
 					color: #000000 !important;
-					border: unset;
+					border: 1px solid transparent !important; // Matches normal state to prevent jerk
 				}
 
 				&.current {
 					background: linear-gradient(90deg, #2563EB 0%, #4F46E5 43.27%, #7C3AED 100%) !important;
 					color: white !important;
-					border-radius: 30px;
+					border-radius: 50% !important;
 
 					// border: unset !important;
 					&:hover {
 						color: #fff !important;
-						border-radius: 30px !important;
+						border-radius: 50% !important;
 					}
 				}
 
@@ -3056,6 +3128,22 @@ $border-top-color_1: #072d18;
 							color: #9a9a9a !important;
 						}
 					}
+				}
+			}
+
+			// Target only the number buttons (inside the span) to make them perfect circles
+			> span > .paginate_button {
+				min-width: 35px;
+				height: 35px;
+				display: inline-flex;
+				justify-content: center;
+				align-items: center;
+				padding: 0 !important;
+				border-radius: 50% !important;
+				margin: 0 2px !important;
+				
+				&:hover {
+					border-radius: 50% !important;
 				}
 			}
 		}
