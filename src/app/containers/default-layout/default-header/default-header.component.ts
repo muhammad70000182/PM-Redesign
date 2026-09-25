@@ -34,20 +34,18 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
   currentLang: any = 'en';
   PendingDocumentList: any;
   showNotifications = false;
-  notificationItems = [
-    {
-      title: 'Pending approvals',
-      message: 'There are documents waiting for your review.'
-    },
-    {
-      title: 'Approval reminder',
-      message: 'A few approvals need your attention today.'
-    },
-    {
-      title: 'Document review',
-      message: 'New items were submitted and require action.'
-    }
+  DocumentType: any = [
+    { name: 'Agreement', value: 'Agreement' },
+    { name: 'Proforma Invoice', value: 'Proforma Invoice' },
+    { name: 'Unit Return', value: 'Unit Return' },
+    { name: 'Ownership Transfer', value: 'Ownership Transfer' },
+    { name: 'Suspension', value: 'Suspension' },
+    { name: 'Renewal', value: 'Renewal' },
   ];
+  notificationItems: any[] = this.DocumentType.map((docType: any) => ({
+    title: docType.name,
+    message: `You have 0 pending document(s) for review.`
+  }));
 
   constructor(
     private classToggler: ClassToggleService,
@@ -157,14 +155,10 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
             docCounts[type] = (docCounts[type] || 0) + 1;
           }
 
-          this.notificationItems = Object.keys(docCounts).map(type => ({
-            title: type,
-            message: `You have ${docCounts[type]} pending document(s) for review.`
+          this.notificationItems = this.DocumentType.map((docType: any) => ({
+            title: docType.name,
+            message: `You have ${docCounts[docType.value] || 0} pending document(s) for review.`
           }));
-
-          if (this.PendingDocumentList === 0) {
-            this.showNotifications = false;
-          }
         }
       },
       error: (err: any) => { },
@@ -172,11 +166,7 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
   }
 
   toggleNotifications(): void {
-    if (this.PendingDocumentList > 0) {
-      this.showNotifications = !this.showNotifications;
-    } else {
-      this.showNotifications = false;
-    }
+    this.showNotifications = !this.showNotifications;
   }
 
   closeNotifications(): void {
