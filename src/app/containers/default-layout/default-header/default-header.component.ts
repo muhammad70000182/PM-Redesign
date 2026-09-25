@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -34,20 +34,18 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
   currentLang: any = 'en';
   PendingDocumentList: any;
   showNotifications = false;
-  notificationItems = [
-    {
-      title: 'Pending approvals',
-      message: 'There are documents waiting for your review.'
-    },
-    {
-      title: 'Approval reminder',
-      message: 'A few approvals need your attention today.'
-    },
-    {
-      title: 'Document review',
-      message: 'New items were submitted and require action.'
-    }
+  DocumentType: any = [
+    { name: 'Agreement', value: 'Agreement' },
+    { name: 'Proforma Invoice', value: 'Proforma Invoice' },
+    { name: 'Unit Return', value: 'Unit Return' },
+    { name: 'Ownership Transfer', value: 'Ownership Transfer' },
+    { name: 'Suspension', value: 'Suspension' },
+    { name: 'Renewal', value: 'Renewal' },
   ];
+  notificationItems: any[] = this.DocumentType.map((docType: any) => ({
+    title: docType.name,
+    message: `You have 0 pending document(s) for review.`
+  }));
 
   constructor(
     private classToggler: ClassToggleService,
@@ -148,7 +146,19 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
     this._service.Get(url).subscribe({
       next: result => {
         if (result.status) {
-          this.PendingDocumentList = result.data.length
+          const documents = result.data || [];
+          this.PendingDocumentList = documents.length;
+
+          const docCounts: { [key: string]: number } = {};
+          for (const doc of documents) {
+            const type = doc.docType || 'Other';
+            docCounts[type] = (docCounts[type] || 0) + 1;
+          }
+
+          this.notificationItems = this.DocumentType.map((docType: any) => ({
+            title: docType.name,
+            message: `You have ${docCounts[docType.value] || 0} pending document(s) for review.`
+          }));
         }
       },
       error: (err: any) => { },
@@ -168,8 +178,9 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
     this.route.navigate(['/approvals/pending-documents']);
   }
 
+  @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
-    if (this.showNotifications && !this.el.nativeElement.contains(event.target)) {
+    if (this.showNotifications) {
       this.closeNotifications();
     }
   }
