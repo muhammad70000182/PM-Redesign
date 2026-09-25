@@ -368,6 +368,8 @@
     // }
     .customSidebar .sidebar-nav .nav-group-items .nav-item .nav-link {
     padding-left: 55px !important;
+    width: 100% !important;
+    max-width: 245px !important;
     }
     .ng-scrollbar-wrapper>scrollbar-y.scrollbar-control>.ng-scrollbar-track{
         width: 3px !important;
@@ -375,4 +377,38 @@
     .ng-scrollbar-wrapper>scrollbar-y.scrollbar-control{
         width: 4px !important;
     }
+    .customSidebar.sidebar-narrow-unfoldable .nav-group-active  .nav-link.nav-group-toggle{
+            width: 100%;
+            border-radius: 10px !important;
+            margin-left: 6px;
+            max-width: 50px;
+        }
+        .customSidebar.sidebar-narrow-unfoldable .nav-group-active  .nav-link.nav-group-toggle i{
+            margin-right: 10px;
+            width: 100%;
+            max-width: 50px;
+        }
+        .customSidebar.sidebar-narrow-unfoldable  .nav-link.active i{
+            margin-right: 10px;
+            width: 100%;
+            max-width: 50px;
+        }
+        .customSidebar.sidebar-narrow-unfoldable .sidebar-nav > .nav-item:first-child .nav-link{
+            margin-left: 6px;
+            padding-left: 8px;
+        }
+        .customSidebar.sidebar-narrow-unfoldable .sidebar-nav > .nav-item:first-child .nav-link.active{
+                width: 100%;
+                border-radius: 10px !important;
+                max-width: 50px;
+                padding-left: 16px;
+        }
+        .customSidebar.sidebar-narrow-unfoldable .nav-group  .nav-link {
+            width: 100%;
+            margin-left: 0px;
+            max-width: 50px;
+        }
+        .customSidebar.sidebar-narrow-unfoldable .sidebar-nav .nav-icon{
+            flex:0 0 4rem !important;
+        }
 }
