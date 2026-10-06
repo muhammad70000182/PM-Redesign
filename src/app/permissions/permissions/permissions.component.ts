@@ -59,7 +59,8 @@ export class PermissionsComponent implements OnInit, AfterViewInit {
       pageLength: 10,
       processing: true,
       ordering: true,
-      scrollX: true
+      scrollX: true,
+      autoWidth: false,
       // dom: 'lBfrtip'
     };
 

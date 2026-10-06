@@ -30,9 +30,9 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>{{'Select All' | translate}}
-                                        <input type="checkbox" [(ngModel)]="selectAll"
-                                            (change)="toggleSelectAll($event)" />
+                                    <th><input type="checkbox" [(ngModel)]="selectAll"
+                                            (change)="toggleSelectAll($event)" />{{'Select All' | translate}}
+                                        
                                     </th>
                                     <th>{{'Doc Num' | translate}}</th>
                                     <th>{{'Series' | translate}}</th>
