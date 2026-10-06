@@ -60,7 +60,7 @@ export class ParentPermissionsComponent implements OnInit, AfterViewInit {
       pageLength: 10,
       processing: true,
       ordering:true,
-      // autoWidth:false,
+      autoWidth:false,
       // scrollCollapse: true,
       scrollX: true
 

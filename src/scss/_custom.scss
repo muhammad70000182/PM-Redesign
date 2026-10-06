@@ -344,6 +344,7 @@ body {
 .table {
 	//   border-collapse: separate;
 	font-size: 0.875rem;
+	width: 100% !important;
 	//    border-spacing: 0 6px !important;
 
 	thead th {
@@ -1492,6 +1493,17 @@ div#forgotPasswordModal label {
 	top: 27px;
 }
 
+
+.dataTableDesign .dataTables_scrollBody .table tbody tr:first-child .action-btn span i.fa-eye:after,
+.dataTableDesign .dataTables_scrollBody .table tbody tr:first-child .action-btn span i.fa-edit:after,
+.dataTableDesign .dataTables_scrollBody .table tbody tr:first-child .action-btn span i.fa-trash:after,
+.dataTableDesign .dataTables_scrollBody .table tbody tr:first-child .action-btn span i.fa-file-lines:after
+{
+	clip-path: polygon(0% 25%, 35% 25%, 50% 6%, 65% 25%, 100% 25%, 100% 100%, 0% 100%);
+	padding-top: 16px;
+	top: 27px;
+}
+
 .tbl-chooseFilebtn input[type="file"]::file-selector-button {
 	left: 22px;
 	background: #14213d;
@@ -2559,7 +2571,7 @@ table td.wrap-text {
 }
 .portal-version {
 	border-top: 1px solid #E5E7EB;
-    padding: 10px;
+    padding: 14px 0 14px 0px;
 }
 .portal-version p {
     margin: 0;
@@ -2957,6 +2969,7 @@ $border-top-color_1: #072d18;
 .dataTableDesign .table thead tr th input[type="checkbox"] {
 	position: relative;
 	top: 3px;
+	margin-right: 10px
 }
 
 .dataTableDesign {
@@ -3483,6 +3496,16 @@ body {
 // RTL Css 
 
 html[dir="rtl"] {
+	.nameRole{
+		padding-right: 12px;
+	}
+	.lng-btn .langDropdown{
+		padding: 3px 15px 3px 0px;
+	}
+	.customSidebar{
+		border-left: 1px solid #d8dbe0 !important;
+	}
+	
 	.customSidebar {
 		.nav-link {
 			// direction: rtl;
@@ -3611,7 +3634,18 @@ html[dir="rtl"] {
 	table.dataTable tfoot td {
 		text-align: right;
 	}
-
+.dataTableDesign thead tr th:last-child {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+	border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+}
+.dataTableDesign thead tr th:first-child {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+	border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+}
 // .customSidebar.sidebar-narrow-unfoldable .nav-group {
 //     width: 70px;
 // }
@@ -3626,10 +3660,58 @@ html[dir="rtl"] {
 // 	margin-left: 10px;
 // }
 
+
+
+.agreePilotPurple .customSidebar.sidebar-narrow-unfoldable .sidebar-nav > .nav-item:first-child .nav-link{
+	margin-right: 6px;
+    padding-right: 10px;
+}
+.agreePilotPurple .customSidebar.sidebar-narrow-unfoldable .nav-group .nav-link{
+	margin-right: 0;
+}
+.agreePilotPurple .customSidebar.sidebar-narrow-unfoldable .nav-group-active .nav-link.nav-group-toggle{
+	margin-right: 6px;
+}
+.agreePilotPurple .customSidebar.sidebar-narrow-unfoldable .nav-link.active i{
+	margin-right: -10px;
+}
+.agreePilotPurple .customSidebar.sidebar-narrow-unfoldable .nav-group-active .nav-link.nav-group-toggle i{
+	margin-right: -15px;
+}
+
+.customSidebar.sidebar-narrow-unfoldable .sidebar-toggler {
+    transform: rotate(360deg);
+}
+.customSidebar .sidebar-toggler {
+    transform: rotate(180deg);
+}
+.custom-permissions-table .accordion-header-row .toggle-icon{
+	float: left;
+}
+.agreePilotPurple .wrapper .sectionHeading h6, .agreePilotPurple .wrapper .sectionHeading .h6 {
+    border-right: 4px solid var(--ap-purple) !important;
+	border-left: unset !important;
+}
+.customSidebar .nav-group-items .nav-item::before{
+	right: 35px;
+    left: unset;
+}
+// .agreePilotPurple .customSidebar.sidebar-narrow-unfoldable .nav-group .nav-link{
+// 	margin-right: 0;
+// }
+// .agreePilotPurple .customSidebar.sidebar-narrow-unfoldable .sidebar-nav > .nav-item:first-child .nav-link {
+//     margin-right: 6px;
+// }
+// .agreePilotPurple .customSidebar.sidebar-narrow-unfoldable .nav-link.active i{
+// 	margin-right: -16px;
+// }
+
+
 }
 .AgreePilotlogo{
 	display: none;
 }
+
 .chosaeFilebtn {
 	height: 44px;
 	font-size: 13px;
