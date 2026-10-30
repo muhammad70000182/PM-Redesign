@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
@@ -39,17 +39,39 @@ export class DashboardComponent implements OnInit {
   isOverviewFilterOpen = false;
   overviewChartMonths: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   overviewChartBars: Array<{ label: string; value: number; active: boolean }> = [];
-  featuredProperties = [
+
+  // Search & Dynamic Units Property Section
+  loadingProperties: boolean = false;
+  searchPropertyName: string = '';
+  allProperties: any[] = [];
+  rawUnitsList: any[] = [];
+
+  // Slick Slider Properties
+  itemsPerPage: number = 3;
+  currentSlide: number = 0;
+  touchStartX: number = 0;
+
+  staticImages: string[] = [
+    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
+  ];
+
+  initialFeaturedProperties: any[] = [
     {
       image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
       badges: ['FEATURED', 'FOR SALE', 'NEW'],
       price: 'PKR 4.5 Crore',
       type: 'Villa',
       title: 'Modern 5-Bed Luxury Villa with Private Pool',
-      location: ' DHA Phase 6, Block L, Lahore',
+      location: 'DHA Phase 6, Block L, Lahore',
       beds: 5,
       baths: 6,
       sqft: '5,400 sqf',
+      pills: ['Corner Plot', 'Park Facing', '+2'],
       agent: 'ZP',
       agentName: 'Zameen Premier',
       status: '2 hours ago',
@@ -65,6 +87,7 @@ export class DashboardComponent implements OnInit {
       beds: 3,
       baths: 3,
       sqft: '2,100 sqft',
+      pills: ['Sea View', 'Balcony', 'Furnished'],
       agent: 'BC',
       agentName: 'Bayut Certified',
       status: '1 day ago',
@@ -75,22 +98,28 @@ export class DashboardComponent implements OnInit {
       badges: ['FOR SALE'],
       price: 'PKR 2.85 Crore',
       type: 'House',
-      title: '10 Mara Double-Storey House — Prime Location',
+      title: '10 Marla Double-Storey House — Prime Location',
       location: 'Bahria Town Phase 7, Rawalpindi',
       beds: 4,
       baths: 3,
       sqft: '2,250 sqft',
+      pills: ['Double Story', 'Main Boulevard'],
       agent: 'BP',
       agentName: 'Bahria Properties',
       status: '3 days ago',
       accent: 'blue'
     }
   ];
+
+  featuredProperties: any[] = [];
+
   constructor(
     private chartsData: DashboardChartsData,
     private toastr: ToastrService,
     private _service: SharedService,
   ) {
+    this.allProperties = [...this.initialFeaturedProperties];
+    this.featuredProperties = [...this.allProperties];
   }
 
   public users: IUser[] = [
@@ -179,11 +208,108 @@ export class DashboardComponent implements OnInit {
     trafficRadio: new UntypedFormControl('Month')
   });
 
+  @HostListener('window:resize')
+  onResize(): void {
+    this.updateItemsPerPage();
+  }
+
   ngOnInit(): void {
+    this.updateItemsPerPage();
     this.initCharts();
     this.buildOverviewChart();
     // this.GetAgreementFilterList();
     this.GetSummary();
+    this.GetUnits();
+  }
+
+  updateItemsPerPage(): void {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < 768) {
+        this.itemsPerPage = 1;
+      } else if (width < 1200) {
+        this.itemsPerPage = 2;
+      } else {
+        this.itemsPerPage = 3;
+      }
+      if (this.currentSlide > this.maxSlideIndex) {
+        this.currentSlide = this.maxSlideIndex;
+      }
+    }
+  }
+
+  get maxSlideIndex(): number {
+    return Math.max(0, this.featuredProperties.length - this.itemsPerPage);
+  }
+
+  canPrev(): boolean {
+    return this.currentSlide > 0;
+  }
+
+  canNext(): boolean {
+    return this.currentSlide < this.maxSlideIndex;
+  }
+
+  prevSlide(): void {
+    if (this.currentSlide > 0) {
+      this.currentSlide--;
+    } else {
+      this.currentSlide = this.maxSlideIndex;
+    }
+  }
+
+  nextSlide(): void {
+    if (this.currentSlide < this.maxSlideIndex) {
+      this.currentSlide++;
+    } else {
+      this.currentSlide = 0;
+    }
+  }
+
+  goToPage(pageIndex: number): void {
+    const target = pageIndex * this.itemsPerPage;
+    this.currentSlide = Math.min(target, this.maxSlideIndex);
+  }
+
+  isPageActive(pageIndex: number): boolean {
+    const activePage = Math.floor(this.currentSlide / this.itemsPerPage);
+    return activePage === pageIndex;
+  }
+
+  getSlideDots(): number[] {
+    const totalDots = Math.ceil(this.featuredProperties.length / this.itemsPerPage);
+    return Array.from({ length: Math.max(0, totalDots) }, (_, i) => i);
+  }
+
+  getSlideTransform(): string {
+    const stepPercent = 100 / this.itemsPerPage;
+    return `translateX(-${this.currentSlide * stepPercent}%)`;
+  }
+
+  getSlideRangeText(): string {
+    if (!this.featuredProperties.length) return '0 of 0';
+    const start = this.currentSlide + 1;
+    const end = Math.min(this.currentSlide + this.itemsPerPage, this.featuredProperties.length);
+    return `${start} - ${end} of ${this.featuredProperties.length}`;
+  }
+
+  onTouchStart(e: TouchEvent): void {
+    if (e.changedTouches && e.changedTouches.length) {
+      this.touchStartX = e.changedTouches[0].screenX;
+    }
+  }
+
+  onTouchEnd(e: TouchEvent): void {
+    if (e.changedTouches && e.changedTouches.length) {
+      const diff = this.touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0) {
+          this.nextSlide();
+        } else {
+          this.prevSlide();
+        }
+      }
+    }
   }
 
   initCharts(): void {
@@ -195,17 +321,235 @@ export class DashboardComponent implements OnInit {
     this.chartsData.initMainChart(value);
     this.initCharts();
   }
-  GetAgreementFilterList(Id: any = 0) {
 
+  /**
+   * Search current units dynamically using the same AdvanceUnitSearch API as advance-search.component.ts
+   */
+  GetUnits(searchPayload: any = {}): void {
+    this.loadingProperties = true;
+
+    const payload = {
+      project: '',
+      building: '',
+      zone: '',
+      subZone: '',
+      propertyItemType: '',
+      unitCategory: '',
+      propertyStatus: '',
+      floor: '',
+      district: '',
+      city: '',
+      region: '',
+      facingCode: '',
+      Electricity: null,
+      Water: null,
+      Gas: null,
+      Furnished: null,
+      Basement: null,
+      SwimmingPool: null,
+      AC: null,
+      FullKitchen: null,
+      Elevator: null,
+      OpenSpace: null,
+      Garden: null,
+      NearbyPark: null,
+      fromBedrooms: null,
+      toBedrooms: null,
+      fromOtherRooms: null,
+      toOtherRooms: null,
+      fromWashRooms: null,
+      toWashRooms: null,
+      fromParkings: null,
+      toParkings: null,
+      fromServantQuarter: null,
+      toServantQuarter: null,
+      fromUnitSizeSQM: null,
+      toUnitSizeSQM: null,
+      fromAnnualRentSQM: null,
+      toAnnualRentSQM: null,
+      fromTotalRentPerYear: null,
+      toTotalRentPerYear: null,
+      fromLastRenovated: null,
+      toLastRenovated: null,
+      fromPropertyAge: null,
+      toPropertyAge: null,
+      ...searchPayload
+    };
+
+    const url = '/MasterData/AdvanceUnitSearch';
+    this._service.Post(payload, url).subscribe({
+      next: (result: any) => {
+        this.loadingProperties = false;
+        if (result && result.status && Array.isArray(result.data) && result.data.length > 0) {
+          this.rawUnitsList = result.data;
+          this.mapUnitsToProperties(result.data);
+        } else {
+          // If no dynamic data returned, fallback gracefully to initial properties
+          if (!this.allProperties.length) {
+            this.allProperties = [...this.initialFeaturedProperties];
+            this.featuredProperties = [...this.allProperties];
+          }
+        }
+      },
+      error: (err: any) => {
+        this.loadingProperties = false;
+        console.error('Error fetching advance unit search in dashboard:', err);
+        if (!this.allProperties.length) {
+          this.allProperties = [...this.initialFeaturedProperties];
+          this.featuredProperties = [...this.allProperties];
+        }
+      }
+    });
+  }
+
+  /**
+   * Maps units returned from /MasterData/AdvanceUnitSearch to property card structure
+   */
+  mapUnitsToProperties(units: any[]): void {
+    const accents = ['purple', 'pink', 'blue', 'teal', 'yellow'];
+
+    this.allProperties = units.map((u: any, index: number) => {
+      // Images remain static as requested
+      const image = this.staticImages[index % this.staticImages.length];
+
+      // Badges
+      const badges: string[] = [];
+      const status = u.propertyStatus ? String(u.propertyStatus).trim() : 'Available';
+      badges.push(status.toUpperCase());
+
+      const salesPrice = Number(u.totalSalesPrice || u.salesPriceSQM);
+      const rentPrice = Number(u.totalRentPerYear || u.u_TotalRentPerYear || u.annualRentSQM);
+
+      if (salesPrice > 0) {
+        badges.push('FOR SALE');
+      } else if (rentPrice > 0) {
+        badges.push('FOR RENT');
+      }
+
+      // Price Formatting
+      let formattedPrice = 'Price on Request';
+      if (!isNaN(salesPrice) && salesPrice > 0) {
+        formattedPrice = 'SAR ' + salesPrice.toLocaleString();
+      } else if (!isNaN(rentPrice) && rentPrice > 0) {
+        formattedPrice = 'SAR ' + rentPrice.toLocaleString() + ' / yr';
+      } else if (u.totalSalesPrice) {
+        formattedPrice = String(u.totalSalesPrice);
+      } else if (u.totalRentPerYear) {
+        formattedPrice = String(u.totalRentPerYear);
+      }
+
+      // Type
+      const type = u.unitCategoryName || u.u_PropertyItemType || 'Apartment';
+
+      // Title (Property Name)
+      const title = u.itemName || u.unitDetailName || (u.itemCode ? `Unit ${u.itemCode}` : 'Unit');
+
+      // Location
+      const locParts = [u.buildingName, u.projectName, u.city || u.district || u.region].filter(Boolean);
+      const location = locParts.length ? locParts.join(', ') : (u.city || u.region || 'Prime Location');
+
+      // Specs
+      const beds = u.u_Bedrooms ?? u.bedrooms ?? 0;
+      const baths = u.u_WashRooms ?? u.washrooms ?? 0;
+      const sizeVal = u.unitSizeSQM ?? u.u_UnitSizeSQM;
+      const sqft = sizeVal ? `${sizeVal} SQM` : '0 SQM';
+
+      // Facilities Pills
+      const pillsRaw: string[] = [];
+      if (u.facingName) pillsRaw.push(`${u.facingName} Facing`);
+      if (u.u_Furnished === 'Y' || u.furnished === 'Y') pillsRaw.push('Furnished');
+      if (u.u_AC === 'Y' || u.ac === 'Y') pillsRaw.push('Central AC');
+      if (u.u_SwmPool === 'Y' || u.swimmingPool === 'Y') pillsRaw.push('Swimming Pool');
+      if (u.u_Garden === 'Y' || u.garden === 'Y') pillsRaw.push('Garden');
+      if (u.u_Parkings) pillsRaw.push(`${u.u_Parkings} Parking`);
+      else if (u.associatedParking) pillsRaw.push('Parking');
+      if (u.floorName) pillsRaw.push(u.floorName);
+
+      let pills: string[] = [];
+      if (pillsRaw.length > 2) {
+        pills = [pillsRaw[0], pillsRaw[1], `+${pillsRaw.length - 2}`];
+      } else if (pillsRaw.length > 0) {
+        pills = pillsRaw;
+      } else {
+        pills = ['Standard'];
+      }
+
+      // Agent
+      const agentFullName = u.assignedToBP || 'Property Manager';
+      const agentInitials = agentFullName.replace(/[^a-zA-Z]/g, '').slice(0, 2).toUpperCase() || 'PM';
+
+      // Time Status
+      const timeStatus = u.propertyStatus ? String(u.propertyStatus) : 'Active';
+
+      return {
+        id: u.itemCode || index,
+        code: u.itemCode || '',
+        title,
+        price: formattedPrice,
+        type,
+        location,
+        city: u.city || u.district || '',
+        beds,
+        baths,
+        sqft,
+        badges,
+        pills,
+        agent: agentInitials,
+        agentName: agentFullName,
+        status: timeStatus,
+        image,
+        accent: accents[index % accents.length],
+        raw: u
+      };
+    });
+
+    this.onSearchPropertyChange();
+  }
+
+  /**
+   * Filter properties by property name, code, location, or type
+   */
+  onSearchPropertyChange(): void {
+    this.currentSlide = 0;
+    const term = (this.searchPropertyName || '').trim().toLowerCase();
+    if (!term) {
+      this.featuredProperties = [...this.allProperties];
+      return;
+    }
+
+    this.featuredProperties = this.allProperties.filter((item: any) => {
+      const titleMatch = item.title && item.title.toLowerCase().includes(term);
+      const locationMatch = item.location && item.location.toLowerCase().includes(term);
+      const typeMatch = item.type && item.type.toLowerCase().includes(term);
+      const codeMatch = item.code && item.code.toLowerCase().includes(term);
+      const priceMatch = item.price && item.price.toLowerCase().includes(term);
+      return titleMatch || locationMatch || typeMatch || codeMatch || priceMatch;
+    });
+  }
+
+  clearSearch(): void {
+    this.searchPropertyName = '';
+    this.onSearchPropertyChange();
+  }
+
+  getPropertiesMeta(): string {
+    if (this.searchPropertyName && this.searchPropertyName.trim()) {
+      return `Results matching "${this.searchPropertyName.trim()}"`;
+    }
+    const locations = Array.from(new Set(this.allProperties.map(p => p.city).filter(Boolean)));
+    const locText = locations.length > 0
+      ? (locations.slice(0, 2).join(' • ') + (locations.length > 2 ? ` • +${locations.length - 2}` : ''))
+      : 'All Locations';
+    return `${locText} • All Statuses • All Types`;
+  }
+
+  GetAgreementFilterList(Id: any = 0) {
     let url = '/Agreement/agreements?agrType=' + Id;
     this._service.Get(url).subscribe({
       next: result => {
         if (result.status) {
           this.AgreementList = result.data;
 
-          const data = this.AgreementList; // replace with your actual variable
-
-          // Main logic to build summary
           const mapping: { [key: number]: string } = {
             1: 'Sale',
             2: 'Rent',
@@ -213,9 +557,8 @@ export class DashboardComponent implements OnInit {
             5: 'OffPlan'
           };
 
-          // Approval status mapping (optional, if your backend sends numeric codes)
           const getApprovalStatus = (status: any): string => {
-            if (typeof status === 'string') return status; // already string like 'Approved'
+            if (typeof status === 'string') return status;
             switch (+status) {
               case 1: return 'Pending';
               case 2: return 'Approved';
@@ -224,12 +567,10 @@ export class DashboardComponent implements OnInit {
             }
           };
 
-          // Main logic
           this.summary = this.AgreementList.reduce((acc: any, item: any) => {
             const agTypeName = mapping[item.u_AGType] || 'Unknown';
             const statusName = getApprovalStatus(item.approvalStatus);
 
-            // initialize agreement type group
             if (!acc[agTypeName]) {
               acc[agTypeName] = {
                 total: 0,
@@ -237,15 +578,12 @@ export class DashboardComponent implements OnInit {
               };
             }
 
-            // increment type total
             acc[agTypeName].total++;
 
-            // initialize status count
             if (!acc[agTypeName].statuses[statusName]) {
               acc[agTypeName].statuses[statusName] = 0;
             }
 
-            // increment status count
             acc[agTypeName].statuses[statusName]++;
 
             return acc;
@@ -256,12 +594,12 @@ export class DashboardComponent implements OnInit {
       error: (err: any) => { },
     });
   }
+
   getBadgeClass(value: string): string {
     return value.toLowerCase().replace(/\s+/g, '-');
   }
 
   GetSummary() {
-
     let url = '/MasterData/GetDashboardSummary';
     this._service.Get(url).subscribe({
       next: result => {
@@ -278,7 +616,6 @@ export class DashboardComponent implements OnInit {
           this.buildOverviewChart();
           this.updateOverviewChart();
         } else {
-
           this.toastr.error(result.message, "Error", {
             progressBar: true,
             closeButton: true
