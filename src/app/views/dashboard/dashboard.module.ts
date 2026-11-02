@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
   AvatarModule,
@@ -33,10 +33,10 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     GridModule,
     ProgressModule,
+    FormsModule,
     ReactiveFormsModule,
     ButtonModule,
     FormModule,
-    ButtonModule,
     ButtonGroupModule,
     ChartjsModule,
     AvatarModule,
