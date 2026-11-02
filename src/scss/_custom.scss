@@ -344,7 +344,7 @@ body {
 .table {
 	//   border-collapse: separate;
 	font-size: 0.875rem;
-	width: 100% !important;
+	// width: 100% !important;
 	//    border-spacing: 0 6px !important;
 
 	thead th {
@@ -2139,19 +2139,15 @@ table.table.dataTable.table-striped>tbody>tr:nth-of-type(2n+1)>* {
 
 .modal-header button {
 	border: unset;
-	border-radius: 430px;
+	border-radius: 50%;
 	position: absolute;
 	right: 20px;
 	top: 15px;
 	width: 26px;
 	height: 26px;
-	background: red;
+	background: #9e0707;
 	color: #fff;
 	font-weight: bold;
-	font-size: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 .btn-design.btn-absolute {
@@ -3505,7 +3501,14 @@ html[dir="rtl"] {
 	.customSidebar{
 		border-left: 1px solid #d8dbe0 !important;
 	}
-	
+	.customTab > div a.nav-item.nav-link.active:first-child{
+		border-top-right-radius: 8px;
+		border-top-left-radius: unset;
+	}
+	.customTab > div a.nav-item.nav-link:last-child{
+		border-top-left-radius: 8px;
+		border-top-right-radius: unset;
+	}
 	.customSidebar {
 		.nav-link {
 			// direction: rtl;
@@ -3768,8 +3771,19 @@ html[dir="rtl"] {
 		padding-left: 36px !important;
 		padding-right: 12px !important;
 	}
+	.agreePilotPurple .overview-filter-dropdown.chrt{
+		left: 0;
+		right: unset;
+	}
 }
-
+.modal-header .close{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    font-size: 17px
+}
 /* =========================================================================
    SIDEBAR FLOATING MENU CONFIGURATION
    ========================================================================= */

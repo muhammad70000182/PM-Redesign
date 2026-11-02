@@ -199,20 +199,112 @@
             </div>
 
             <div class="property-actions">
-              <button class="action-btn purple" type="button">
+              <button class="action-btn purple" type="button" (click)="openPropertyModal('call', property)">
                 <i class="fa-solid fa-phone"></i>
                 Call
               </button>
-              <button class="action-btn green" type="button">
+              <button class="action-btn green" type="button" (click)="openPropertyModal('chat', property)">
                 <i class="fa-solid fa-comment-dots"></i>
                 Chat
               </button>
-              <button class="action-btn lightGray" type="button" aria-label="Open property">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <button class="action-btn lightGray" type="button" aria-label="Share property" (click)="openPropertyModal('share', property)">
+                <i class="fa-solid fa-share-nodes"></i>
               </button>
             </div>
           </div>
         </article>
+      </div>
+    </div>
+
+    <div *ngIf="activeModal" class="property-dialog-overlay" (click)="closePropertyModal()">
+      <div class="property-dialog-panel" [ngClass]="activeModal" (click)="$event.stopPropagation()">
+        <ng-container *ngIf="activeModal === 'call'">
+          <div class="call-dialog">
+            <div class="dialog-agent-row">
+              <div class="dialog-avatar">{{ selectedProperty?.agent?.substring(0, 2).toUpperCase() || 'ZP' }}</div>
+              <div class="dialog-agent-meta">
+                <h4>{{ selectedProperty?.agentName || 'Zameen Premier' }}</h4>
+                <span><i class="fa-solid fa-circle"></i> Online</span>
+              </div>
+            </div>
+
+            <div class="dialog-call-card">
+              <div class="dialog-property-thumb" [style.background-image]="'url(' + selectedProperty.image + ')'" aria-label="Property preview"></div>
+              <div class="dialog-property-copy">
+                <strong>{{ selectedProperty?.price || 'PKR 4.5 Crore' }}</strong>
+                <span>{{ selectedProperty?.title || 'Modern 5-Bed Luxury Villa' }}</span>
+              </div>
+            </div>
+
+            <div class="dialog-message">Hi! Welcome to Zameen Premier. How can I help you with this property?</div>
+
+            <div class="dialog-quick-actions">
+              <button type="button">Is this property still available?</button>
+              <button type="button">Can I schedule a visit?</button>
+              <button type="button">What's the exact location?</button>
+            </div>
+
+            <div class="dialog-input-row">
+              <button type="button" class="mini-icon"><i class="fa-solid fa-paperclip"></i></button>
+              <input type="text" value="Type a message..." aria-label="Type a message" />
+              <button type="button" class="send-btn"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="activeModal === 'chat'">
+          <div class="chat-dialog">
+            <div class="chat-header">
+              <div class="chat-header-left">
+                <div class="dialog-avatar small">{{ selectedProperty?.agent?.substring(0, 2).toUpperCase() || 'ZP' }}</div>
+                <div class="chat-header-copy">
+                  <h4>{{ selectedProperty?.agentName || 'Zameen Premier' }}</h4>
+                  <span><i class="fa-solid fa-circle"></i> Online</span>
+                </div>
+              </div>
+              <button type="button" class="close-button" (click)="closePropertyModal()" aria-label="Close dialog">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <div class="chat-property-summary">
+              <div class="chat-property-thumb" [style.background-image]="'url(' + selectedProperty.image + ')'" aria-label="Property preview"></div>
+              <div class="chat-property-copy">
+                <span>{{ selectedProperty?.price || 'PKR 4.5 Crore' }}</span>
+                <strong>{{ selectedProperty?.title || 'Modern 5-Bed Luxury Villa' }}</strong>
+              </div>
+            </div>
+
+            <div class="chat-bubble">Hi! Welcome to Zameen Premier. How can I help you with this property?</div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="activeModal === 'share'">
+          <div class="share-dialog">
+            <div class="share-dialog-header">
+              <div class="share-logo">{{ selectedProperty?.agent?.substring(0, 2).toUpperCase() || 'ZP' }}</div>
+              <div class="share-dialog-copy">
+                <h4>{{ selectedProperty?.agentName || 'Zameen Premier' }}</h4>
+                <span>Modern 5-Bed Luxury Villa With Private Pool</span>
+              </div>
+            </div>
+
+            <div class="share-link-row">
+              <span>{{ selectedProperty?.shareUrl || 'https://zameen.com/property/12345' }}</span>
+              <button type="button">Copy</button>
+            </div>
+
+            <div class="share-socials">
+              <button type="button" class="share-social whatsapp"><i class="fa-brands fa-whatsapp"></i></button>
+              <button type="button" class="share-social facebook"><i class="fa-brands fa-facebook-f"></i></button>
+              <button type="button" class="share-social email"><i class="fa-regular fa-envelope"></i></button>
+              <button type="button" class="share-social twitter"><i class="fa-brands fa-x-twitter"></i></button>
+              <button type="button" class="share-social more"><i class="fa-solid fa-ellipsis"></i></button>
+            </div>
+
+            <button type="button" class="cancel-button" (click)="closePropertyModal()">Cancel</button>
+          </div>
+        </ng-container>
       </div>
     </div>
     <!-- Charts Section -->
@@ -234,7 +326,7 @@
                   <img src="assets/images/icons/filter-icon.svg" alt="filter" style="width: 22px; height: 22px; opacity: 0.9;" />
                 </button>
 
-                <div *ngIf="isOverviewFilterOpen" class="overview-filter-dropdown" style="position: absolute; top: calc(100% + 8px); right: 0; min-width: 190px; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12); padding: 8px; z-index: 20;">
+                <div *ngIf="isOverviewFilterOpen" class="overview-filter-dropdown chrt" style="">
                   <button *ngFor="let option of overviewFilterOptions"
                           type="button"
                           (click)="applyOverviewFilter(option)"

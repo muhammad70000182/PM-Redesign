@@ -53,7 +53,9 @@ export class DashboardComponent implements OnInit {
       agent: 'ZP',
       agentName: 'Zameen Premier',
       status: '2 hours ago',
-      accent: 'purple'
+      accent: 'purple',
+      phone: '+92 321 456 7890',
+      shareUrl: 'https://zameen.com/property/12345'
     },
     {
       image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
@@ -68,7 +70,9 @@ export class DashboardComponent implements OnInit {
       agent: 'BC',
       agentName: 'Bayut Certified',
       status: '1 day ago',
-      accent: 'pink'
+      accent: 'pink',
+      phone: '+971 50 987 6543',
+      shareUrl: 'https://bayut.com/property/98765'
     },
     {
       image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80',
@@ -83,9 +87,13 @@ export class DashboardComponent implements OnInit {
       agent: 'BP',
       agentName: 'Bahria Properties',
       status: '3 days ago',
-      accent: 'blue'
+      accent: 'blue',
+      phone: '+92 300 123 4567',
+      shareUrl: 'https://bahria.com/property/45678'
     }
   ];
+  activeModal: 'call' | 'chat' | 'share' | null = null;
+  selectedProperty: any = this.featuredProperties[0];
   constructor(
     private chartsData: DashboardChartsData,
     private toastr: ToastrService,
@@ -258,6 +266,16 @@ export class DashboardComponent implements OnInit {
   }
   getBadgeClass(value: string): string {
     return value.toLowerCase().replace(/\s+/g, '-');
+  }
+
+  openPropertyModal(modal: 'call' | 'chat' | 'share', property: any): void {
+    this.selectedProperty = property || this.featuredProperties[0];
+    this.activeModal = modal;
+  }
+
+  closePropertyModal(): void {
+    this.activeModal = null;
+    this.selectedProperty = this.featuredProperties[0];
   }
 
   GetSummary() {
