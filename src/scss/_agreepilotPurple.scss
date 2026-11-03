@@ -162,7 +162,7 @@
         background: var(--ap-purple-gradient) !important;
         color: #fff !important;
     }
-    
+
 
     /* Portal version / small accent text */
     .portal-version p,
@@ -411,5 +411,8 @@
         }
         .customSidebar.sidebar-narrow-unfoldable .sidebar-nav .nav-icon{
             flex:0 0 4rem !important;
+        }
+        .overview-filter-dropdown.chrt{
+            position: absolute; top: calc(100% + 8px); right: 0; min-width: 190px; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12); padding: 8px; z-index: 20;
         }
 }

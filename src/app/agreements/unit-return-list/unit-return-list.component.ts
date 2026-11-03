@@ -84,7 +84,8 @@ export class unitreturnlistComponent implements OnInit, AfterViewInit {
       pageLength: 10,
       processing: true,
       ordering: true,
-      scrollX: true
+      scrollX: true,
+      autoWidth: false
     };
     this.enumService.getAgreementTypes().subscribe(types => {
       this.AgreementTypeListVlaues = types;
