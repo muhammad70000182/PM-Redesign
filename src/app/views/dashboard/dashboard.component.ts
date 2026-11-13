@@ -114,6 +114,42 @@ export class DashboardComponent implements OnInit {
       accent: 'blue',
       phone: '+92 300 123 4567',
       shareUrl: 'https://bahria.com/property/45678'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80',
+      badges: ['FOR SALE'],
+      price: 'PKR 2.85 Crore',
+      type: 'House',
+      title: '10 Marla Double-Storey House — Prime Location',
+      location: 'Bahria Town Phase 7, Rawalpindi',
+      beds: 4,
+      baths: 3,
+      sqft: '2,250 sqft',
+      pills: ['Double Story', 'Main Boulevard'],
+      agent: 'BP',
+      agentName: 'Bahria Properties',
+      status: '3 days ago',
+      accent: 'blue',
+      phone: '+92 300 123 4567',
+      shareUrl: 'https://bahria.com/property/45678'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80',
+      badges: ['FOR SALE'],
+      price: 'PKR 2.85 Crore',
+      type: 'House',
+      title: '10 Marla Double-Storey House — Prime Location',
+      location: 'Bahria Town Phase 7, Rawalpindi',
+      beds: 4,
+      baths: 3,
+      sqft: '2,250 sqft',
+      pills: ['Double Story', 'Main Boulevard'],
+      agent: 'BP',
+      agentName: 'Bahria Properties',
+      status: '3 days ago',
+      accent: 'blue',
+      phone: '+92 300 123 4567',
+      shareUrl: 'https://bahria.com/property/45678'
     }
   ];
 
@@ -335,7 +371,7 @@ export class DashboardComponent implements OnInit {
    */
   GetUnits(searchPayload: any = {}): void {
     this.loadingProperties = true;
-
+    debugger;
     const payload = {
       project: '',
       building: '',
@@ -387,6 +423,7 @@ export class DashboardComponent implements OnInit {
     const url = '/MasterData/AdvanceUnitSearch';
     this._service.Post(payload, url).subscribe({
       next: (result: any) => {
+        debugger;
         this.loadingProperties = false;
         if (result && result.status && Array.isArray(result.data) && result.data.length > 0) {
           this.rawUnitsList = result.data;
@@ -400,6 +437,7 @@ export class DashboardComponent implements OnInit {
         }
       },
       error: (err: any) => {
+        debugger;
         this.loadingProperties = false;
         console.error('Error fetching advance unit search in dashboard:', err);
         if (!this.allProperties.length) {
