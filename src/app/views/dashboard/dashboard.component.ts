@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit {
   rawUnitsList: any[] = [];
 
   // Slick Slider Properties
-  itemsPerPage: number = 3;
+  itemsPerPage: number = 4;
   currentSlide: number = 0;
   touchStartX: number = 0;
 
@@ -274,7 +274,7 @@ export class DashboardComponent implements OnInit {
       } else if (width < 1200) {
         this.itemsPerPage = 2;
       } else {
-        this.itemsPerPage = 3;
+        this.itemsPerPage = 4;
       }
       if (this.currentSlide > this.maxSlideIndex) {
         this.currentSlide = this.maxSlideIndex;
